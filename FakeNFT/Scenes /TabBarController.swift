@@ -24,25 +24,25 @@ final class TabBarController: UITabBarController {
         let profile = prepareViewController(
             ProfileAssembly.assemble(),
             image: .init(systemName: Constant.profileImageName),
-            title: "Profile"
+            title: .loc.Profile.title
         )
 
         let catalog = prepareViewController(
             CatalogAssembly.assemble(),
             image: .init(systemName: Constant.catalogImageName),
-            title: "Catalog"
+            title: .loc.Catalog.title
         )
 
         let cart = prepareViewController(
             CartAssembly.assemble(),
             image: .init(systemName: Constant.cartImageName),
-            title: "Cart"
+            title: .loc.Cart.title
         )
 
         let statistics = prepareViewController(
             StatisticsAssembly.assemble(),
             image: .init(systemName: Constant.statisticsImageName),
-            title: "Statistics"
+            title: .loc.Statistics.title
         )
 
         viewControllers = [profile, catalog, cart, statistics]
