@@ -25,6 +25,15 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Assets {
   internal static let accentColor = ColorAsset(name: "AccentColor")
+  internal static let ypBackgroundUniversal = ColorAsset(name: "YP Background Universal")
+  internal static let ypBlackUniversal = ColorAsset(name: "YP Black Universal")
+  internal static let ypBlack = ColorAsset(name: "YP Black")
+  internal static let ypBlueUniversal = ColorAsset(name: "YP Blue Universal")
+  internal static let ypGreenUniversal = ColorAsset(name: "YP Green Universal")
+  internal static let ypLightGrey = ColorAsset(name: "YP Light grey")
+  internal static let ypWhiteUniversal = ColorAsset(name: "YP White Universal")
+  internal static let ypWhite = ColorAsset(name: "YP White")
+  internal static let ypYellowUniversal = ColorAsset(name: "YP Yellow Universal")
   internal static let close = ImageAsset(name: "close")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
