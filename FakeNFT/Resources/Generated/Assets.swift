@@ -34,6 +34,7 @@ internal enum Assets {
   internal static let ypWhiteUniversal = ColorAsset(name: "YP White Universal")
   internal static let ypWhite = ColorAsset(name: "YP White")
   internal static let ypYellowUniversal = ColorAsset(name: "YP Yellow Universal")
+  internal static let catalogTabIcon = ImageAsset(name: "catalogTabIcon")
   internal static let close = ImageAsset(name: "close")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

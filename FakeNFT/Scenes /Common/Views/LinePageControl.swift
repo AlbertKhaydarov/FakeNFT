@@ -17,7 +17,7 @@ final class LinePageControl: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: height)
+        return CGSize(width: UIView.noIntrinsicMetric, height: segmentHeight)
     }
 
     // MARK: - Private properties
@@ -50,8 +50,8 @@ final class LinePageControl: UIView {
 
         for _ in (0..<numberOfItems) {
             let segment = UIView()
-            segment.heightAnchor.constraint(equalToConstant: height).isActive = true
-            segment.layer.cornerRadius = height / 2
+            segment.heightAnchor.constraint(equalToConstant: segmentHeight).isActive = true
+            segment.layer.cornerRadius = segmentHeight / 2
             stackView.addArrangedSubview(segment)
         }
 
@@ -68,4 +68,4 @@ final class LinePageControl: UIView {
 
 // MARK: - Constants
 
-private let height: CGFloat = 4
+private let segmentHeight: CGFloat = 4

@@ -31,5 +31,16 @@ final class CatalogPresenter {
 // MARK: - ICatalogPresenter
 
 extension CatalogPresenter: ICatalogPresenter {
-    func viewDidLoad() { }
+    func viewDidLoad() {
+        // TODO: network call
+
+        let mockCollectionItems: [CollectionItem] = [
+            CollectionItem.makeMockCollectionItem(with: "Peach"),
+            CollectionItem.makeMockCollectionItem(with: "Blue"),
+            CollectionItem.makeMockCollectionItem(with: "Brown"),
+            CollectionItem.makeMockCollectionItem(with: "White")
+        ]
+
+        view?.updateCollectionItems(mockCollectionItems)
+    }
 }

@@ -41,6 +41,9 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		5E13B0BA2BAD5F07006EB5AA /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13B0B92BAD5F07006EB5AA /* UIView+Ext.swift */; };
+		5E13B0BC2BAD6A68006EB5AA /* CollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13B0BB2BAD6A68006EB5AA /* CollectionItem.swift */; };
+		5EE4C1982BACDF480089100B /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE4C1972BACDF480089100B /* CatalogCell.swift */; };
 		5EE7BEE62BAA028400A32EC0 /* SplashAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BEE52BAA028400A32EC0 /* SplashAssembly.swift */; };
 		5EE7BEE82BAA028D00A32EC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BEE72BAA028D00A32EC0 /* SplashViewController.swift */; };
 		5EE7BEEA2BAA029400A32EC0 /* SplashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BEE92BAA029400A32EC0 /* SplashPresenter.swift */; };
@@ -123,6 +126,9 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		5E13B0B92BAD5F07006EB5AA /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		5E13B0BB2BAD6A68006EB5AA /* CollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItem.swift; sourceTree = "<group>"; };
+		5EE4C1972BACDF480089100B /* CatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
 		5EE7BEE52BAA028400A32EC0 /* SplashAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashAssembly.swift; sourceTree = "<group>"; };
 		5EE7BEE72BAA028D00A32EC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5EE7BEE92BAA029400A32EC0 /* SplashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashPresenter.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 		0CFCB7472A7808870009A829 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
+				5EE4C1962BACDF1B0089100B /* Cells */,
 				3F6806C829CBBC8100B4F915 /* ProductDetails */,
 				0C79EE642A76DDCF00EE90EA /* NftDetails */,
 				5EE7BEED2BAA179800A32EC0 /* CatalogAssembly.swift */,
@@ -364,6 +371,7 @@
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
 				0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */,
+				5E13B0B92BAD5F07006EB5AA /* UIView+Ext.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				0CFCB7412A78013E0009A829 /* Nft.swift */,
+				5E13B0BB2BAD6A68006EB5AA /* CollectionItem.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -394,6 +403,14 @@
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		5EE4C1962BACDF1B0089100B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5EE4C1972BACDF480089100B /* CatalogCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		5EE7BEE42BAA026500A32EC0 /* Splash */ = {
@@ -500,7 +517,7 @@
 				3F68068F29CBBAF100B4F915 /* Sources */,
 				3F68069029CBBAF100B4F915 /* Frameworks */,
 				3F68069129CBBAF100B4F915 /* Resources */,
-				5EE7BF102BAA20E300A32EC0 /* ShellScript */,
+				5EE7BF102BAA20E300A32EC0 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -559,7 +576,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					3F68069229CBBAF100B4F915 = {
 						CreatedOnToolsVersion = 14.2;
@@ -640,12 +657,13 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/SwiftLintOutput",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		5EE7BF102BAA20E300A32EC0 /* ShellScript */ = {
+		5EE7BF102BAA20E300A32EC0 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -654,9 +672,11 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/SwiftGenOutput",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -703,9 +723,11 @@
 				5EE7BF0B2BAA1B6C00A32EC0 /* ProfileViewController.swift in Sources */,
 				5EE7BEE62BAA028400A32EC0 /* SplashAssembly.swift in Sources */,
 				5EE7BF092BAA1B6600A32EC0 /* ProfileAssembly.swift in Sources */,
+				5E13B0BA2BAD5F07006EB5AA /* UIView+Ext.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */,
+				5EE4C1982BACDF480089100B /* CatalogCell.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				5EE7BEF92BAA19C700A32EC0 /* CartAssembly.swift in Sources */,
@@ -731,6 +753,7 @@
 				5EE7BF192BAA218400A32EC0 /* Localization.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
+				5E13B0BC2BAD6A68006EB5AA /* CollectionItem.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				5EE7BEFF2BAA19DD00A32EC0 /* CartRouter.swift in Sources */,
