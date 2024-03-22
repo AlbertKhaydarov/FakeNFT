@@ -9,6 +9,7 @@ import UIKit
 
 protocol ICatalogView: AnyObject { 
     func updateCollectionItems(_ items: [CollectionItem])
+    func showSortingAlert()
 }
 
 final class CatalogViewController: UIViewController {
@@ -36,6 +37,19 @@ final class CatalogViewController: UIViewController {
         return tableView.forAutolayout()
     }()
 
+    private lazy var sortButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: Assets.sortIcon.image,
+            style: .plain,
+            target: self,
+            action: #selector(sortIconTapped)
+        )
+
+        button.tintColor = .label
+
+        return button
+    }()
+
     // MARK: - Lifecycle
 
     init(presenter: some ICatalogPresenter) {
@@ -47,7 +61,6 @@ final class CatalogViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
 
         presenter.viewDidLoad()
         setupUI()
@@ -56,19 +69,61 @@ final class CatalogViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
+        view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = sortButton
+
         tableView.placedOn(view)
         NSLayoutConstraint.activate([
-            tableView.top.constraint(equalTo: view.top, constant: 20),
-            tableView.left.constraint(equalTo: view.left, constant: 16),
-            tableView.right.constraint(equalTo: view.right, constant: -16),
-            tableView.bottom.constraint(equalTo: view.bottom, constant: -20)
+            tableView.top.constraint(equalTo: view.top, constant: Constant.extraInset),
+            tableView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+            tableView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
+            tableView.bottom.constraint(equalTo: view.bottom, constant: -Constant.extraInset)
         ])
+    }
+
+    @objc
+    private func sortIconTapped() {
+        presenter.sortButtonTapped()
     }
 }
 
 // MARK: - ICatalogView
 
 extension CatalogViewController: ICatalogView {
+    func showSortingAlert() {
+        let alertController = UIAlertController(
+            title: .loc.Catalog.alertTitle,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let byNameAction = UIAlertAction(
+            title: .loc.Catalog.alertAction1Title,
+            style: .default,
+            handler: { [weak self] _ in
+                self?.presenter.sortByNameChosen()
+            }
+        )
+
+        let byQuantityOfNftAction = UIAlertAction(
+            title: .loc.Catalog.alertAction2Title,
+            style: .default,
+            handler: { [weak self] _ in
+                self?.presenter.sortByQuantityChosen()
+            }
+        )
+
+        let cancelAction = UIAlertAction(
+            title: .loc.Catalog.alertCloseActionTitle,
+            style: .cancel
+        )
+
+        alertController.addAction(byNameAction)
+        alertController.addAction(byQuantityOfNftAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
     func updateCollectionItems(_ items: [CollectionItem]) {
         collectionItems = items
         tableView.reloadData()

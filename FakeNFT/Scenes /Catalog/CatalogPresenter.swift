@@ -9,6 +9,10 @@ import Foundation
 
 protocol ICatalogPresenter {
     func viewDidLoad()
+
+    func sortButtonTapped()
+    func sortByNameChosen()
+    func sortByQuantityChosen()
 }
 
 final class CatalogPresenter {
@@ -16,6 +20,7 @@ final class CatalogPresenter {
 
     weak var view: (any ICatalogView)?
     private let router: any ICatalogRouter
+    private var collectionItems = [CollectionItem]()
 
     // MARK: - Lifecycle
 
@@ -34,13 +39,27 @@ extension CatalogPresenter: ICatalogPresenter {
     func viewDidLoad() {
         // TODO: network call
 
-        let mockCollectionItems: [CollectionItem] = [
-            CollectionItem.makeMockCollectionItem(with: "Peach"),
-            CollectionItem.makeMockCollectionItem(with: "Blue"),
-            CollectionItem.makeMockCollectionItem(with: "Brown"),
-            CollectionItem.makeMockCollectionItem(with: "White")
+        collectionItems = [
+            CollectionItem.makeMockCollectionItem(with: "Peach", quantity: [1]),
+            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: [1 ,2, 3, 4]),
+            CollectionItem.makeMockCollectionItem(with: "Brown", quantity: [1, 2, 3]),
+            CollectionItem.makeMockCollectionItem(with: "White", quantity: [1, 2, 3, 4, 5])
         ]
 
-        view?.updateCollectionItems(mockCollectionItems)
+        view?.updateCollectionItems(collectionItems)
+    }
+
+    func sortButtonTapped() {
+        view?.showSortingAlert()
+    }
+
+    func sortByNameChosen() {
+        collectionItems.sort(by: { $0.name < $1.name })
+        view?.updateCollectionItems(collectionItems)
+    }
+
+    func sortByQuantityChosen() {
+        collectionItems.sort(by: { $0.nfts.count < $1.nfts.count })
+        view?.updateCollectionItems(collectionItems)
     }
 }

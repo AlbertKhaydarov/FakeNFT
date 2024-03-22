@@ -18,12 +18,12 @@ struct CollectionItem: Decodable {
 }
 
 extension CollectionItem {
-    static func makeMockCollectionItem(with name: String) -> CollectionItem {
+    static func makeMockCollectionItem(with name: String, quantity: [Int]) -> CollectionItem {
         .init(
             createdAt: "2023-04-20T02:22:27Z",
             name: name,
             cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oryJHBLe6JqGSLEfDAvFsF5iaBzkkGKvCKDCOSqZwQ&s",
-            nfts: [1, 2, 3, 4, 5],
+            nfts: quantity,
             description: "A series of one-of-a-kind NFTs featuring historic moments in sports history.",
             author: 49,
             id: "1"

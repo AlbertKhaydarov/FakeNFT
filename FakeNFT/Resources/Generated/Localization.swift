@@ -15,6 +15,14 @@ internal enum Localization {
     internal static let title = Localization.tr("Localizable", "Cart.title", fallback: "Корзина")
   }
   internal enum Catalog {
+    /// По названию
+    internal static let alertAction1Title = Localization.tr("Localizable", "Catalog.alert_action1_title", fallback: "По названию")
+    /// По количеству NFT
+    internal static let alertAction2Title = Localization.tr("Localizable", "Catalog.alert_action2_title", fallback: "По количеству NFT")
+    /// Закрыть
+    internal static let alertCloseActionTitle = Localization.tr("Localizable", "Catalog.alert_close_action_title", fallback: "Закрыть")
+    /// Сортировка
+    internal static let alertTitle = Localization.tr("Localizable", "Catalog.alert_title", fallback: "Сортировка")
     /// Каталог
     internal static let title = Localization.tr("Localizable", "Catalog.title", fallback: "Каталог")
   }
