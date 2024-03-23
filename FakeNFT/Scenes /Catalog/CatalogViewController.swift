@@ -123,7 +123,7 @@ extension CatalogViewController: ICatalogView {
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
     }
-    
+
     func updateCollectionItems(_ items: [CollectionItem]) {
         collectionItems = items
         tableView.reloadData()
@@ -136,14 +136,14 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         collectionItems.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CatalogCell = tableView.dequeueReusableCell()
         let currentItem = collectionItems[indexPath.row]
         cell.configure(model: .init(
             name: currentItem.name,
             nfts: currentItem.nfts,
-            cover: currentItem.cover
+            imagePath: currentItem.cover
         ))
         cell.selectionStyle = .none
 
@@ -152,5 +152,10 @@ extension CatalogViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constant.cellHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = collectionItems[indexPath.row]
+        presenter.cellDidSelected(with: item)
     }
 }

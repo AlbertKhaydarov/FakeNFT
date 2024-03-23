@@ -16,11 +16,16 @@ final class CollectionPresenter {
     // MARK: Properties
 
     weak var view: (any ICollectionView)?
+    private let chosenItem: CollectionItem
     private let router: any ICollectionRouter
 
     // MARK: - Lifecycle
 
-    init(router: some ICollectionRouter) {
+    init(
+        chosenItem: CollectionItem,
+        router: some ICollectionRouter
+    ) {
+        self.chosenItem = chosenItem
         self.router = router
     }
 
@@ -32,5 +37,9 @@ final class CollectionPresenter {
 // MARK: - ICollectionPresenter
 
 extension CollectionPresenter: ICollectionPresenter {
-    func viewDidLoad() { }
+    func viewDidLoad() {
+        // TODO: network call
+
+        view?.updateCollectionItems([chosenItem])
+    }
 }

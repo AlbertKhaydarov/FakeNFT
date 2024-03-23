@@ -11,7 +11,9 @@ import UIKit
 protocol ICollectionRouter { }
 
 final class CollectionRouter: ICollectionRouter {
-    // MARK: - Public
+    // MARK: - Properties
+
+    weak var viewController: UIViewController?
 
     // MARK: - Private
 }

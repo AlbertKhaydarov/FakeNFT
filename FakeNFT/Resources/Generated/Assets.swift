@@ -31,11 +31,16 @@ internal enum Assets {
   internal static let ypBlueUniversal = ColorAsset(name: "YP Blue Universal")
   internal static let ypGreenUniversal = ColorAsset(name: "YP Green Universal")
   internal static let ypLightGrey = ColorAsset(name: "YP Light grey")
+  internal static let ypRedUniversal = ColorAsset(name: "YP Red Universal")
   internal static let ypWhiteUniversal = ColorAsset(name: "YP White Universal")
   internal static let ypWhite = ColorAsset(name: "YP White")
   internal static let ypYellowUniversal = ColorAsset(name: "YP Yellow Universal")
   internal static let catalogTabIcon = ImageAsset(name: "catalogTabIcon")
+  internal static let favoriteIcon = ImageAsset(name: "favoriteIcon")
+  internal static let inCartIcon = ImageAsset(name: "inCartIcon")
   internal static let sortIcon = ImageAsset(name: "sortIcon")
+  internal static let startIcon = ImageAsset(name: "startIcon")
+  internal static let toCartIcon = ImageAsset(name: "toCartIcon")
   internal static let close = ImageAsset(name: "close")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

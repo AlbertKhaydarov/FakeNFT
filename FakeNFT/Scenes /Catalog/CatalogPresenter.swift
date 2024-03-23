@@ -13,6 +13,8 @@ protocol ICatalogPresenter {
     func sortButtonTapped()
     func sortByNameChosen()
     func sortByQuantityChosen()
+
+    func cellDidSelected(with item: CollectionItem)
 }
 
 final class CatalogPresenter {
@@ -41,7 +43,7 @@ extension CatalogPresenter: ICatalogPresenter {
 
         collectionItems = [
             CollectionItem.makeMockCollectionItem(with: "Peach", quantity: [1]),
-            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: [1 ,2, 3, 4]),
+            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: [1, 2, 3, 4]),
             CollectionItem.makeMockCollectionItem(with: "Brown", quantity: [1, 2, 3]),
             CollectionItem.makeMockCollectionItem(with: "White", quantity: [1, 2, 3, 4, 5])
         ]
@@ -61,5 +63,9 @@ extension CatalogPresenter: ICatalogPresenter {
     func sortByQuantityChosen() {
         collectionItems.sort(by: { $0.nfts.count < $1.nfts.count })
         view?.updateCollectionItems(collectionItems)
+    }
+
+    func cellDidSelected(with item: CollectionItem) {
+        router.openCollectionScreen(with: item)
     }
 }

@@ -11,12 +11,16 @@ import UIKit
 final class CollectionAssembly {
     // MARK: - Public
 
-    static func assemble() -> UIViewController {
+    static func assemble(collectionItem: CollectionItem) -> UIViewController {
         let router = CollectionRouter()
-        let presenter = CollectionPresenter(router: router)
-        let view = CollectionViewController(presenter: presenter)
+        let presenter = CollectionPresenter(chosenItem: collectionItem, router: router)
+        let view = CollectionViewController(
+            presenter: presenter,
+            layoutProvider: CollectionLayoutProvider()
+        )
 
         presenter.view = view
+        router.viewController = view
 
         return view
     }

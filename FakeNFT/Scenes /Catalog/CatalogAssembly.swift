@@ -16,6 +16,7 @@ final class CatalogAssembly {
         let view = CatalogViewController(presenter: presenter)
 
         presenter.view = view
+        router.viewController = view
 
         return view
     }

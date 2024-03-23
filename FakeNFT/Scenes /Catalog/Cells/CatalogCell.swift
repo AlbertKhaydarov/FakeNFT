@@ -12,7 +12,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
     struct Model {
         let name: String
         let nfts: [Int]
-        let cover: String
+        let imagePath: String
     }
 
     private enum Constant {
@@ -28,6 +28,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
     private lazy var mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = Constant.baseCornerRadius
 
         return imageView.forAutolayout()
@@ -36,6 +37,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
+        label.textColor = .label
 
         return label.forAutolayout()
     }()
@@ -55,11 +57,14 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
 
         mainImageView.kf.cancelDownloadTask()
         mainImageView.image = nil
+        label.text = nil
     }
+
+    // MARK: - Public
 
     func configure(model: Model) {
         label.text = "\(model.name) (\(model.nfts.count))"
-        downloadImage(path: model.cover)
+        downloadImage(path: model.imagePath)
     }
 
     // MARK: - Private
@@ -69,7 +74,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
         NSLayoutConstraint.activate([
             mainImageView.left.constraint(equalTo: contentView.left),
             mainImageView.right.constraint(equalTo: contentView.right),
-            mainImageView.height.constraint(equalToConstant: Constant.mainImageViewHeight),
+            mainImageView.height.constraint(equalToConstant: Constant.mainImageViewHeight)
         ])
 
         label.placedOn(contentView)

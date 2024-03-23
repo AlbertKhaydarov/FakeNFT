@@ -5,4 +5,8 @@
 //  Created by MAKOVEY Vladislav on 22.03.2024.
 //
 
-import Foundation
+import UIKit
+
+protocol ILayoutProvider {
+    func layout() -> UICollectionViewCompositionalLayout
+}

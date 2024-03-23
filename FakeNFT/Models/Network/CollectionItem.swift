@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CollectionItem: Decodable {
+struct CollectionItem: Decodable, Hashable {
     let createdAt: String
     let name: String
     let cover: String
