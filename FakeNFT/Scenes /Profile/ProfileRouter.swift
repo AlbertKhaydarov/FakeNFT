@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol IProfileRouter { }
+protocol ProfileRouterProtocol { }
 
-final class ProfileRouter: IProfileRouter {
+final class ProfileRouter: ProfileRouterProtocol {
     // MARK: - Public
 
     // MARK: - Private

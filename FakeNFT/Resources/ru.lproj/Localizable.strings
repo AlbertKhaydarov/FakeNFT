@@ -15,3 +15,6 @@
 
 "Cart.title" = "Корзина";
 "Statistics.title" = "Статистика";
+"myNFTButton.title" = "Мои NFT";
+"favoriteNFTButton.title" = "Избранные NFT";
+"aboutDesignerButton.title" = "О разработчике";
