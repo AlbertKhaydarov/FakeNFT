@@ -7,5 +7,7 @@
 "Catalog.alert_action2_title" = "По количеству NFT";
 "Catalog.alert_close_action_title" = "Закрыть";
 
+"Collection.author_label_title" = "Автор коллекции:";
+
 "Cart.title" = "Корзина";
 "Statistics.title" = "Статистика";

@@ -13,7 +13,7 @@ final class RatingView: UIView {
     private let stars: [UIImageView] = {
         var imageViews = [UIImageView]()
 
-        for i in 1...5 {
+        for image in 1...5 {
             imageViews.append(UIImageView(image: Assets.startIcon.image))
         }
         return imageViews
@@ -25,7 +25,7 @@ final class RatingView: UIView {
         stack.distribution = .equalSpacing
         stack.spacing = 2
 
-        return stack.forAutolayout()
+        return stack
     }()
 
     // MARK: - Lifecycle

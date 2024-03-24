@@ -15,9 +15,9 @@ final class ProductImageView: UIView {
     }
 
     // MARK: - Properties
-    
+
     private var isFavorite = false {
-        didSet { 
+        didSet {
             let favoriteIconColor = isFavorite ?
             Assets.ypRedUniversal.color:
             Assets.ypWhiteUniversal.color
@@ -37,7 +37,7 @@ final class ProductImageView: UIView {
         imageView.layer.cornerRadius = Constant.baseCornerRadius
         imageView.isUserInteractionEnabled = false
 
-        return imageView.forAutolayout()
+        return imageView
     }()
 
     private lazy var favoriteButton: UIButton = {
@@ -45,7 +45,7 @@ final class ProductImageView: UIView {
         button.setImage(Assets.favoriteIcon.image, for: .normal)
         button.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
 
-        return button.forAutolayout()
+        return button
     }()
 
     // MARK: - Lifecycle

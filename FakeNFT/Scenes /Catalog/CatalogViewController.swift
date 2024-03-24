@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ICatalogView: AnyObject { 
+protocol ICatalogView: AnyObject {
     func updateCollectionItems(_ items: [CollectionItem])
     func showSortingAlert()
 }
@@ -34,7 +34,7 @@ final class CatalogViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(CatalogCell.self)
 
-        return tableView.forAutolayout()
+        return tableView
     }()
 
     private lazy var sortButton: UIBarButtonItem = {

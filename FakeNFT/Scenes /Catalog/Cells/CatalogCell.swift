@@ -31,7 +31,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = Constant.baseCornerRadius
 
-        return imageView.forAutolayout()
+        return imageView
     }()
 
     private lazy var label: UILabel = {
@@ -39,7 +39,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
         label.font = .bodyBold
         label.textColor = .label
 
-        return label.forAutolayout()
+        return label
     }()
 
     // MARK: - Lifecycle

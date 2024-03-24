@@ -14,12 +14,13 @@ typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, Personalize
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
 
 protocol ICollectionView: AnyObject {
-    func updateCollectionItem(_ item: CollectionItem)
+    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo)
     func updateNfts(_ items: [PersonalizedNft])
 }
 
 final class CollectionViewController: UIViewController {
     enum Constant {
+        static let minInset: CGFloat = 8
         static let baseInset: CGFloat = 16
         static let extraInset: CGFloat = 24
 
@@ -35,6 +36,8 @@ final class CollectionViewController: UIViewController {
     private var collectionItems = [PersonalizedNft]() {
         didSet { applySnapshot() }
     }
+
+    private var profileLink: String?
 
     private lazy var dataSource: CollectionDataSource = {
         CollectionDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
@@ -52,7 +55,7 @@ final class CollectionViewController: UIViewController {
         imageView.layer.cornerRadius = 12
         imageView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
-        return imageView.forAutolayout()
+        return imageView
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -66,43 +69,33 @@ final class CollectionViewController: UIViewController {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "Автор коллекции:"
+        label.font = .caption2
+        label.text = .loc.Collection.authorLabelTitle
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        return label.forAutolayout()
+        return label
     }()
 
     private lazy var authorLabelLink: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = Assets.ypBlueUniversal.color
+        label.font = .caption2
         label.isUserInteractionEnabled = true
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(authorLinkDidTap))
         label.addGestureRecognizer(tap)
 
-        return label.forAutolayout()
+        return label
     }()
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 0
+        label.font = .caption2
 
         return label
-    }()
-
-    private lazy var titleWithAuthorStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleLabel, authorLabel])
-        stack.axis = .vertical
-        stack.spacing = 8
-
-        return stack
-    }()
-
-    private lazy var middleTextStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [titleWithAuthorStack, descriptionLabel])
-        stack.axis = .vertical
-
-        return stack.forAutolayout()
     }()
 
     private lazy var collectionView: UICollectionView = {
@@ -110,7 +103,7 @@ final class CollectionViewController: UIViewController {
         collectionView.register(VerticalNftCell.self)
         collectionView.showsVerticalScrollIndicator = false
 
-        return collectionView.forAutolayout()
+        return collectionView
     }()
 
     // MARK: - Lifecycle
@@ -148,18 +141,38 @@ final class CollectionViewController: UIViewController {
             topImageView.height.constraint(equalToConstant: Constant.coverSize)
         ])
 
-        middleTextStackView.placedOn(view)
+        titleLabel.placedOn(view)
         NSLayoutConstraint.activate([
-            middleTextStackView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
-            middleTextStackView.top.constraint(equalTo: topImageView.bottom, constant: Constant.baseInset),
-            middleTextStackView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
-            middleTextStackView.height.constraint(lessThanOrEqualToConstant: Constant.maxSizeOfText)
+            titleLabel.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+            titleLabel.top.constraint(equalTo: topImageView.bottom, constant: Constant.baseInset),
+            titleLabel.right.constraint(equalTo: view.right, constant: -Constant.baseInset)
+        ])
+
+        authorLabel.placedOn(view)
+        NSLayoutConstraint.activate([
+            authorLabel.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+            authorLabel.top.constraint(equalTo: titleLabel.bottom, constant: Constant.minInset)
+        ])
+
+        authorLabelLink.placedOn(view)
+        NSLayoutConstraint.activate([
+            authorLabelLink.left.constraint(equalTo: authorLabel.right, constant: 4),
+            authorLabelLink.top.constraint(equalTo: titleLabel.bottom, constant: Constant.minInset),
+            authorLabelLink.right.constraint(equalTo: view.right, constant: -Constant.baseInset)
+        ])
+
+        descriptionLabel.placedOn(view)
+        NSLayoutConstraint.activate([
+            descriptionLabel.left.constraint(equalTo: view.left, constant: Constant.baseInset),
+            descriptionLabel.top.constraint(equalTo: authorLabel.bottom, constant: Constant.minInset),
+            descriptionLabel.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
+            descriptionLabel.height.constraint(lessThanOrEqualToConstant: Constant.maxSizeOfText)
         ])
 
         collectionView.placedOn(view)
         NSLayoutConstraint.activate([
             collectionView.left.constraint(equalTo: view.left, constant: Constant.baseInset),
-            collectionView.top.constraint(equalTo: middleTextStackView.bottom, constant: Constant.extraInset),
+            collectionView.top.constraint(equalTo: descriptionLabel.bottom, constant: Constant.extraInset),
             collectionView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
             collectionView.bottom.constraint(equalTo: view.bottom)
         ])
@@ -188,7 +201,7 @@ final class CollectionViewController: UIViewController {
 
     @objc
     private func authorLinkDidTap() {
-        print("Tapped")
+        presenter.authorsLinkTapped(with: profileLink)
     }
 
     private func applySnapshot() {
@@ -199,20 +212,27 @@ final class CollectionViewController: UIViewController {
 
         dataSource.apply(snapshot)
     }
+
+    private func downloadCover(with imagePath: String) {
+        guard let url = URL(string: imagePath) else { return }
+
+        topImageView.kf.indicatorType = .activity
+        topImageView.kf.setImage(with: url)
+    }
 }
 
 // MARK: - ICollectionView
 
-extension CollectionViewController: ICollectionView { 
+extension CollectionViewController: ICollectionView {
     func updateNfts(_ items: [PersonalizedNft]) {
         collectionItems = items
     }
 
-    func updateCollectionItem(_ item: CollectionItem) {
-        topImageView.kf.indicatorType = .activity
-        topImageView.kf.setImage(with: URL(string: item.cover)!)
+    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo) {
+        downloadCover(with: item.cover)
 
-        authorLabel.text = "Author Label: Unknown"
+        profileLink = profileInfo.website
+        authorLabelLink.text = profileInfo.name
         descriptionLabel.text = item.description
         titleLabel.text = item.name
     }

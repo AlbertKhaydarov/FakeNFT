@@ -10,6 +10,7 @@ import Foundation
 
 protocol ICollectionPresenter {
     func viewDidLoad()
+    func authorsLinkTapped(with link: String?)
 }
 
 final class CollectionPresenter {
@@ -39,7 +40,6 @@ final class CollectionPresenter {
 extension CollectionPresenter: ICollectionPresenter {
     func viewDidLoad() {
         // TODO: network call
-
         let profileInfo = ProfileInfo.makeProfileInfo()
         let order = Order.makeMockOrder()
         let nft = Nft.makeMockNft()
@@ -48,16 +48,21 @@ extension CollectionPresenter: ICollectionPresenter {
             PersonalizedNft(
                 id: nftId,
                 name: nft.name,
-                price: nft.price, 
+                price: nft.price,
                 website: profileInfo.website,
-                imagePath: nft.images[0], 
+                imagePath: nft.images[0],
                 rating: nft.rating,
                 liked: profileInfo.likes.first(where: { $0 == nftId }) != nil,
                 inCart: order.nfts.first(where: { $0 == nftId }) != nil
             )
         }
 
-        view?.updateCollectionItem(chosenItem)
+        view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
         view?.updateNfts(personalizedNfts)
+    }
+
+    func authorsLinkTapped(with link: String?) {
+        guard let link, let url = URL(string: link) else { return }
+        router.openWebView(with: url)
     }
 }

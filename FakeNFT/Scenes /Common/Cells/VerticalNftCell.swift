@@ -47,11 +47,11 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var productImageView: ProductImageView = {
         ProductImageView { [weak self] in
             self?.isFavorite = $0
-        }.forAutolayout()
+        }
     }()
 
     private lazy var ratingView: RatingView = {
-        RatingView().forAutolayout()
+        RatingView()
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -93,7 +93,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
 
-        return stack.forAutolayout()
+        return stack
     }()
 
     // MARK: - Lifecycle

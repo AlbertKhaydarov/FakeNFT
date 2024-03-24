@@ -26,6 +26,10 @@ internal enum Localization {
     /// Каталог
     internal static let title = Localization.tr("Localizable", "Catalog.title", fallback: "Каталог")
   }
+  internal enum Collection {
+    /// Автор коллекции:
+    internal static let authorLabelTitle = Localization.tr("Localizable", "Collection.author_label_title", fallback: "Автор коллекции:")
+  }
   internal enum Profile {
     /// Профиль
     internal static let title = Localization.tr("Localizable", "Profile.title", fallback: "Профиль")
