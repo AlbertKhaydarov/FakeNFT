@@ -34,6 +34,9 @@ internal enum Assets {
   internal static let ypWhiteUniversal = ColorAsset(name: "YP White Universal")
   internal static let ypWhite = ColorAsset(name: "YP White")
   internal static let ypYellowUniversal = ColorAsset(name: "YP Yellow Universal")
+  internal static let backwardIcon = ImageAsset(name: "backwardIcon")
+  internal static let editProfileImage = ImageAsset(name: "editProfileImage")
+  internal static let tabProfileImage = ImageAsset(name: "tabProfileImage")
   internal static let userPic = ImageAsset(name: "userPic")
   internal static let close = ImageAsset(name: "close")
 }

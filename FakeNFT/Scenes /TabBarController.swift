@@ -2,7 +2,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private enum Constant {
-        static let profileImageName = "figure.wave"
+        static let profileImageIcon = Assets.tabProfileImage.image
         static let catalogImageName = "figure.wave"
         static let cartImageName = "figure.wave"
         static let statisticsImageName = "figure.wave"
@@ -16,6 +16,7 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = Assets.ypWhite.color
         setupViewControllers()
+        setupNavigationAppearance() 
     }
 
     // MARK: = Private
@@ -23,26 +24,30 @@ final class TabBarController: UITabBarController {
     private func setupViewControllers() {
         let profile = prepareViewController(
             ProfileAssembly.assemble(),
-            image: .init(systemName: Constant.profileImageName),
-            title: .loc.Profile.title
+            image: Constant.profileImageIcon,
+            title: .loc.Profile.title,
+            tag: 0
         )
 
         let catalog = prepareViewController(
             CatalogAssembly.assemble(),
             image: .init(systemName: Constant.catalogImageName),
-            title: .loc.Catalog.title
+            title: .loc.Catalog.title,
+            tag: 1
         )
 
         let cart = prepareViewController(
             CartAssembly.assemble(),
             image: .init(systemName: Constant.cartImageName),
-            title: .loc.Cart.title
+            title: .loc.Cart.title,
+            tag: 2
         )
 
         let statistics = prepareViewController(
             StatisticsAssembly.assemble(),
             image: .init(systemName: Constant.statisticsImageName),
-            title: .loc.Statistics.title
+            title: .loc.Statistics.title,
+            tag: 3
         )
 
         viewControllers = [profile, catalog, cart, statistics]
@@ -51,12 +56,21 @@ final class TabBarController: UITabBarController {
     private func prepareViewController(
         _ viewController: UIViewController,
         image: UIImage?,
-        title: String
+        title: String,
+        tag: Int
     ) -> UIViewController {
         let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
-        viewController.title = title
-        viewController.tabBarItem.image = image
+        let tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
+        viewController.tabBarItem = tabBarItem
+        
         return navigationController
+    }
+    
+    private func setupNavigationAppearance() {
+        UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
+        UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted)
     }
 }
