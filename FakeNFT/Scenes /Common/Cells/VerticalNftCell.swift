@@ -40,7 +40,15 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
     weak var delegate: (any IVerticalNftCellDelegate)?
     private var id: String?
     private var isFavorite: Bool?
-    private var isInCart: Bool?
+    private var isInCart: Bool = false {
+        didSet {
+            let isInCartIcon = isInCart ?
+            Assets.inCartIcon.image :
+            Assets.toCartIcon.image
+
+            cartButton.setImage(isInCartIcon, for: .normal)
+        }
+    }
 
     // MARK: - UI
 
@@ -160,7 +168,8 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
 
     @objc
     private func cartButtonTapped() {
-        guard let id, let isInCart else { return }
+        guard let id else { return }
+        isInCart = !isInCart
 
         delegate?.cartButtonTapped(with: id, isInCart: isInCart)
     }

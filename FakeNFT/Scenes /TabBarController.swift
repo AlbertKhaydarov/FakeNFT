@@ -16,6 +16,7 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         setupViewControllers()
+        setupNavigationAppearance()
     }
 
     // MARK: = Private
@@ -64,5 +65,13 @@ final class TabBarController: UITabBarController {
         viewController.tabBarItem = tabBarItem
 
         return navigationController
+    }
+
+    private func setupNavigationAppearance() {
+        UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
+        UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted)
     }
 }
