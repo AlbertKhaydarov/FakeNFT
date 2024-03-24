@@ -2,3 +2,6 @@
 "Catalog.title" = "Catalog";
 "Cart.title" = "Cart";
 "Statistics.title" = "Statistic";
+"myNFTButton.title" = "My NFTs";
+"favoriteNFTButton.title" = "Favorite NFT";
+"aboutDesignerButton.title" = "About designers";

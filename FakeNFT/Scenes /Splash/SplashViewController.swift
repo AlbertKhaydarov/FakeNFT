@@ -29,6 +29,8 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
+    
+
 }
 
 // MARK: - ISplashView

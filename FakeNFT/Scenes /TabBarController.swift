@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = Assets.ypWhite.color
         setupViewControllers()
     }
 
