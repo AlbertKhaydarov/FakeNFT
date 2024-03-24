@@ -182,6 +182,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
     private func resetCellState() {
         productImageView.cancelDownloadImage()
 
+        ratingView.configure(rating: 0)
         setIconsToButtons(isFavorite: false, isInCart: false)
         titleLabel.text = nil
         priceLabel.text = nil

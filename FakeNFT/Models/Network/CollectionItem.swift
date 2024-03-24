@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct CollectionItem: Decodable, Hashable {
+struct CollectionItem: Decodable {
     let createdAt: String
     let name: String
     let cover: String
-    let nfts: [Int]
+    let nfts: [String]
     let description: String
     let author: Int
     let id: String
 }
 
 extension CollectionItem {
-    static func makeMockCollectionItem(with name: String, quantity: [Int]) -> CollectionItem {
+    static func makeMockCollectionItem(with name: String, quantity: [String]) -> CollectionItem {
         .init(
             createdAt: "2023-04-20T02:22:27Z",
             name: name,

@@ -42,10 +42,10 @@ extension CatalogPresenter: ICatalogPresenter {
         // TODO: network call
 
         collectionItems = [
-            CollectionItem.makeMockCollectionItem(with: "Peach", quantity: [1]),
-            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: [1, 2, 3, 4]),
-            CollectionItem.makeMockCollectionItem(with: "Brown", quantity: [1, 2, 3]),
-            CollectionItem.makeMockCollectionItem(with: "White", quantity: [1, 2, 3, 4, 5])
+            CollectionItem.makeMockCollectionItem(with: "Peach", quantity: ["1"]),
+            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: ["1", "2", "3", "4"]),
+            CollectionItem.makeMockCollectionItem(with: "Brown", quantity: ["1", "2", "3"]),
+            CollectionItem.makeMockCollectionItem(with: "White", quantity: ["1", "2", "3", "4", "5"])
         ]
 
         view?.updateCollectionItems(collectionItems)

@@ -10,11 +10,12 @@ import Kingfisher
 import UIKit
 
 enum Section { case main }
-typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, CollectionItem>
-typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, CollectionItem>
+typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, PersonalizedNft>
+typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
 
 protocol ICollectionView: AnyObject {
-    func updateCollectionItems(_ items: [CollectionItem])
+    func updateCollectionItem(_ item: CollectionItem)
+    func updateNfts(_ items: [PersonalizedNft])
 }
 
 final class CollectionViewController: UIViewController {
@@ -31,7 +32,7 @@ final class CollectionViewController: UIViewController {
     private let presenter: any ICollectionPresenter
     private let layoutProvider: any ILayoutProvider
 
-    private var collectionItems = [CollectionItem]() {
+    private var collectionItems = [PersonalizedNft]() {
         didSet { applySnapshot() }
     }
 
@@ -167,17 +168,17 @@ final class CollectionViewController: UIViewController {
     private func cellProvider(
         collectionView: UICollectionView,
         indexPath: IndexPath,
-        item: CollectionItem
+        item: PersonalizedNft
     ) -> UICollectionViewCell {
         let cell: VerticalNftCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = VerticalNftCell.Model(
             id: item.id,
             name: item.name,
-            imagePath: item.cover,
-            rating: Int.random(in: 1...5),
-            price: 1.99,
-            isFavorite: Bool.random(),
-            isInCart: Bool.random()
+            imagePath: item.imagePath,
+            rating: item.rating,
+            price: item.price,
+            isFavorite: item.liked,
+            isInCart: item.inCart
         )
 
         cell.configure(model: model)
@@ -203,13 +204,16 @@ final class CollectionViewController: UIViewController {
 // MARK: - ICollectionView
 
 extension CollectionViewController: ICollectionView { 
-    func updateCollectionItems(_ items: [CollectionItem]) {
-        let item = items[0]
+    func updateNfts(_ items: [PersonalizedNft]) {
+        collectionItems = items
+    }
+
+    func updateCollectionItem(_ item: CollectionItem) {
         topImageView.kf.indicatorType = .activity
         topImageView.kf.setImage(with: URL(string: item.cover)!)
+
         authorLabel.text = "Author Label: Unknown"
         descriptionLabel.text = item.description
         titleLabel.text = item.name
-        collectionItems = items
     }
 }

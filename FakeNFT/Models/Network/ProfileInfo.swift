@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileInfo {
+struct ProfileInfo: Decodable {
     let name: String
     let avatar: String
     let description: String
@@ -18,14 +18,14 @@ struct ProfileInfo {
 }
 
 extension ProfileInfo {
-    static func makeProductInfo() -> ProfileInfo {
+    static func makeProfileInfo() -> ProfileInfo {
         .init(
             name: "Студентус Практикумус",
             avatar: "https://code.s3.yandex.net/landings-v2-ios-developer/space.PNG",
             description: "Прошел 5-й спринт, и этот пройду",
             website: "https://practicum.yandex.ru/ios-developer",
             nfts: ["1", "2", "3"],
-            likes: ["1", "2", "3"],
+            likes: ["1", "3", "5"],
             id: "1"
         )
     }

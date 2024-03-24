@@ -40,6 +40,24 @@ extension CollectionPresenter: ICollectionPresenter {
     func viewDidLoad() {
         // TODO: network call
 
-        view?.updateCollectionItems([chosenItem])
+        let profileInfo = ProfileInfo.makeProfileInfo()
+        let order = Order.makeMockOrder()
+        let nft = Nft.makeMockNft()
+
+        let personalizedNfts = chosenItem.nfts.map { nftId in
+            PersonalizedNft(
+                id: nftId,
+                name: nft.name,
+                price: nft.price, 
+                website: profileInfo.website,
+                imagePath: nft.images[0], 
+                rating: nft.rating,
+                liked: profileInfo.likes.first(where: { $0 == nftId }) != nil,
+                inCart: order.nfts.first(where: { $0 == nftId }) != nil
+            )
+        }
+
+        view?.updateCollectionItem(chosenItem)
+        view?.updateNfts(personalizedNfts)
     }
 }

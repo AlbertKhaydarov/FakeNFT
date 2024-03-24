@@ -11,7 +11,7 @@ import UIKit
 final class CatalogCell: UITableViewCell, ReuseIdentifying {
     struct Model {
         let name: String
-        let nfts: [Int]
+        let nfts: [String]
         let imagePath: String
     }
 
