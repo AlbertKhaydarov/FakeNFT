@@ -2,7 +2,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     private enum Constant {
-        static let profileImageName = "figure.wave"
+        static let profileImageIcon = Assets.tabProfileImage.image
         static let catalogImageIcon = Assets.catalogTabIcon.image
         static let cartImageName = "figure.wave"
         static let statisticsImageName = "figure.wave"
@@ -25,7 +25,7 @@ final class TabBarController: UITabBarController {
     private func setupViewControllers() {
         let profile = prepareViewController(
             ProfileAssembly.assemble(),
-            image: .init(systemName: Constant.profileImageName),
+            image: Constant.profileImageIcon,
             title: .loc.Profile.title,
             tag: 0
         )
@@ -64,19 +64,15 @@ final class TabBarController: UITabBarController {
         let navigationController = UINavigationController(rootViewController: viewController)
         let tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         viewController.tabBarItem = tabBarItem
-
+        
         return navigationController
     }
-
+    
     private func setupNavigationAppearance() {
         UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
-        UINavigationBar.appearance().tintColor = Assets.ypBlack.color
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal
-        )
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-            [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted
-        )
+        UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted)
     }
 }

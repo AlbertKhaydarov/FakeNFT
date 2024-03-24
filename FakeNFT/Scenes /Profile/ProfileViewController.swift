@@ -99,7 +99,20 @@ final class ProfileViewController: UIViewController {
         presenter.viewDidLoad()
         setupSubview()
         layoutSubviews()
+        addEditButton()
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    private func addEditButton() {
+        let rightButton = UIBarButtonItem(image: Assets.editProfileImage.image, style: .plain, target: self, action: #selector(editButtontapped))
+        self.navigationItem.rightBarButtonItem = rightButton
+        rightButton.tintColor = Assets.ypBlack.color
+    }
+    
+    @objc private func editButtontapped() {
+        print(#function)
+    }
+    
     
     private func setupSubview() {
         view.addSubview(verticalStackView)
