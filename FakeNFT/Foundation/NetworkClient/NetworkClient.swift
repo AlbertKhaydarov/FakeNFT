@@ -37,17 +37,25 @@ extension NetworkClient {
 }
 
 struct DefaultNetworkClient: NetworkClient {
+    // MARK: - Properties
+
     private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
-         encoder: JSONEncoder = JSONEncoder()) {
+    // MARK: - Lifecycle
+
+    init(
+        session: URLSession = URLSession.shared,
+        decoder: JSONDecoder = JSONDecoder(),
+        encoder: JSONEncoder = JSONEncoder()
+    ) {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
     }
+
+    // MARK: - Public
 
     @discardableResult
     func send(
@@ -123,6 +131,8 @@ struct DefaultNetworkClient: NetworkClient {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = dtoEncoded
         }
+
+        urlRequest.setValue(Secrets.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
 
         return urlRequest
     }

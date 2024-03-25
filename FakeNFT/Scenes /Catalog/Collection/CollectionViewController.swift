@@ -17,7 +17,7 @@ typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, Personalize
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
 
 protocol ICollectionView: AnyObject {
-    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo)
+    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
     func updateNfts(_ items: [PersonalizedNft])
 }
 
@@ -231,7 +231,7 @@ extension CollectionViewController: ICollectionView {
         collectionItems = items
     }
 
-    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo) {
+    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo) {
         downloadCover(with: item.cover)
 
         profileLink = profileInfo.website

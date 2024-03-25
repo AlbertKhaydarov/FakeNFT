@@ -11,8 +11,10 @@ final class CatalogAssembly {
     // MARK: - Public
 
     static func assemble() -> UIViewController {
+        let service: ICatalogItemService = CatalogItemService(networkClient: DefaultNetworkClient())
+
         let router = CatalogRouter()
-        let presenter = CatalogPresenter(router: router)
+        let presenter = CatalogPresenter(router: router, service: service)
         let view = CatalogViewController(presenter: presenter)
 
         presenter.view = view

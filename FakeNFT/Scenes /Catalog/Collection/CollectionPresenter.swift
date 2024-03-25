@@ -17,13 +17,13 @@ final class CollectionPresenter {
     // MARK: Properties
 
     weak var view: (any ICollectionView)?
-    private let chosenItem: CollectionItem
+    private let chosenItem: CatalogItem
     private let router: any ICollectionRouter
 
     // MARK: - Lifecycle
 
     init(
-        chosenItem: CollectionItem,
+        chosenItem: CatalogItem,
         router: some ICollectionRouter
     ) {
         self.chosenItem = chosenItem
