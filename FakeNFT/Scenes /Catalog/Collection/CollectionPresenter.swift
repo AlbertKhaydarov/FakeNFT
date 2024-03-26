@@ -40,8 +40,8 @@ extension CollectionPresenter: ICollectionPresenter {
         let order = Order.makeMockOrder()
         let nft = Nft.makeMockNft()
 
-        let personalizedNfts = chosenItem.nfts.map { nftId in
-            PersonalizedNft(
+        let collectionViewModel = chosenItem.nfts.map { nftId in
+            CollectionViewModel(
                 id: nftId,
                 name: nft.name,
                 price: nft.price,
@@ -54,7 +54,7 @@ extension CollectionPresenter: ICollectionPresenter {
         }
 
         view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
-        view?.updateNfts(personalizedNfts)
+        view?.updateNfts(collectionViewModel)
     }
 
     func authorsLinkTapped(with link: String?) {

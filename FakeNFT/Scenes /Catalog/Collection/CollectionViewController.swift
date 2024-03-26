@@ -18,7 +18,7 @@ typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, Per
 
 protocol ICollectionView: AnyObject {
     func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
-    func updateNfts(_ items: [PersonalizedNft])
+    func updateNfts(_ items: [CollectionViewModel])
 }
 
 final class CollectionViewController: UIViewController {
@@ -36,7 +36,7 @@ final class CollectionViewController: UIViewController {
     private let presenter: any ICollectionPresenter
     private let layoutProvider: any ILayoutProvider
 
-    private var collectionItems = [PersonalizedNft]() {
+    private var collectionItems = [CollectionViewModel]() {
         didSet { applySnapshot() }
     }
 
@@ -184,7 +184,7 @@ final class CollectionViewController: UIViewController {
     private func cellProvider(
         collectionView: UICollectionView,
         indexPath: IndexPath,
-        item: PersonalizedNft
+        item: CollectionViewModel
     ) -> UICollectionViewCell {
         let cell: VerticalNftCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = VerticalNftCellModel(
@@ -227,7 +227,7 @@ final class CollectionViewController: UIViewController {
 // MARK: - ICollectionView
 
 extension CollectionViewController: ICollectionView {
-    func updateNfts(_ items: [PersonalizedNft]) {
+    func updateNfts(_ items: [CollectionViewModel]) {
         collectionItems = items
     }
 
