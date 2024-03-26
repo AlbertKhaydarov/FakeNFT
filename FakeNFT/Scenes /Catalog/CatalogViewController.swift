@@ -54,6 +54,13 @@ final class CatalogViewController: UIViewController {
         return button
     }()
 
+    private lazy var refreshCatalogControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(pullToRefreshDragged), for: .valueChanged)
+
+        return control
+    }()
+
     // MARK: - Lifecycle
 
     init(presenter: some ICatalogPresenter) {
@@ -83,11 +90,18 @@ final class CatalogViewController: UIViewController {
             tableView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
             tableView.bottom.constraint(equalTo: view.bottom, constant: -Constant.extraInset)
         ])
+
+        tableView.refreshControl = refreshCatalogControl
     }
 
     @objc
     private func sortIconTapped() {
         presenter.sortButtonTapped()
+    }
+
+    @objc
+    private func pullToRefreshDragged() {
+        presenter.pullToRefreshDragged()
     }
 }
 
@@ -139,6 +153,7 @@ extension CatalogViewController: ICatalogView {
 
     func dismissLoader() {
         UIBlockingProgressHUD.dismiss()
+        refreshCatalogControl.endRefreshing()
     }
 }
 

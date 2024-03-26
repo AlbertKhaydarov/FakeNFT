@@ -15,6 +15,7 @@ protocol ICatalogPresenter {
     func sortByQuantityChosen()
 
     func cellDidSelected(with item: CatalogItem)
+    func pullToRefreshDragged()
 }
 
 final class CatalogPresenter {
@@ -34,14 +35,8 @@ final class CatalogPresenter {
         self.router = router
         self.service = service
     }
-}
 
-// MARK: - ICatalogPresenter
-
-extension CatalogPresenter: ICatalogPresenter {
-    func viewDidLoad() {
-        view?.showLoader()
-
+    private func loadCatalogItems() {
         service.loadCollectionItems { [weak self] in
             switch $0 {
             case let .success(models):
@@ -55,6 +50,19 @@ extension CatalogPresenter: ICatalogPresenter {
                 assertionFailure(error.localizedDescription) // TODO: handle error
             }
         }
+    }
+}
+
+// MARK: - ICatalogPresenter
+
+extension CatalogPresenter: ICatalogPresenter {
+    func pullToRefreshDragged() {
+        loadCatalogItems()
+    }
+
+    func viewDidLoad() {
+        view?.showLoader()
+        loadCatalogItems()
     }
 
     func sortButtonTapped() {
