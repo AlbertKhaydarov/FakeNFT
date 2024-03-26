@@ -13,8 +13,8 @@ enum Section {
     case main
 }
 
-typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, PersonalizedNft>
-typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
+typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, CollectionViewModel>
+typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, CollectionViewModel>
 
 protocol ICollectionView: AnyObject {
     func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
