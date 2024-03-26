@@ -29,10 +29,6 @@ final class CollectionPresenter {
         self.chosenItem = chosenItem
         self.router = router
     }
-
-    // MARK: - Public
-
-    // MARK: - Private
 }
 
 // MARK: - ICollectionPresenter

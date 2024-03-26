@@ -9,7 +9,7 @@ import Kingfisher
 import UIKit
 
 final class ProductImageView: UIView {
-    enum Constant {
+    private enum Constant {
         static let baseCornerRadius: CGFloat = 12
         static let iconSize: CGFloat = 42
     }

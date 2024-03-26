@@ -9,7 +9,10 @@
 import Kingfisher
 import UIKit
 
-enum Section { case main }
+enum Section { 
+    case main
+}
+
 typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, PersonalizedNft>
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
 
@@ -19,7 +22,7 @@ protocol ICollectionView: AnyObject {
 }
 
 final class CollectionViewController: UIViewController {
-    enum Constant {
+    private enum Constant {
         static let minInset: CGFloat = 8
         static let baseInset: CGFloat = 16
         static let extraInset: CGFloat = 24
@@ -60,7 +63,7 @@ final class CollectionViewController: UIViewController {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .headline3
+        label.font = .Headline.medium
         label.textColor = .label
 
         return label
@@ -69,7 +72,7 @@ final class CollectionViewController: UIViewController {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.font = .caption2
+        label.font = .Caption.medium
         label.text = .loc.Collection.authorLabelTitle
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
@@ -79,7 +82,7 @@ final class CollectionViewController: UIViewController {
     private lazy var authorLabelLink: UILabel = {
         let label = UILabel()
         label.textColor = Assets.ypBlueUniversal.color
-        label.font = .caption2
+        label.font = .Caption.medium
         label.isUserInteractionEnabled = true
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
@@ -93,7 +96,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.textColor = .label
         label.numberOfLines = 0
-        label.font = .caption2
+        label.font = .Caption.medium
 
         return label
     }()
@@ -184,7 +187,7 @@ final class CollectionViewController: UIViewController {
         item: PersonalizedNft
     ) -> UICollectionViewCell {
         let cell: VerticalNftCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        let model = VerticalNftCell.Model(
+        let model = VerticalNftCellModel(
             id: item.id,
             name: item.name,
             imagePath: item.imagePath,

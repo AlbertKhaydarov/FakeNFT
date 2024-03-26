@@ -29,10 +29,6 @@ final class CatalogPresenter {
     init(router: some ICatalogRouter) {
         self.router = router
     }
-
-    // MARK: - Public
-
-    // MARK: - Private
 }
 
 // MARK: - ICatalogPresenter

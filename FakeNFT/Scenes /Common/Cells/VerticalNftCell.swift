@@ -14,17 +14,6 @@ protocol IVerticalNftCellDelegate: AnyObject {
 }
 
 final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
-    struct Model {
-        let id: String
-        let name: String
-        let imagePath: String
-        let rating: Int
-        let price: Decimal
-
-        let isFavorite: Bool
-        let isInCart: Bool
-    }
-
     private enum Constant {
         static let baseCornerRadius: CGFloat = 12
         static let baseInset: CGFloat = 8
@@ -64,7 +53,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = .label
 
         return label
@@ -73,7 +62,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.font = .caption3
+        label.font = .Caption.small
 
         return label
     }()
@@ -121,7 +110,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
 
     // MARK: - Public
 
-    func configure(model: Model) {
+    func configure(model: VerticalNftCellModel) {
         setupInitialState(model: model)
 
         productImageView.configure(model.imagePath, isFavorite: model.isFavorite)
@@ -138,7 +127,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
         NSLayoutConstraint.activate([
             productImageView.left.constraint(equalTo: contentView.left),
             productImageView.top.constraint(equalTo: contentView.top),
-            productImageView.width.constraint(equalToConstant: Constant.productImageSize),
+            productImageView.right.constraint(equalTo: contentView.right),
             productImageView.height.constraint(equalToConstant: Constant.productImageSize)
         ])
 
@@ -174,7 +163,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
         delegate?.cartButtonTapped(with: id, isInCart: isInCart)
     }
 
-    private func setupInitialState(model: Model) {
+    private func setupInitialState(model: VerticalNftCellModel) {
         id = model.id
         isFavorite = model.isFavorite
         isInCart = model.isInCart

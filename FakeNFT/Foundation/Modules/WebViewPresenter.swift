@@ -22,16 +22,12 @@ final class WebViewPresenter {
     init(url: URL) {
         self.url = url
     }
-
-    // MARK: - Public
-
-    // MARK: - Private
 }
 
 // MARK: - IWebViewPresenter
 
 extension WebViewPresenter: IWebViewPresenter {
-    func viewDidLoad() { 
+    func viewDidLoad() {
         let request = URLRequest(url: url)
         view?.load(request: request)
     }

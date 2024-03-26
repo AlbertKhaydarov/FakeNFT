@@ -19,7 +19,7 @@ final class RatingView: UIView {
         return imageViews
     }()
 
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: stars)
         stack.axis = .horizontal
         stack.distribution = .equalSpacing

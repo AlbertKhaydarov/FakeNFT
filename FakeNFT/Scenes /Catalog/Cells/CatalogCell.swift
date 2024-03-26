@@ -36,7 +36,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
 
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = .label
 
         return label

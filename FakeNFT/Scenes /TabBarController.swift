@@ -14,6 +14,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Assets.ypWhite.color
 
         setupViewControllers()
         setupNavigationAppearance()
@@ -71,7 +72,11 @@ final class TabBarController: UITabBarController {
         UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
         UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted)
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal
+        )
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            [NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted
+        )
     }
 }

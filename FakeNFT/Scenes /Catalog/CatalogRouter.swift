@@ -28,6 +28,4 @@ final class CatalogRouter: ICatalogRouter {
         destination.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(destination, animated: true)
     }
-
-    // MARK: - Private
 }
