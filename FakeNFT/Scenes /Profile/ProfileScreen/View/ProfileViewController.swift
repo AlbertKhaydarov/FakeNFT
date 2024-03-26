@@ -17,7 +17,7 @@ final class ProfileViewController: UIViewController {
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "userPic")
+        imageView.image = Assets.userPic.image
         return imageView
     }()
     
@@ -110,9 +110,8 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func editButtontapped() {
-        print(#function)
+        presenter.switchToProfileEditView(from: self)
     }
-    
     
     private func setupSubview() {
         view.addSubview(verticalStackView)

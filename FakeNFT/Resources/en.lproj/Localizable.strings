@@ -18,3 +18,7 @@
 "myNFTButton.title" = "My NFTs";
 "favoriteNFTButton.title" = "Favorite NFT";
 "aboutDesignerButton.title" = "About designers";
+"userProfileImageDownload.title" = "Download an image";
+"userNamelabel.title" = "Name";
+"descriptionLabel.title" = "`Description";
+"websiteLabel.title" = "Website";

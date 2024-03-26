@@ -48,6 +48,10 @@ internal enum Localization {
     /// О разработчике
     internal static let title = Localization.tr("Localizable", "aboutDesignerButton.title", fallback: "О разработчике")
   }
+  internal enum DescriptionLabel {
+    /// Описание
+    internal static let title = Localization.tr("Localizable", "descriptionLabel.title", fallback: "Описание")
+  }
   internal enum FavoriteNFTButton {
     /// Избранные NFT
     internal static let title = Localization.tr("Localizable", "favoriteNFTButton.title", fallback: "Избранные NFT")
@@ -55,6 +59,18 @@ internal enum Localization {
   internal enum MyNFTButton {
     /// Мои NFT
     internal static let title = Localization.tr("Localizable", "myNFTButton.title", fallback: "Мои NFT")
+  }
+  internal enum UserNamelabel {
+    /// Имя
+    internal static let title = Localization.tr("Localizable", "userNamelabel.title", fallback: "Имя")
+  }
+  internal enum UserProfileImageDownload {
+    /// Загрузить изображение
+    internal static let title = Localization.tr("Localizable", "userProfileImageDownload.title", fallback: "Загрузить изображение")
+  }
+  internal enum WebsiteLabel {
+    /// Сайт
+    internal static let title = Localization.tr("Localizable", "websiteLabel.title", fallback: "Сайт")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

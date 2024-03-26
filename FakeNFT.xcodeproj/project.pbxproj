@@ -116,6 +116,11 @@
 		EA97C5B22BADF242003B6A81 /* ProfileButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5B12BADF242003B6A81 /* ProfileButtonFactory.swift */; };
 		EA97C5B42BAEB00D003B6A81 /* RouterCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5B32BAEB00D003B6A81 /* RouterCases.swift */; };
 		EA97C5B62BB075AF003B6A81 /* ProfileViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5B52BB075AF003B6A81 /* ProfileViewTableViewCell.swift */; };
+		EA97C5BB2BB1D4BC003B6A81 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5BA2BB1D4BB003B6A81 /* ProfileEditViewController.swift */; };
+		EA97C5BF2BB1D5D8003B6A81 /* ProfileEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5BE2BB1D5D8003B6A81 /* ProfileEditPresenter.swift */; };
+		EA97C5C12BB1DB50003B6A81 /* ProfileEditAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5C02BB1DB50003B6A81 /* ProfileEditAssembly.swift */; };
+		EA97C5C32BB1E3DE003B6A81 /* ProfileEditRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5C22BB1E3DE003B6A81 /* ProfileEditRouter.swift */; };
+		EA97C5C52BB2BEE2003B6A81 /* Extension+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5C42BB2BEE2003B6A81 /* Extension+TextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -662,12 +667,9 @@
 		5EE7BEF62BAA196A00A32EC0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				5EE7BF082BAA1B6600A32EC0 /* ProfileAssembly.swift */,
-				5EE7BF0A2BAA1B6C00A32EC0 /* ProfileViewController.swift */,
-				EA97C5B52BB075AF003B6A81 /* ProfileViewTableViewCell.swift */,
 				EA97C5B02BADF227003B6A81 /* Helper */,
-				5EE7BF0C2BAA1B7300A32EC0 /* ProfilePresenter.swift */,
-				5EE7BF0E2BAA1B7900A32EC0 /* ProfileRouter.swift */,
+				EA97C5B92BB1D467003B6A81 /* ProfileEditScreen */,
+				EA97C5B82BB1D21E003B6A81 /* ProfileScreen */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -743,10 +745,42 @@
 			isa = PBXGroup;
 			children = (
 				EA97C5AE2BADF1F9003B6A81 /* ProfileButtonFactoryProtocol.swift */,
+				EA97C5C42BB2BEE2003B6A81 /* Extension+TextField.swift */,
 				EA97C5B12BADF242003B6A81 /* ProfileButtonFactory.swift */,
 				EA97C5B32BAEB00D003B6A81 /* RouterCases.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		EA97C5B72BB1D1FB003B6A81 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5EE7BF0A2BAA1B6C00A32EC0 /* ProfileViewController.swift */,
+				EA97C5B52BB075AF003B6A81 /* ProfileViewTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA97C5B82BB1D21E003B6A81 /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				EA97C5B72BB1D1FB003B6A81 /* View */,
+				5EE7BF0C2BAA1B7300A32EC0 /* ProfilePresenter.swift */,
+				5EE7BF082BAA1B6600A32EC0 /* ProfileAssembly.swift */,
+				5EE7BF0E2BAA1B7900A32EC0 /* ProfileRouter.swift */,
+			);
+			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		EA97C5B92BB1D467003B6A81 /* ProfileEditScreen */ = {
+			isa = PBXGroup;
+			children = (
+				EA97C5BA2BB1D4BB003B6A81 /* ProfileEditViewController.swift */,
+				EA97C5BE2BB1D5D8003B6A81 /* ProfileEditPresenter.swift */,
+				EA97C5C02BB1DB50003B6A81 /* ProfileEditAssembly.swift */,
+				EA97C5C22BB1E3DE003B6A81 /* ProfileEditRouter.swift */,
+			);
+			path = ProfileEditScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -978,6 +1012,8 @@
 				5E13B0BA2BAD5F07006EB5AA /* UIView+Ext.swift in Sources */,
 				0C79EE6A2A76DE1000EE90EA /* NftDetailAssembly.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				EA97C5C12BB1DB50003B6A81 /* ProfileEditAssembly.swift in Sources */,
+				EA97C5C32BB1E3DE003B6A81 /* ProfileEditRouter.swift in Sources */,
 				5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */,
 				5E1D0C102BB1E4AB0067AB47 /* CollectionItemService.swift in Sources */,
 				5EE4C1982BACDF480089100B /* CatalogCell.swift in Sources */,
