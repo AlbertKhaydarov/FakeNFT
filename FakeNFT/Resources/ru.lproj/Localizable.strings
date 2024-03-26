@@ -5,3 +5,8 @@
 "myNFTButton.title" = "Мои NFT";
 "favoriteNFTButton.title" = "Избранные NFT";
 "aboutDesignerButton.title" = "О разработчике";
+"userProfileImageDownload.title" = "Загрузить изображение";
+"userNamelabel.title" = "Имя";
+"descriptionLabel.title" = "Описание";
+"websiteLabel.title" = "Сайт";
+

@@ -9,7 +9,8 @@ import UIKit
 
 protocol ProfilePresenterProtocol {
     func viewDidLoad()
-    var countTitleButtons: [Int] { get } 
+    func switchToProfileEditView(from: UIViewController)
+    var countTitleButtons: [Int] { get }
 //    func createButton(with title: String) -> UIButton
 }
 
@@ -30,10 +31,11 @@ final class ProfilePresenter {
 
     // MARK: - Public
 
+    
     // MARK: - Private
 }
 
-// MARK: - IProfilePresenter
+// MARK: - ProfilePresenterProtocol
 
 extension ProfilePresenter: ProfilePresenterProtocol {
 //    func createButton(with title: String) -> UIButton {
@@ -41,5 +43,9 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 //    }
     
     func viewDidLoad() {
+    }
+        
+    func switchToProfileEditView(from: UIViewController) {
+        router.switchToProfileEditView(from: from)
     }
 }
