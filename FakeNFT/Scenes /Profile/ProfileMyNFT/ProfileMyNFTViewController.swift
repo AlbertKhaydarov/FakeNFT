@@ -7,21 +7,21 @@
 
 import UIKit
 
-protocol ProfileFavoriteViewProtocol: AnyObject { }
+protocol ProfileMyNFTViewProtocol: AnyObject { }
 
 
-class ProfileFavoriteViewController: UIViewController {
+class ProfileMyNFTViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let presenter: any ProfileFavoritePresenterProtocol
+    private let presenter: any ProfileMyNFTPresenterProtocol
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = Assets.ypWhite.color
-        tableView.register(ProfileFavoriteTableViewCell.self, forCellReuseIdentifier: "favoritesCellReuseIdentifier")
+        tableView.register(ProfileMyNFTTableViewCell.self, forCellReuseIdentifier: "myNFTCellReuseIdentifier")
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
@@ -39,7 +39,7 @@ class ProfileFavoriteViewController: UIViewController {
         return label
     }()
     
-    init(presenter: some ProfileFavoritePresenterProtocol) {
+    init(presenter: some ProfileMyNFTPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,7 +56,7 @@ class ProfileFavoriteViewController: UIViewController {
     }
     
     private func isStubHidden() {
-        if presenter.favoritesNFT.count == 0 {
+        if presenter.myNFT.count == 0 {
             stubLabel.isHidden = false
         } else {
             stubLabel.isHidden = true
@@ -80,7 +80,7 @@ class ProfileFavoriteViewController: UIViewController {
     }
     
     private func layoutSubviews() {
-        let height = presenter.favoritesNFT.count * 140
+        let height = presenter.myNFT.count * 140
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -97,22 +97,22 @@ class ProfileFavoriteViewController: UIViewController {
 
 // MARK: - ProfileEditViewProtocol
 //MARK: - TODO in the 2nd part
-extension ProfileFavoriteViewController: ProfileFavoriteViewProtocol { }
+extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol { }
 
 //MARK: - UITableViewDataSource
-extension ProfileFavoriteViewController: UITableViewDataSource {
+extension ProfileMyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "favoritesCellReuseIdentifier", for: indexPath) as? ProfileFavoriteTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "myNFTCellReuseIdentifier", for: indexPath) as? ProfileMyNFTTableViewCell else {return UITableViewCell()}
         cell.configureCell(indexPath: indexPath, with: presenter)
         return cell
     }
 }
 //MARK: - UITableViewDelegate
-extension ProfileFavoriteViewController: UITableViewDelegate {
+extension ProfileMyNFTViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140.0
     }
