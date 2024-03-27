@@ -30,7 +30,7 @@ final class ProfileRouter: ProfileRouterProtocol {
             return
         }
         
-        let destination = ProfileFavoriteAssembly.assemble()
+        let destination = ProfileMyNFTAssembly.assemble()
         destination.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(destination, animated: true)
     }

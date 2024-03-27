@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class ProfileFavoriteAssembly {
+final class ProfileMyNFTAssembly {
  
     // MARK: - Public
 
     static func assemble() -> UIViewController {
-        let router = ProfileFavoriteRouter()
-        let presenter = ProfileFavoritePresenter(router: router)
-        let view = ProfileFavoriteViewController(presenter: presenter)
+        let router = ProfileMyNFTRouter()
+        let presenter = ProfileMyNFTPresenter(router: router)
+        let view = ProfileMyNFTViewController(presenter: presenter)
 
         presenter.view = view
         router.viewController = view

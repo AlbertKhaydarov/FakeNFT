@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FavoritesViewModel {
+struct MyNFTViewModel {
     let name: String
     let imagePath: String
     let starsRating: Int
@@ -16,8 +16,8 @@ struct FavoritesViewModel {
 }
 
 //MARK: - Mock data
-extension FavoritesViewModel {
-    static func getNFT() -> FavoritesViewModel {
+extension MyNFTViewModel {
+    static func getNFT() -> MyNFTViewModel {
         .init(
             name: "Nft",
             imagePath: "https://bankruptcy-ua.com/assets_images/publication/19478/photo_originals.jpg",

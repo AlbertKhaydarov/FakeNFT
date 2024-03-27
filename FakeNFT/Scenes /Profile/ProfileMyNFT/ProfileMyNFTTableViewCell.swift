@@ -7,10 +7,10 @@
 import Kingfisher
 import UIKit
 
-class ProfileFavoriteTableViewCell: UITableViewCell {
+class ProfileMyNFTTableViewCell: UITableViewCell {
 
     // MARK: - Properties
-    private var presenter: ProfileFavoritePresenterProtocol?
+    private var presenter: ProfileMyNFTPresenterProtocol?
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -103,12 +103,12 @@ class ProfileFavoriteTableViewCell: UITableViewCell {
         priceLabel.text = nil
     }
     
-    func configureCell(indexPath: IndexPath, with presenter: ProfileFavoritePresenterProtocol) {
-        downloadImage(path: presenter.favoritesNFT[indexPath.row].imagePath)
-        nameLabel.text = presenter.favoritesNFT[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: presenter.favoritesNFT[indexPath.row].starsRating)
-        authorLabel.text = .loc.AuthorLabelText.title+" "+"\(presenter.favoritesNFT[indexPath.row].author)"
-        priceLabel.text = "\(presenter.favoritesNFT[indexPath.row].price) ETH"
+    func configureCell(indexPath: IndexPath, with presenter: ProfileMyNFTPresenterProtocol) {
+        downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
+        nameLabel.text = presenter.myNFT[indexPath.row].name
+        starsRatingImageView.setRatingStars(rating: presenter.myNFT[indexPath.row].starsRating)
+        authorLabel.text = .loc.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
+        priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
     }
     
     private func setupSubview() {
@@ -133,9 +133,6 @@ class ProfileFavoriteTableViewCell: UITableViewCell {
             nameAndRatingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -39),
             nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nameAndRatingStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
-//            starsRatingImageView.widthAnchor.constraint(equalToConstant: 100),
-//            starsRatingImageView.heightAnchor.constraint(equalToConstant: 12),
 
             priceStackView.leadingAnchor.constraint(greaterThanOrEqualTo: nameAndRatingStackView.trailingAnchor, constant: 39),
             priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -39),

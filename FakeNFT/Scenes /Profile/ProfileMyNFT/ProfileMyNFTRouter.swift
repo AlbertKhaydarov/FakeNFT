@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol ProfileFavoriteRouterProtocol {}
+protocol ProfileMyNFTRouterProtocol {}
 
-final class ProfileFavoriteRouter: ProfileFavoriteRouterProtocol {
+final class ProfileMyNFTRouter: ProfileMyNFTRouterProtocol {
     
     // MARK: - Properties
     weak var viewController: UIViewController?
