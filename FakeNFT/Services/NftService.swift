@@ -2,16 +2,16 @@ import Foundation
 
 typealias NftCompletion = (Result<Nft, Error>) -> Void
 
-protocol NftService {
+protocol INftService {
     func loadNft(id: String, completion: @escaping NftCompletion)
 }
 
-final class NftServiceImpl: NftService {
+final class NftService: INftService {
 
-    private let networkClient: NetworkClient
-    private let storage: NftStorage
+    private let networkClient: any NetworkClient
+    private let storage: any INftStorage
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
+    init(networkClient: some NetworkClient, storage: some INftStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }

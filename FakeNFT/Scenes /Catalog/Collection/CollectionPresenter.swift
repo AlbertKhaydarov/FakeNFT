@@ -18,15 +18,24 @@ final class CollectionPresenter {
 
     weak var view: (any ICollectionView)?
     private let chosenItem: CatalogItem
+    private let profileService: any IProfileService
+    private let orderService: any IOrderService
+    private let nftService: any INftService
     private let router: any ICollectionRouter
 
     // MARK: - Lifecycle
 
     init(
         chosenItem: CatalogItem,
+        profileService: any IProfileService,
+        orderService: any IOrderService,
+        nftService: any INftService,
         router: some ICollectionRouter
     ) {
         self.chosenItem = chosenItem
+        self.profileService = profileService
+        self.orderService = orderService
+        self.nftService = nftService
         self.router = router
     }
 }

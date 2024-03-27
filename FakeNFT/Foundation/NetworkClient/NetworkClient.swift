@@ -21,17 +21,20 @@ protocol NetworkClient {
 }
 
 extension NetworkClient {
-
     @discardableResult
-    func send(request: NetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
+    func send(
+        request: NetworkRequest,
+        onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, completionQueue: .main, onResponse: onResponse)
     }
 
     @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
+    func send<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        onResponse: @escaping (Result<T, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, type: type, completionQueue: .main, onResponse: onResponse)
     }
 }
