@@ -27,6 +27,18 @@ class ProfileFavoriteViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var stubLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyBold
+        label.textColor = Assets.ypBlack.color
+        label.textAlignment = .center
+        label.text = .loc.StubLabel.title
+        label.isHidden = true
+        
+        return label
+    }()
+    
     init(presenter: some ProfileFavoritePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -40,6 +52,15 @@ class ProfileFavoriteViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         sortButton()
+        isStubHidden() 
+    }
+    
+    private func isStubHidden() {
+        if presenter.favoritesNFT.count == 0 {
+            stubLabel.isHidden = false
+        } else {
+            stubLabel.isHidden = true
+        }
     }
     
     //MARK: - TODO  in the 3rd part
@@ -55,23 +76,25 @@ class ProfileFavoriteViewController: UIViewController {
     
     private func setupSubview() {
         view.addSubview(tableView)
+        view.addSubview(stubLabel)
     }
     
     private func layoutSubviews() {
         let height = presenter.favoritesNFT.count * 140
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 20),
-           
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: CGFloat(height))
+            tableView.heightAnchor.constraint(equalToConstant: CGFloat(height)),
             
-            
-            
+            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
-
 }
+
 // MARK: - ProfileEditViewProtocol
 //MARK: - TODO in the 2nd part
 extension ProfileFavoriteViewController: ProfileFavoriteViewProtocol { }
