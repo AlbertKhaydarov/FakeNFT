@@ -56,6 +56,10 @@ internal enum Localization {
     /// Описание
     internal static let title = Localization.tr("Localizable", "descriptionLabel.title", fallback: "Описание")
   }
+  internal enum EditImagelabel {
+    /// Сменить фото
+    internal static let title = Localization.tr("Localizable", "editImagelabel.title", fallback: "Сменить фото")
+  }
   internal enum FavoriteNFTButton {
     /// Избранные NFT
     internal static let title = Localization.tr("Localizable", "favoriteNFTButton.title", fallback: "Избранные NFT")
@@ -68,9 +72,13 @@ internal enum Localization {
     /// Цена
     internal static let title = Localization.tr("Localizable", "priceTitleLabel.title", fallback: "Цена")
   }
-  internal enum StubLabel {
+  internal enum StubFavotitesLabel {
+    /// У Вас ещё нет избранных NFT
+    internal static let title = Localization.tr("Localizable", "stubFavotitesLabel.title", fallback: "У Вас ещё нет избранных NFT")
+  }
+  internal enum StubMyNFTLabel {
     /// У Вас ещё нет NFT
-    internal static let title = Localization.tr("Localizable", "stubLabel.title", fallback: "У Вас ещё нет NFT")
+    internal static let title = Localization.tr("Localizable", "stubMyNFTLabel.title", fallback: "У Вас ещё нет NFT")
   }
   internal enum UserNamelabel {
     /// Имя

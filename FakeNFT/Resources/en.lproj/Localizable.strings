@@ -24,4 +24,6 @@
 "websiteLabel.title" = "Website";
 "priceTitleLabel.title" = "Price";
 "authorLabelText.title" = "from";
-"stubLabel.title" = "You don't have an NFT yet";
+"stubMyNFTLabel.title" = "You don't have an NFT yet";
+"stubFavotitesLabel.title" = "You don't have any NFT favorites yet";
+"editImagelabel.title" = "Change the photo";

@@ -8,5 +8,4 @@
 import UIKit
 
 protocol ProfileButtonFactoryProtocol {
-//    func createButton(with title: String) -> UIButton
   }

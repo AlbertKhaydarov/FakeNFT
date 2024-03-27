@@ -31,12 +31,12 @@ final class RatingStarsView: UIView {
         getStackView()
     }
     
-    func getStackView() {
+    private func getStackView() {
         let stackView = UIStackView(arrangedSubviews: starImageViews)
-                stackView.axis  = .horizontal
-                stackView.spacing = 2
-                stackView.distribution = .equalSpacing
-                stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis  = .horizontal
+        stackView.spacing = 2
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         setupSubviews(stackView: stackView)
         layoutSetup(stackView: stackView)
     }

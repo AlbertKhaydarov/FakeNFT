@@ -13,7 +13,5 @@ final class ProfileEditRouter: ProfileEditRouterProtocol {
     
     // MARK: - Properties
     weak var viewController: UIViewController?
-    // MARK: - Public
-  
-    // MARK: - Private
+
 }
