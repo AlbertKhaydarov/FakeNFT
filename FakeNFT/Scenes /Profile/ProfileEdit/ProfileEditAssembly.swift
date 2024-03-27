@@ -8,14 +8,14 @@
 import UIKit
 
 final class ProfileEditAssembly {
- 
+    
     // MARK: - Public
-
-    static func assemble() -> UIViewController {
+    
+    static func assemble(profile: ProfileViewModel) -> UIViewController {
         let router = ProfileEditRouter()
-        let presenter = ProfileEditPresenter(router: router)
+        let presenter = ProfileEditPresenter(router: router, profile: profile)
         let view = ProfileEditViewController(presenter: presenter)
-
+        
         presenter.view = view
         router.viewController = view
         return view

@@ -11,4 +11,6 @@
 "websiteLabel.title" = "Сайт";
 "priceTitleLabel.title" = "Цена";
 "authorLabelText.title" = "от";
-"stubLabel.title" = "У Вас ещё нет NFT";
+"stubMyNFTLabel.title" = "У Вас ещё нет NFT";
+"stubFavotitesLabel.title" = "У Вас ещё нет избранных NFT";
+"editImagelabel.title" = "Сменить фото";

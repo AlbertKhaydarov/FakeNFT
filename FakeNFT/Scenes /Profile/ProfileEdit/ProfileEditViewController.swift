@@ -7,24 +7,42 @@
 
 import UIKit
 
-protocol ProfileEditViewProtocol: AnyObject { }
+protocol ProfileEditViewProtocol: AnyObject {
+    func updateUserPic(with image: UIImage)
+}
 
 class ProfileEditViewController: UIViewController {
     
     // MARK: - Properties
     private let presenter: any ProfileEditPresenterProtocol
-
+    
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Assets.editPic.image
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(userProfileImageTapped))
         imageView.isUserInteractionEnabled = true
-        imageView.contentMode = .scaleAspectFit
         imageView.addGestureRecognizer(tapGesture)
         return imageView
     }()
-
+    
+    private lazy var userProfileImageOverlayView: UIView = {
+        let overlayView = UIView()
+        overlayView.translatesAutoresizingMaskIntoConstraints = false
+        overlayView.backgroundColor = Assets.ypBlackUniversal.color.withAlphaComponent(0.5)
+        return overlayView
+    }()
+    
+    private lazy var editImagelabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .caption3
+        label.textColor = Assets.ypWhiteUniversal.color
+        label.textAlignment = .center
+        label.text = .loc.EditImagelabel.title
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private lazy var userProfileImageDownloadLinkTextField: UITextField = {
         let textField = UITextField()
         textField.isHidden = true
@@ -37,16 +55,6 @@ class ProfileEditViewController: UIViewController {
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
-    }()
-    
-    private lazy var userProfileImageStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.addArrangedSubview(userProfileImageView)
-        stackView.addArrangedSubview(userProfileImageDownloadLinkTextField)
-        return stackView
     }()
     
     private lazy var userNamelabel: UILabel = {
@@ -68,7 +76,6 @@ class ProfileEditViewController: UIViewController {
         textField.clipsToBounds = true
         textField.font = .bodyRegular
         textField.textColor = Assets.ypBlack.color
-        textField.text = presenter.userNameText
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -103,12 +110,10 @@ class ProfileEditViewController: UIViewController {
         textView.clipsToBounds = true
         textView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         textView.font = .bodyRegular
-        textView.text = presenter.descriptionText
         textView.textColor = Assets.ypBlack.color
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isEditable = true
-    
         textView.delegate = self
         return textView
     }()
@@ -131,7 +136,7 @@ class ProfileEditViewController: UIViewController {
         label.text = .loc.WebsiteLabel.title
         return label
     }()
-
+    
     private lazy var websiteTextField: UITextField = {
         let textField = UITextField()
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
@@ -141,7 +146,6 @@ class ProfileEditViewController: UIViewController {
         textField.clipsToBounds = true
         textField.font = .bodyRegular
         textField.textColor = Assets.ypBlack.color
-        textField.text = presenter.websiteText
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -177,8 +181,6 @@ class ProfileEditViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle
-    
     init(presenter: some ProfileEditPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -194,42 +196,69 @@ class ProfileEditViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         navigationController?.navigationBar.prefersLargeTitles = false
-  
+        updateProfileDetails()
+        presenter.updateUserPicImage()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
+        userProfileImageView.layer.masksToBounds = true
+    }
+    
+    //MARK: - Private
+    private func updateProfileDetails() {
+        userNameTextField.text = presenter.profile.name
+        descriptionTextView.text = presenter.profile.description
+        websiteTextField.text = presenter.profile.website
+    }
+    
+    //MARK: - Public
+    func updateUserPic(with image: UIImage) {
+        userProfileImageView.kf.indicatorType = .activity
+        userProfileImageView.image = image
     }
     
     @objc private func userProfileImageTapped() {
         userProfileImageDownloadLinkTextField.isHidden  = false
     }
     
-   @objc private func closeButtonTapped() {
+    @objc private func closeButtonTapped() {
         dismiss(animated: true)
     }
     
     private func setupSubview() {
         view.addSubview(closeButton)
-        view.addSubview(userProfileImageStackView)
         view.addSubview(commonStackView)
-        
-        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
-        userProfileImageView.layer.masksToBounds = true
+        view.addSubview(userProfileImageView)
+        view.addSubview(userProfileImageDownloadLinkTextField)
+        userProfileImageView.addSubview(userProfileImageOverlayView)
+        userProfileImageView.addSubview(editImagelabel)
     }
     
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
-            
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-           
-            userProfileImageStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            userProfileImageStackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
-            userProfileImageStackView.widthAnchor.constraint(equalToConstant: 250),
             
-            userProfileImageView.centerXAnchor.constraint(equalTo: userProfileImageStackView.centerXAnchor),
+            userProfileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            userProfileImageView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
             userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
-//            userProfileImageView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
             
-            userProfileImageDownloadLinkTextField.centerXAnchor.constraint(equalTo: userProfileImageStackView.centerXAnchor),
+            userProfileImageOverlayView.topAnchor.constraint(equalTo: userProfileImageView.topAnchor),
+            userProfileImageOverlayView.bottomAnchor.constraint(equalTo: userProfileImageView.bottomAnchor),
+            userProfileImageOverlayView.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
+            userProfileImageOverlayView.trailingAnchor.constraint(equalTo: userProfileImageView.trailingAnchor),
+            userProfileImageOverlayView.widthAnchor.constraint(equalToConstant: 70),
+            userProfileImageOverlayView.heightAnchor.constraint(equalToConstant: 70),
+            
+            editImagelabel.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
+            editImagelabel.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
+            editImagelabel.widthAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
+            
+            userProfileImageDownloadLinkTextField.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 4),
+            userProfileImageDownloadLinkTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userProfileImageDownloadLinkTextField.heightAnchor.constraint(equalToConstant: 44),
             userProfileImageDownloadLinkTextField.widthAnchor.constraint(equalToConstant: 250),
             
@@ -243,13 +272,14 @@ class ProfileEditViewController: UIViewController {
             websiteTextField.heightAnchor.constraint(equalToConstant: 44),
             
             descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24),
-            
         ])
     }
 }
 // MARK: - ProfileEditViewProtocol
 
-extension ProfileEditViewController: ProfileEditViewProtocol { }
+extension ProfileEditViewController: ProfileEditViewProtocol {
+    //TODO: -
+}
 
 extension ProfileEditViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {

@@ -10,6 +10,8 @@ import UIKit
 class ProfileViewTableViewCell: UITableViewCell {
     
     // MARK: - Properties
+    static let profileViewCellIdentifier = String(describing: ProfileViewTableViewCell.self)
+    
     private var presenter: ProfilePresenterProtocol?
     
     private let buttonsTitles: [String] = [.loc.MyNFTButton.title,
@@ -60,6 +62,11 @@ class ProfileViewTableViewCell: UITableViewCell {
         layoutSetup()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Private
     private func setupSubview() {
         contentView.addSubview(labelsStackView)
         contentView.addSubview(accessoryImageView)
@@ -74,13 +81,11 @@ class ProfileViewTableViewCell: UITableViewCell {
             accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
         ])
     }
-    
+    //MARK: - Public
     func configureCell(indexPath: IndexPath, with presenter: ProfilePresenterProtocol) {
         titleButtonsLabel.text = buttonsTitles[indexPath.row]
         countLabel.text = "(\(presenter.countTitleButtons[indexPath.row]))"
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+   
 }

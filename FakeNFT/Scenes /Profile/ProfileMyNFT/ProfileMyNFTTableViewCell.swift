@@ -10,6 +10,8 @@ import UIKit
 class ProfileMyNFTTableViewCell: UITableViewCell {
 
     // MARK: - Properties
+    static let profileMyNFTCellIdentifier = String(describing: ProfileMyNFTTableViewCell.self)
+    
     private var presenter: ProfileMyNFTPresenterProtocol?
     
     private lazy var nftImageView: UIImageView = {
@@ -47,6 +49,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 4
+        stackView.distribution = .equalCentering
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(authorLabel)
@@ -77,10 +80,18 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 2
+        stackView.distribution = .equalCentering
         stackView.addArrangedSubview(priceTitleLabel)
         stackView.addArrangedSubview(priceLabel)
         return stackView
     }() 
+    
+    lazy var favoriteActiveButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        return button
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -103,18 +114,32 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         priceLabel.text = nil
     }
     
+    //MARK: - Public
     func configureCell(indexPath: IndexPath, with presenter: ProfileMyNFTPresenterProtocol) {
         downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
         nameLabel.text = presenter.myNFT[indexPath.row].name
         starsRatingImageView.setRatingStars(rating: presenter.myNFT[indexPath.row].starsRating)
         authorLabel.text = .loc.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
         priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
+        setIsLiked(isLiked: presenter.myNFT[indexPath.row].isFavorite)
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        var favoriteActiveImage: UIImage!
+        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
+        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+    }
+    
+    //MARK: - Private
+   @objc private func likeButtonClicked() {
+        //TODO: -
     }
     
     private func setupSubview() {
         contentView.addSubview(nftImageView)
         contentView.addSubview(nameAndRatingStackView)
         contentView.addSubview(priceStackView)
+        contentView.addSubview(favoriteActiveButton)
 
         nftImageView.layer.cornerRadius = 12
         nftImageView.layer.masksToBounds = true
@@ -129,6 +154,11 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
 
+            favoriteActiveButton.heightAnchor.constraint(equalToConstant: 42),
+            favoriteActiveButton.widthAnchor.constraint(equalToConstant: 42),
+            favoriteActiveButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
+            favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
+            
             nameAndRatingStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
             nameAndRatingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -39),
             nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),

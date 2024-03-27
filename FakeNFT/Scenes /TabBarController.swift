@@ -7,20 +7,20 @@ final class TabBarController: UITabBarController {
         static let cartImageName = "figure.wave"
         static let statisticsImageName = "figure.wave"
     }
-
+    
     // Dependencies
-
+    
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Assets.ypWhite.color
         setupViewControllers()
-        setupNavigationAppearance() 
+        setupNavigationAppearance()
     }
-
+    
     // MARK: = Private
-
+    
     private func setupViewControllers() {
         let profile = prepareViewController(
             ProfileAssembly.assemble(),
@@ -28,32 +28,31 @@ final class TabBarController: UITabBarController {
             title: .loc.Profile.title,
             tag: 0
         )
-        print(profile.navigationController)
-
+        
         let catalog = prepareViewController(
             CatalogAssembly.assemble(),
             image: .init(systemName: Constant.catalogImageName),
             title: .loc.Catalog.title,
             tag: 1
         )
-
+        
         let cart = prepareViewController(
             CartAssembly.assemble(),
             image: .init(systemName: Constant.cartImageName),
             title: .loc.Cart.title,
             tag: 2
         )
-
+        
         let statistics = prepareViewController(
             StatisticsAssembly.assemble(),
             image: .init(systemName: Constant.statisticsImageName),
             title: .loc.Statistics.title,
             tag: 3
         )
-
+        
         viewControllers = [profile, catalog, cart, statistics]
     }
-
+    
     private func prepareViewController(
         _ viewController: UIViewController,
         image: UIImage?,
@@ -63,7 +62,6 @@ final class TabBarController: UITabBarController {
         let navigationController = UINavigationController(rootViewController: viewController)
         let tabBarItem = UITabBarItem(title: title, image: image, tag: tag)
         viewController.tabBarItem = tabBarItem
-        
         return navigationController
     }
     

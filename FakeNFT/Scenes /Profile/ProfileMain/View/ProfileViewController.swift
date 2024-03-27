@@ -7,7 +7,10 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject { }
+protocol ProfileViewProtocol: AnyObject {
+    func updateUserPic(with image: UIImage)
+    var activityIndicator: UIActivityIndicatorView { get set }
+}
 
 final class ProfileViewController: UIViewController {
     
@@ -17,7 +20,6 @@ final class ProfileViewController: UIViewController {
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = Assets.userPic.image
         return imageView
     }()
     
@@ -27,7 +29,6 @@ final class ProfileViewController: UIViewController {
         label.font = .headline3
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
-        label.text = "Joaquin Phoenix"
         return label
     }()
     
@@ -38,7 +39,6 @@ final class ProfileViewController: UIViewController {
         label.textColor = Assets.ypBlack.color
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
         return label
     }()
     
@@ -47,7 +47,6 @@ final class ProfileViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .caption1
         label.textColor = Assets.ypBlueUniversal.color
-        label.text = "Joaquin Phoenix.com"
         return label
     }()
     
@@ -75,14 +74,18 @@ final class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = Assets.ypWhite.color
-        tableView.register(ProfileViewTableViewCell.self, forCellReuseIdentifier: "buttomCellReuseIdentifier")
+        tableView.register(ProfileViewTableViewCell.self, forCellReuseIdentifier: ProfileViewTableViewCell.profileViewCellIdentifier)
         tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
     }()
     
-    // MARK: - Lifecycle
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        activityIndicator =  UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
     
     init(presenter: some ProfilePresenterProtocol) {
         self.presenter = presenter
@@ -91,8 +94,6 @@ final class ProfileViewController: UIViewController {
     
     required init?(coder: NSCoder) { nil }
     
-    // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = nil
@@ -100,9 +101,13 @@ final class ProfileViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         addEditButton()
+        updateProfileDetails()
         navigationController?.navigationBar.prefersLargeTitles = false
+        activityIndicator.startAnimating()
+        presenter.updateUserPicImage()
     }
     
+    //MARK: - Private
     private func addEditButton() {
         let rightButton = UIBarButtonItem(image: Assets.editProfileImage.image, style: .plain, target: self, action: #selector(editButtontapped))
         self.navigationItem.rightBarButtonItem = rightButton
@@ -110,16 +115,14 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func editButtontapped() {
-        presenter.switchToProfileEditView(from: self)
+        presenter.switchToProfileEditView(from: self, profile: presenter.getProfileDetails())
     }
     
     private func setupSubview() {
         view.addSubview(verticalStackView)
         view.addSubview(websiteLinkLabel)
         view.addSubview(tableView)
-        
-        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
-        userProfileImageView.layer.masksToBounds = true
+        userProfileImageView.addSubview(activityIndicator)
     }
     
     private func layoutSubviews() {
@@ -136,6 +139,9 @@ final class ProfileViewController: UIViewController {
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
             userProfileImageView.topAnchor.constraint(equalTo: horizontalStackView.topAnchor),
             userProfileImageView.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
+            
+            activityIndicator.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
             
             userNamelabel.centerYAnchor.constraint(equalTo: horizontalStackView.centerYAnchor),
             userNamelabel.trailingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor),
@@ -154,6 +160,21 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -221),
         ])
     }
+    
+    private func updateProfileDetails() {
+        let profileModel = presenter.getProfileDetails()
+        userNamelabel.text = profileModel.name
+        descriptionLabel.text = profileModel.description
+        websiteLinkLabel.text = profileModel.website
+    }
+    
+    //MARK: - Public
+    func updateUserPic(with image: UIImage) {
+        userProfileImageView.kf.indicatorType = .activity
+        userProfileImageView.image = image
+        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
+        userProfileImageView.layer.masksToBounds = true
+    }
 }
 
 // MARK: - ProfileViewProtocol
@@ -167,7 +188,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "buttomCellReuseIdentifier", for: indexPath) as? ProfileViewTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileViewTableViewCell.profileViewCellIdentifier, for: indexPath) as? ProfileViewTableViewCell else {return UITableViewCell()}
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         cell.configureCell(indexPath: indexPath, with: presenter)
         return cell
@@ -180,9 +201,12 @@ extension ProfileViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
+            presenter.switchToProfileMyNFTView()
+        } else if indexPath.row == 1 {
             presenter.switchToProfileFavoriteView()
+        } else if indexPath.row == 2 {
+            guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
+            presenter.switchToProfileUserWebViewViewController(with: url)
         }
-        
     }
-    
 }

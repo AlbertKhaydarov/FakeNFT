@@ -21,21 +21,20 @@ class ProfileMyNFTViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = Assets.ypWhite.color
-        tableView.register(ProfileMyNFTTableViewCell.self, forCellReuseIdentifier: "myNFTCellReuseIdentifier")
+        tableView.register(ProfileMyNFTTableViewCell.self, forCellReuseIdentifier: ProfileMyNFTTableViewCell.profileMyNFTCellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
     }()
     
-    private lazy var stubLabel: UILabel = {
+    private lazy var stubMyNFTLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .bodyBold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .center
-        label.text = .loc.StubLabel.title
+        label.text = .loc.StubMyNFTLabel.title
         label.isHidden = true
-        
         return label
     }()
     
@@ -52,20 +51,21 @@ class ProfileMyNFTViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         sortButton()
-        isStubHidden() 
+        isStubHidden()
     }
     
+    //MARK: - Private
     private func isStubHidden() {
         if presenter.myNFT.count == 0 {
-            stubLabel.isHidden = false
+            stubMyNFTLabel.isHidden = false
         } else {
-            stubLabel.isHidden = true
+            stubMyNFTLabel.isHidden = true
         }
     }
     
     //MARK: - TODO  in the 3rd part
-   @objc private func sortButtonTapped() {
-       print(#function)
+    @objc private func sortButtonTapped() {
+        print(#function)
     }
     
     private func sortButton() {
@@ -76,7 +76,7 @@ class ProfileMyNFTViewController: UIViewController {
     
     private func setupSubview() {
         view.addSubview(tableView)
-        view.addSubview(stubLabel)
+        view.addSubview(stubMyNFTLabel)
     }
     
     private func layoutSubviews() {
@@ -87,15 +87,16 @@ class ProfileMyNFTViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.heightAnchor.constraint(equalToConstant: CGFloat(height)),
             
-            stubLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stubLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stubLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stubLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            stubMyNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stubMyNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stubMyNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stubMyNFTLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])
     }
 }
 
-// MARK: - ProfileEditViewProtocol
+// MARK: - ProfileMyNFTViewProtocol
+
 //MARK: - TODO in the 2nd part
 extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol { }
 
@@ -106,7 +107,7 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "myNFTCellReuseIdentifier", for: indexPath) as? ProfileMyNFTTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileMyNFTTableViewCell.profileMyNFTCellIdentifier, for: indexPath) as? ProfileMyNFTTableViewCell else {return UITableViewCell()}
         cell.configureCell(indexPath: indexPath, with: presenter)
         return cell
     }
@@ -116,4 +117,4 @@ extension ProfileMyNFTViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140.0
     }
-    }
+}

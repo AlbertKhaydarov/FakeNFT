@@ -5,43 +5,52 @@
 //  Created by Альберт Хайдаров on 25.03.2024.
 //
 
-import Foundation
+import UIKit
 
 protocol ProfileEditPresenterProtocol {
     func viewDidLoad()
-    var userNameText: String? { get set }
-    var descriptionText: String? { get set }
-    var websiteText: String? { get set }
+    var profile: ProfileViewModel { get }
+    func updateUserPicImage()
 }
 
 final class ProfileEditPresenter {
     // MARK: Properties
-
+    
     weak var view: (any ProfileEditViewProtocol)?
     private let router: any ProfileEditRouterProtocol
-
-    var userNameText: String? = "Joaquin Phoenix"
-    var descriptionText: String? = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-    var websiteText: String? = "Joaquin Phoenix.com"
-
-
-    // MARK: - Lifecycle
-
-    init(router: some ProfileEditRouterProtocol) {
+    var profile: ProfileViewModel
+    
+    init(router: some ProfileEditRouterProtocol, profile: ProfileViewModel) {
         self.router = router
-
+        self.profile = profile
     }
-
-    // MARK: - Public
-
-    // MARK: - Private
+    
+    func updateUserPicImage() {
+        let profileImageString = profile.userPic
+        
+        guard
+            let url = URL(string: profileImageString)
+        else {
+            print("Failed to create full URL")
+            return
+        }
+        
+        let nftImageView = UIImageView()
+        nftImageView.kf.setImage(with: url) { result in
+            switch result {
+            case .success(let value):
+                self.view?.updateUserPic(with: value.image)
+            case .failure(let error):
+                print("Error loading image: \(error)")
+            }
+        }
+    }
 }
 
 // MARK: - ProfileEditPresenterProtocol
 
 extension ProfileEditPresenter: ProfileEditPresenterProtocol {
+    //TODO: - a service implementation
     func viewDidLoad() {
     }
-    
-    
 }

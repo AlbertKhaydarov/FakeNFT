@@ -17,7 +17,6 @@ class ProfileButtonFactory: ProfileButtonFactoryProtocol {
 
         let shevronImage = UIImage(systemName: "chevron.forward")
         button.setImage(shevronImage, for: .normal)
-//        button.imageView?.contentMode = .scaleAspectFit
         
         setupButton(button: button)
         layoutSubviews(button: button)
@@ -34,12 +33,10 @@ class ProfileButtonFactory: ProfileButtonFactoryProtocol {
         )
         button.imageEdgeInsets = UIEdgeInsets(
             top: 0,
-//            left: buttonWidth - imageWidth,
             left: buttonWidth,
             bottom: 0,
             right: -buttonWidth
         )
-        
     }
     
     private func layoutSubviews(button: UIButton) {
