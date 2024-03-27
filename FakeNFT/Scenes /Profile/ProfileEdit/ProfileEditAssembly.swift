@@ -17,7 +17,7 @@ final class ProfileEditAssembly {
         let view = ProfileEditViewController(presenter: presenter)
 
         presenter.view = view
-
+        router.viewController = view
         return view
     }
 }

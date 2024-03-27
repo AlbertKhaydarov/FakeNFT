@@ -28,6 +28,7 @@ final class TabBarController: UITabBarController {
             title: .loc.Profile.title,
             tag: 0
         )
+        print(profile.navigationController)
 
         let catalog = prepareViewController(
             CatalogAssembly.assemble(),
