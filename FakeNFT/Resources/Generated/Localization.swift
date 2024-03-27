@@ -48,6 +48,10 @@ internal enum Localization {
     /// О разработчике
     internal static let title = Localization.tr("Localizable", "aboutDesignerButton.title", fallback: "О разработчике")
   }
+  internal enum AuthorLabelText {
+    /// от
+    internal static let title = Localization.tr("Localizable", "authorLabelText.title", fallback: "от")
+  }
   internal enum DescriptionLabel {
     /// Описание
     internal static let title = Localization.tr("Localizable", "descriptionLabel.title", fallback: "Описание")
@@ -59,6 +63,10 @@ internal enum Localization {
   internal enum MyNFTButton {
     /// Мои NFT
     internal static let title = Localization.tr("Localizable", "myNFTButton.title", fallback: "Мои NFT")
+  }
+  internal enum PriceTitleLabel {
+    /// Цена
+    internal static let title = Localization.tr("Localizable", "priceTitleLabel.title", fallback: "Цена")
   }
   internal enum UserNamelabel {
     /// Имя

@@ -16,7 +16,8 @@ final class ProfileAssembly {
         let view = ProfileViewController(presenter: presenter)
 
         presenter.view = view
-
+        router.viewController = view
+        
         return view
     }
 }

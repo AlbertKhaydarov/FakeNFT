@@ -22,3 +22,5 @@
 "userNamelabel.title" = "Name";
 "descriptionLabel.title" = "`Description";
 "websiteLabel.title" = "Website";
+"priceTitleLabel.title" = "Price";
+"authorLabelText.title" = "from";

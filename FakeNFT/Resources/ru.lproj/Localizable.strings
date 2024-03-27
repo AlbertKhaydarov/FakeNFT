@@ -22,4 +22,5 @@
 "userNamelabel.title" = "Имя";
 "descriptionLabel.title" = "Описание";
 "websiteLabel.title" = "Сайт";
-
+"priceTitleLabel.title" = "Цена";
+"authorLabelText.title" = "от";

@@ -10,6 +10,7 @@ import UIKit
 protocol ProfilePresenterProtocol {
     func viewDidLoad()
     func switchToProfileEditView(from: UIViewController)
+    func switchToProfileFavoriteView()
     var countTitleButtons: [Int] { get }
 //    func createButton(with title: String) -> UIButton
 }
@@ -48,4 +49,9 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     func switchToProfileEditView(from: UIViewController) {
         router.switchToProfileEditView(from: from)
     }
+    
+    func switchToProfileFavoriteView() {
+        router.switchToProfileFavoriteView()
+    }
+    
 }
