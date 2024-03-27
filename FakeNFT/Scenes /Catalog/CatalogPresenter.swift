@@ -24,16 +24,19 @@ final class CatalogPresenter {
     weak var view: (any ICatalogView)?
     private let router: any ICatalogRouter
     private let service: any ICatalogItemService
+    private var sortStorage: any ISortStorage
     private var catalogItems = [CatalogItem]()
 
     // MARK: - Lifecycle
 
     init(
         router: some ICatalogRouter,
-        service: some ICatalogItemService
+        service: some ICatalogItemService,
+        sortStorage: some ISortStorage
     ) {
         self.router = router
         self.service = service
+        self.sortStorage = sortStorage
     }
 
     private func loadCatalogItems() {
@@ -44,12 +47,28 @@ final class CatalogPresenter {
                 self.view?.dismissLoader()
 
                 self.catalogItems = models
-                self.view?.updateCatalogItems(self.catalogItems)
+                self.updateItems()
             case let .failure(error):
                 self?.view?.dismissLoader()
                 assertionFailure(error.localizedDescription) // TODO: handle error
             }
         }
+    }
+
+    private func sortIfNeeded() {
+        switch sortStorage.chosenSort {
+        case .byNft:
+            catalogItems.sort(by: { $0.nfts.count > $1.nfts.count })
+        case .byName:
+            catalogItems.sort(by: { $0.name < $1.name })
+        case .none:
+            break
+        }
+    }
+
+    private func updateItems() {
+        sortIfNeeded()
+        view?.updateCatalogItems(catalogItems)
     }
 }
 
@@ -57,6 +76,7 @@ final class CatalogPresenter {
 
 extension CatalogPresenter: ICatalogPresenter {
     func pullToRefreshDragged() {
+        sortStorage.chosenSort = .none
         loadCatalogItems()
     }
 
@@ -70,13 +90,13 @@ extension CatalogPresenter: ICatalogPresenter {
     }
 
     func sortByNameChosen() {
-        catalogItems.sort(by: { $0.name < $1.name })
-        view?.updateCatalogItems(catalogItems)
+        sortStorage.chosenSort = .byName
+        updateItems()
     }
 
     func sortByQuantityChosen() {
-        catalogItems.sort(by: { $0.nfts.count > $1.nfts.count })
-        view?.updateCatalogItems(catalogItems)
+        sortStorage.chosenSort = .byNft
+        updateItems()
     }
 
     func cellDidSelected(with item: CatalogItem) {

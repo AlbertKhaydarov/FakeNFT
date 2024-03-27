@@ -12,9 +12,10 @@ final class CatalogAssembly {
 
     static func assemble() -> UIViewController {
         let service: ICatalogItemService = CatalogItemService(networkClient: DefaultNetworkClient())
+        let storage: ISortStorage = SortStorage()
 
         let router = CatalogRouter()
-        let presenter = CatalogPresenter(router: router, service: service)
+        let presenter = CatalogPresenter(router: router, service: service, sortStorage: storage)
         let view = CatalogViewController(presenter: presenter)
 
         presenter.view = view
