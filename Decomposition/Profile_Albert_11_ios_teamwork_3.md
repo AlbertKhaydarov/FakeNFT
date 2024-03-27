@@ -4,8 +4,6 @@
 Группа - 11_ios_teamwork_3
 Эпик - Профиль
 
-# Общая инофрмация
-
 Способ верстки: UIKit, кодом
 Архитектура: MVP с роутером и ассембли
 Таск трекер: https://github.com/users/AlbertKhaydarov/projects/1
