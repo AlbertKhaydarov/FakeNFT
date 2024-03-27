@@ -25,7 +25,7 @@ final class ProfileFavoritePresenter {
 
     init(router: some ProfileFavoriteRouterProtocol) {
         self.router = router
-        getMockData()
+//        getMockData()
     }
 
     // MARK: - Public

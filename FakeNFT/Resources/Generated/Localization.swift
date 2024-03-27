@@ -50,6 +50,10 @@ internal enum Localization {
     /// Цена
     internal static let title = Localization.tr("Localizable", "priceTitleLabel.title", fallback: "Цена")
   }
+  internal enum StubLabel {
+    /// У Вас ещё нет NFT
+    internal static let title = Localization.tr("Localizable", "stubLabel.title", fallback: "У Вас ещё нет NFT")
+  }
   internal enum UserNamelabel {
     /// Имя
     internal static let title = Localization.tr("Localizable", "userNamelabel.title", fallback: "Имя")
