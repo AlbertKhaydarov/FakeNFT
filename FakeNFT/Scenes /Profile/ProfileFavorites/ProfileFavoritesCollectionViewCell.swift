@@ -83,7 +83,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        var favoriteActiveImage: UIImage!
+        var favoriteActiveImage = UIImage()
         favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
         self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
