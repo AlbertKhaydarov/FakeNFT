@@ -11,7 +11,7 @@ protocol ProfilePresenterProtocol {
     func viewDidLoad()
     func getProfileDetails() -> ProfileViewModel
     func updateUserPicImage()
-//    func switchToProfileEditView(from: UIViewController)
+    //    func switchToProfileEditView(from: UIViewController)
     func switchToProfileEditView(from: UIViewController, profile: ProfileViewModel)
     func switchToProfileFavoriteView()
     func switchToProfileMyNFTView()
@@ -59,7 +59,6 @@ final class ProfilePresenter {
         //TODO: - remove DispatchQueue.main.asyncAfter(deadline: .now() + 2) after a service implementation
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             nftImageView.kf.setImage(with: url) { result in
-                self.view?.activityIndicator.stopAnimating()
                 switch result {
                 case .success(let value):
                     self.view?.updateUserPic(with: value.image)

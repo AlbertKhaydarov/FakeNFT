@@ -777,6 +777,16 @@
 			path = ProfileUserWebSite;
 			sourceTree = "<group>";
 		};
+		7C9833CE2BB5454400781151 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				EA97C5AE2BADF1F9003B6A81 /* ProfileButtonFactoryProtocol.swift */,
+				EA97C5B12BADF242003B6A81 /* ProfileButtonFactory.swift */,
+				EA97C5B32BAEB00D003B6A81 /* RouterCases.swift */,
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -800,11 +810,9 @@
 		EA97C5B02BADF227003B6A81 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				EA97C5AE2BADF1F9003B6A81 /* ProfileButtonFactoryProtocol.swift */,
+				7C9833CE2BB5454400781151 /* Archive */,
 				EA97C5C42BB2BEE2003B6A81 /* Extension+TextField.swift */,
 				7C9833C32BB4360D00781151 /* GeometricParamsCollectionView.swift */,
-				EA97C5B12BADF242003B6A81 /* ProfileButtonFactory.swift */,
-				EA97C5B32BAEB00D003B6A81 /* RouterCases.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";

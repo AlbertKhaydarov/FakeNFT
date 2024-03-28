@@ -14,9 +14,9 @@ class ProfileViewTableViewCell: UITableViewCell {
     
     private var presenter: ProfilePresenterProtocol?
     
-    private let buttonsTitles: [String] = [.loc.MyNFTButton.title,
-                                           .loc.FavoriteNFTButton.title,
-                                           .loc.AboutDesignerButton.title]
+    private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,
+                                           .loc.Profile.FavoriteNFTButton.title,
+                                           .loc.Profile.AboutDesignerButton.title]
     
     private lazy var accessoryImageView: UIImageView = {
         let сhevronImage = UIImage(systemName: "chevron.forward")

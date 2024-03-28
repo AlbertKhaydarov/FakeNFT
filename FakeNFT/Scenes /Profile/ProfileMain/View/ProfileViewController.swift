@@ -9,7 +9,6 @@ import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
     func updateUserPic(with image: UIImage)
-    var activityIndicator: UIActivityIndicatorView { get set }
 }
 
 final class ProfileViewController: UIViewController {
@@ -171,6 +170,7 @@ final class ProfileViewController: UIViewController {
     //MARK: - Public
     func updateUserPic(with image: UIImage) {
         userProfileImageView.kf.indicatorType = .activity
+        activityIndicator.stopAnimating()
         userProfileImageView.image = image
         userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
         userProfileImageView.layer.masksToBounds = true

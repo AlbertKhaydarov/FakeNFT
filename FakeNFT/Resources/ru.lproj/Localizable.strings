@@ -15,15 +15,15 @@
 
 "Cart.title" = "Корзина";
 "Statistics.title" = "Статистика";
-"myNFTButton.title" = "Мои NFT";
-"favoriteNFTButton.title" = "Избранные NFT";
-"aboutDesignerButton.title" = "О разработчике";
-"userProfileImageDownload.title" = "Загрузить изображение";
-"userNamelabel.title" = "Имя";
-"descriptionLabel.title" = "Описание";
-"websiteLabel.title" = "Сайт";
-"priceTitleLabel.title" = "Цена";
-"authorLabelText.title" = "от";
-"stubMyNFTLabel.title" = "У Вас ещё нет NFT";
-"stubFavotitesLabel.title" = "У Вас ещё нет избранных NFT";
-"editImagelabel.title" = "Сменить фото";
+"Profile.myNFTButton.title" = "Мои NFT";
+"Profile.favoriteNFTButton.title" = "Избранные NFT";
+"Profile.aboutDesignerButton.title" = "О разработчике";
+"Profile.userProfileImageDownload.title" = "Загрузить изображение";
+"Profile.userNamelabel.title" = "Имя";
+"Profile.descriptionLabel.title" = "Описание";
+"Profile.websiteLabel.title" = "Сайт";
+"Profile.priceTitleLabel.title" = "Цена";
+"Profile.authorLabelText.title" = "от";
+"Profile.stubMyNFTLabel.title" = "У Вас ещё нет NFT";
+"Profile.stubFavotitesLabel.title" = "У Вас ещё нет избранных NFT";
+"Profile.editImagelabel.title" = "Сменить фото";

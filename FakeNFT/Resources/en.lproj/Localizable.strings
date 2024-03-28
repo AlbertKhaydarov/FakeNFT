@@ -15,15 +15,15 @@
 
 "Cart.title" = "Cart";
 "Statistics.title" = "Statistic";
-"myNFTButton.title" = "My NFTs";
-"favoriteNFTButton.title" = "Favorite NFT";
-"aboutDesignerButton.title" = "About designers";
-"userProfileImageDownload.title" = "Download an image";
-"userNamelabel.title" = "Name";
-"descriptionLabel.title" = "`Description";
-"websiteLabel.title" = "Website";
-"priceTitleLabel.title" = "Price";
-"authorLabelText.title" = "from";
-"stubMyNFTLabel.title" = "You don't have an NFT yet";
-"stubFavotitesLabel.title" = "You don't have any NFT favorites yet";
-"editImagelabel.title" = "Change the photo";
+"Profile.myNFTButton.title" = "My NFTs";
+"Profile.favoriteNFTButton.title" = "Favorite NFT";
+"Profile.aboutDesignerButton.title" = "About designers";
+"Profile.userProfileImageDownload.title" = "Download an image";
+"Profile.userNamelabel.title" = "Name";
+"Profile.descriptionLabel.title" = "`Description";
+"Profile.websiteLabel.title" = "Website";
+"Profile.priceTitleLabel.title" = "Price";
+"Profile.authorLabelText.title" = "from";
+"Profile.stubMyNFTLabel.title" = "You don't have an NFT yet";
+"Profile.stubFavotitesLabel.title" = "You don't have any NFT favorites yet";
+"Profile.editImagelabel.title" = "Change the photo";

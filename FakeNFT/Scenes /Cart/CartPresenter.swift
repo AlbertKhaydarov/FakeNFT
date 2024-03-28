@@ -23,9 +23,6 @@ final class CartPresenter {
         self.router = router
     }
 
-    // MARK: - Public
-
-    // MARK: - Private
 }
 
 // MARK: - ICartPresenter

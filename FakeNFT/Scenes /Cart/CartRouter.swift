@@ -10,7 +10,5 @@ import UIKit
 protocol ICartRouter { }
 
 final class CartRouter: ICartRouter {
-    // MARK: - Public
 
-    // MARK: - Private
 }
