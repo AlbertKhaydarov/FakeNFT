@@ -81,11 +81,8 @@ extension CatalogPresenter: ICatalogPresenter {
     }
 
     func viewDidLoad() {
-        // TODO: REMOVE
-//        view?.showLoader()
-//        loadCatalogItems()
-        catalogItems = [.makeMockCollectionItem(with: "name", quantity: ["1", "2", "3"])]
-        updateItems()
+        view?.showLoader()
+        loadCatalogItems()
     }
 
     func sortButtonTapped() {

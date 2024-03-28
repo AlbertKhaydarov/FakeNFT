@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias OrderResult = (Result<Order, Error>) -> Void
+typealias OrderResult = (Order?) -> Void
 
 protocol IOrderService {
     func loadOrder(completion: @escaping OrderResult)
@@ -35,9 +35,9 @@ final class OrderService: IOrderService {
         ) {
             switch $0 {
             case let .success(model):
-                completion(.success(model))
-            case let .failure(error):
-                completion(.failure(error))
+                completion(model)
+            case .failure:
+                completion(nil)
             }
         }
     }

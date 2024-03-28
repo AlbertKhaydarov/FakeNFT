@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias ProfileInfoResult = (Result<ProfileInfo, Error>) -> Void
+typealias ProfileInfoResult = (ProfileInfo?) -> Void
 
 protocol IProfileService {
     func loadProfile(completion: @escaping ProfileInfoResult)
@@ -35,9 +35,9 @@ final class ProfileService: IProfileService {
         ) {
             switch $0 {
             case let .success(model):
-                completion(.success(model))
-            case let .failure(error):
-                completion(.failure(error))
+                completion(model)
+            case .failure:
+                completion(nil)
             }
         }
     }

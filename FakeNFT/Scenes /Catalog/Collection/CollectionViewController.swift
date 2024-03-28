@@ -19,6 +19,9 @@ typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, Col
 protocol ICollectionView: AnyObject {
     func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
     func updateNfts(_ items: [CollectionViewModel])
+
+    func showLoader()
+    func dismissLoader()
 }
 
 final class CollectionViewController: UIViewController {
@@ -238,5 +241,13 @@ extension CollectionViewController: ICollectionView {
         authorLabelLink.text = profileInfo.name
         descriptionLabel.text = item.description
         titleLabel.text = item.name
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func dismissLoader() {
+        UIBlockingProgressHUD.dismiss()
     }
 }

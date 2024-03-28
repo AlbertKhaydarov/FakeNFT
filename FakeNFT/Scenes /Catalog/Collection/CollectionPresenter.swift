@@ -14,6 +14,9 @@ protocol ICollectionPresenter {
 }
 
 final class CollectionPresenter {
+    private enum Constant {
+        static let website = "https://practicum.yandex.ru/ios-developer"
+    }
     // MARK: Properties
 
     weak var view: (any ICollectionView)?
@@ -22,6 +25,11 @@ final class CollectionPresenter {
     private let orderService: any IOrderService
     private let nftService: any INftService
     private let router: any ICollectionRouter
+    private let dispatchGroup = DispatchGroup()
+
+    private var profileInfo: ProfileInfo?
+    private var order: Order?
+    private var nfts: [Nft]?
 
     // MARK: - Lifecycle
 
@@ -38,32 +46,86 @@ final class CollectionPresenter {
         self.nftService = nftService
         self.router = router
     }
+
+    private func loadAllInfo() {
+        loadProfile()
+        loadOrder()
+        loadNft()
+
+        dispatchGroup.notify(qos: .userInteractive, queue: .main) {
+            self.assembleViewModel()
+        }
+    }
+
+    private func loadProfile() {
+        dispatchGroup.enter()
+        profileService.loadProfile { [weak self] profileInfo in
+            guard let profileInfo else {
+                assertionFailure("Profile can't be loaded") // TODO: handle error
+                return
+            }
+
+            self?.profileInfo = profileInfo
+            self?.dispatchGroup.leave()
+        }
+    }
+
+    private func loadOrder() {
+        dispatchGroup.enter()
+        orderService.loadOrder { [weak self] order in
+            guard let order else {
+                assertionFailure("Order can't be loaded") // TODO: handle error
+                return
+            }
+            self?.order = order
+            self?.dispatchGroup.leave()
+        }
+    }
+
+    private func loadNft() {
+        nfts = []
+        chosenItem.nfts.enumerated().forEach { idx, nftId in
+            dispatchGroup.enter()
+            nftService.loadNft(id: nftId) { [weak self] nft in
+                guard let nft, let self else {
+                    assertionFailure("Nft can't be loaded") // TODO: handle error
+                    return
+                }
+
+                self.nfts?.append(nft)
+                self.dispatchGroup.leave()
+            }
+        }
+    }
+
+    private func assembleViewModel() {
+        guard let nfts, let profileInfo, let order else { return }
+
+        let collectionViewModel = nfts.map { nft in
+            CollectionViewModel(
+                id: nft.id,
+                name: nft.name,
+                price: nft.price,
+                website: Constant.website,
+                imagePath: nft.images[0],
+                rating: nft.rating,
+                liked: profileInfo.likes.first(where: { $0 == nft.id }) != nil,
+                inCart: order.nfts.first(where: { $0 == nft.id }) != nil
+            )
+        }
+
+        view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
+        view?.updateNfts(collectionViewModel)
+        view?.dismissLoader()
+    }
 }
 
 // MARK: - ICollectionPresenter
 
 extension CollectionPresenter: ICollectionPresenter {
     func viewDidLoad() {
-        // TODO: network call
-        let profileInfo = ProfileInfo.makeProfileInfo()
-        let order = Order.makeMockOrder()
-        let nft = Nft.makeMockNft()
-
-        let collectionViewModel = chosenItem.nfts.map { nftId in
-            CollectionViewModel(
-                id: nftId,
-                name: nft.name,
-                price: nft.price,
-                website: profileInfo.website,
-                imagePath: nft.images[0],
-                rating: nft.rating,
-                liked: profileInfo.likes.first(where: { $0 == nftId }) != nil,
-                inCart: order.nfts.first(where: { $0 == nftId }) != nil
-            )
-        }
-
-        view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
-        view?.updateNfts(collectionViewModel)
+        view?.showLoader()
+        loadAllInfo()
     }
 
     func authorsLinkTapped(with link: String?) {
