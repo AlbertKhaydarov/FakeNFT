@@ -60,7 +60,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .caption2
-        label.text = .loc.PriceTitleLabel.title
+        label.text = .loc.Profile.PriceTitleLabel.title
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label
@@ -119,7 +119,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
         nameLabel.text = presenter.myNFT[indexPath.row].name
         starsRatingImageView.setRatingStars(rating: presenter.myNFT[indexPath.row].starsRating)
-        authorLabel.text = .loc.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
+        authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
         priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
         setIsLiked(isLiked: presenter.myNFT[indexPath.row].isFavorite)
     }

@@ -38,7 +38,7 @@ class ProfileFavoritesViewController: UIViewController {
         label.font = .bodyBold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .center
-        label.text = .loc.StubFavotitesLabel.title
+        label.text = .loc.Profile.StubFavotitesLabel.title
         label.isHidden = false
         return label
     }()
@@ -52,7 +52,7 @@ class ProfileFavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = .loc.FavoriteNFTButton.title
+        title = .loc.Profile.FavoriteNFTButton.title
         isStubHidden()
         setupSubviews()
         layoutSubviews()

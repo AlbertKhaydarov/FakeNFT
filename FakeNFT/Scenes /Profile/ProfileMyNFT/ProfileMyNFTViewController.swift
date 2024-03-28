@@ -33,7 +33,7 @@ class ProfileMyNFTViewController: UIViewController {
         label.font = .bodyBold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .center
-        label.text = .loc.StubMyNFTLabel.title
+        label.text = .loc.Profile.StubMyNFTLabel.title
         label.isHidden = true
         return label
     }()
@@ -47,7 +47,7 @@ class ProfileMyNFTViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = .loc.MyNFTButton.title
+        title = .loc.Profile.MyNFTButton.title
         setupSubview()
         layoutSubviews()
         sortButton()

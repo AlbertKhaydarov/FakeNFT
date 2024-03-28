@@ -38,7 +38,7 @@ class ProfileEditViewController: UIViewController {
         label.font = .caption3
         label.textColor = Assets.ypWhiteUniversal.color
         label.textAlignment = .center
-        label.text = .loc.EditImagelabel.title
+        label.text = .loc.Profile.EditImagelabel.title
         label.numberOfLines = 0
         return label
     }()
@@ -49,7 +49,7 @@ class ProfileEditViewController: UIViewController {
         textField.backgroundColor = .clear
         textField.font = .bodyRegular
         textField.textColor = Assets.ypBlack.color
-        let placeholder: String = .loc.UserProfileImageDownload.title
+        let placeholder: String = .loc.Profile.UserProfileImageDownload.title
         textField.setCenteredPlaceholder(placeholder)
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
@@ -63,7 +63,7 @@ class ProfileEditViewController: UIViewController {
         label.font = .headline3
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
-        label.text = .loc.UserNamelabel.title
+        label.text = .loc.Profile.UserNamelabel.title
         return label
     }()
     
@@ -99,7 +99,7 @@ class ProfileEditViewController: UIViewController {
         label.textColor = Assets.ypBlack.color
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.text = .loc.DescriptionLabel.title
+        label.text = .loc.Profile.DescriptionLabel.title
         return label
     }()
     
@@ -133,7 +133,7 @@ class ProfileEditViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .headline3
         label.textColor = Assets.ypBlack.color
-        label.text = .loc.WebsiteLabel.title
+        label.text = .loc.Profile.WebsiteLabel.title
         return label
     }()
     
