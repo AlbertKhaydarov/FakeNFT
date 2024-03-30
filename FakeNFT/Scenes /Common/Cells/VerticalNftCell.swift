@@ -82,7 +82,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
         button.setImage(Assets.toCartIcon.image, for: .normal)
         button.addTarget(self, action: #selector(cartButtonTapped), for: .touchUpInside)
 
-        return button
+        return button.forAutolayout()
     }()
 
     private lazy var bottomStackView: UIStackView = {
@@ -141,6 +141,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
 
         bottomStackView.placedOn(contentView)
         NSLayoutConstraint.activate([
+            cartButton.width.constraint(equalToConstant: Constant.iconSize),
             bottomStackView.top.constraint(equalTo: ratingView.bottom, constant: 4),
             bottomStackView.left.constraint(equalTo: contentView.left),
             bottomStackView.right.constraint(equalTo: contentView.right),
