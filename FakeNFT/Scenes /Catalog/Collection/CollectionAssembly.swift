@@ -22,7 +22,7 @@ final class CollectionAssembly {
         let router = CollectionRouter()
         let presenter = CollectionPresenter(
             chosenItem: collectionItem,
-            profileService: profileService, 
+            profileService: profileService,
             orderService: orderService,
             nftService: nftService,
             router: router

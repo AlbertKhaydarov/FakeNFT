@@ -16,7 +16,7 @@ protocol ISortStorage {
 }
 
 struct SortStorage: ISortStorage {
-    private struct Constant {
+    private enum Constant {
         static let key = "catalogSort"
     }
 

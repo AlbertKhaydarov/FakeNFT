@@ -84,9 +84,9 @@ final class CollectionPresenter {
 
     private func loadNft() {
         nfts = []
-        chosenItem.nfts.enumerated().forEach { idx, nftId in
+        chosenItem.nfts.forEach {
             dispatchGroup.enter()
-            nftService.loadNft(id: nftId) { [weak self] nft in
+            nftService.loadNft(id: $0) { [weak self] nft in
                 guard let nft, let self else {
                     assertionFailure("Nft can't be loaded") // TODO: handle error
                     return

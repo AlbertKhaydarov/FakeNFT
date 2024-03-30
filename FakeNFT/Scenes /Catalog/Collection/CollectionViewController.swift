@@ -9,7 +9,7 @@
 import Kingfisher
 import UIKit
 
-enum Section { 
+enum Section {
     case main
 }
 
@@ -78,6 +78,7 @@ final class CollectionViewController: UIViewController {
         label.font = .Caption.medium
         label.text = .loc.Collection.authorLabelTitle
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        label.isHidden = true
 
         return label
     }()
@@ -232,6 +233,7 @@ final class CollectionViewController: UIViewController {
 extension CollectionViewController: ICollectionView {
     func updateNfts(_ items: [CollectionViewModel]) {
         collectionItems = items
+        authorLabel.isHidden = false
     }
 
     func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo) {

@@ -135,7 +135,7 @@ struct DefaultNetworkClient: NetworkClient {
             urlRequest.httpBody = dtoEncoded
         }
 
-        urlRequest.setValue(Secrets.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
+        urlRequest.setValue(ApiConstants.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
 
         return urlRequest
     }
