@@ -9,12 +9,6 @@ import Kingfisher
 import UIKit
 
 final class CatalogCell: UITableViewCell, ReuseIdentifying {
-    struct Model {
-        let name: String
-        let nfts: [String]
-        let imagePath: String
-    }
-
     private enum Constant {
         static let mainImageViewHeight: CGFloat = 140
         static let baseCornerRadius: CGFloat = 12
@@ -62,7 +56,7 @@ final class CatalogCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Public
 
-    func configure(model: Model) {
+    func configure(model: CatalogCellModel) {
         label.text = "\(model.name) (\(model.nfts.count))"
         downloadImage(path: model.imagePath)
     }

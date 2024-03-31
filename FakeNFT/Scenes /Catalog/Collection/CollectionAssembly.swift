@@ -11,9 +11,22 @@ import UIKit
 final class CollectionAssembly {
     // MARK: - Public
 
-    static func assemble(collectionItem: CollectionItem) -> UIViewController {
+    static func assemble(collectionItem: CatalogItem) -> UIViewController {
+        let networkClient = DefaultNetworkClient()
+        let profileService: IProfileService = ProfileService(networkClient: networkClient)
+        let orderService: IOrderService = OrderService(networkClient: networkClient)
+
+        let nftStorage = NftStorage()
+        let nftService: INftService = NftService(networkClient: networkClient, storage: nftStorage)
+
         let router = CollectionRouter()
-        let presenter = CollectionPresenter(chosenItem: collectionItem, router: router)
+        let presenter = CollectionPresenter(
+            chosenItem: collectionItem,
+            profileService: profileService,
+            orderService: orderService,
+            nftService: nftService,
+            router: router
+        )
         let view = CollectionViewController(
             presenter: presenter,
             layoutProvider: CollectionLayoutProvider()

@@ -17,4 +17,3 @@ struct VerticalNftCellModel {
     let isFavorite: Bool
     let isInCart: Bool
 }
-

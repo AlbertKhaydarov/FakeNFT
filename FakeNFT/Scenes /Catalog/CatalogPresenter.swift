@@ -14,7 +14,8 @@ protocol ICatalogPresenter {
     func sortByNameChosen()
     func sortByQuantityChosen()
 
-    func cellDidSelected(with item: CollectionItem)
+    func cellDidSelected(with item: CatalogItem)
+    func pullToRefreshDragged()
 }
 
 final class CatalogPresenter {
@@ -22,29 +23,66 @@ final class CatalogPresenter {
 
     weak var view: (any ICatalogView)?
     private let router: any ICatalogRouter
-    private var collectionItems = [CollectionItem]()
+    private let service: any ICatalogItemService
+    private var sortStorage: any ISortStorage
+    private var catalogItems = [CatalogItem]()
 
     // MARK: - Lifecycle
 
-    init(router: some ICatalogRouter) {
+    init(
+        router: some ICatalogRouter,
+        service: some ICatalogItemService,
+        sortStorage: some ISortStorage
+    ) {
         self.router = router
+        self.service = service
+        self.sortStorage = sortStorage
+    }
+
+    private func loadCatalogItems() {
+        service.loadCollectionItems { [weak self] in
+            switch $0 {
+            case let .success(models):
+                guard let self else { return }
+                self.view?.dismissLoader()
+
+                self.catalogItems = models
+                self.updateItems()
+            case let .failure(error):
+                self?.view?.dismissLoader()
+                assertionFailure(error.localizedDescription) // TODO: handle error
+            }
+        }
+    }
+
+    private func sortIfNeeded() {
+        switch sortStorage.chosenSort {
+        case .byNft:
+            catalogItems.sort(by: { $0.nfts.count > $1.nfts.count })
+        case .byName:
+            catalogItems.sort(by: { $0.name < $1.name })
+        case .none:
+            break
+        }
+    }
+
+    private func updateItems() {
+        sortIfNeeded()
+        view?.updateCatalogItems(catalogItems)
     }
 }
 
 // MARK: - ICatalogPresenter
 
 extension CatalogPresenter: ICatalogPresenter {
+    func pullToRefreshDragged() {
+        sortStorage.chosenSort = .none
+        loadCatalogItems()
+    }
+
     func viewDidLoad() {
-        // TODO: network call
-
-        collectionItems = [
-            CollectionItem.makeMockCollectionItem(with: "Peach", quantity: ["1"]),
-            CollectionItem.makeMockCollectionItem(with: "Blue", quantity: ["1", "2", "3", "4"]),
-            CollectionItem.makeMockCollectionItem(with: "Brown", quantity: ["1", "2", "3"]),
-            CollectionItem.makeMockCollectionItem(with: "White", quantity: ["1", "2", "3", "4", "5"])
-        ]
-
-        view?.updateCollectionItems(collectionItems)
+        view?.showLoader()
+        loadCatalogItems()
     }
 
     func sortButtonTapped() {
@@ -52,16 +90,16 @@ extension CatalogPresenter: ICatalogPresenter {
     }
 
     func sortByNameChosen() {
-        collectionItems.sort(by: { $0.name < $1.name })
-        view?.updateCollectionItems(collectionItems)
+        sortStorage.chosenSort = .byName
+        updateItems()
     }
 
     func sortByQuantityChosen() {
-        collectionItems.sort(by: { $0.nfts.count < $1.nfts.count })
-        view?.updateCollectionItems(collectionItems)
+        sortStorage.chosenSort = .byNft
+        updateItems()
     }
 
-    func cellDidSelected(with item: CollectionItem) {
+    func cellDidSelected(with item: CatalogItem) {
         router.openCollectionScreen(with: item)
     }
 }

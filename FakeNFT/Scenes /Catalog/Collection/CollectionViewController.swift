@@ -9,16 +9,19 @@
 import Kingfisher
 import UIKit
 
-enum Section { 
+enum Section {
     case main
 }
 
-typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, PersonalizedNft>
-typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, PersonalizedNft>
+typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, CollectionViewModel>
+typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, CollectionViewModel>
 
 protocol ICollectionView: AnyObject {
-    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo)
-    func updateNfts(_ items: [PersonalizedNft])
+    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
+    func updateNfts(_ items: [CollectionViewModel])
+
+    func showLoader()
+    func dismissLoader()
 }
 
 final class CollectionViewController: UIViewController {
@@ -36,7 +39,7 @@ final class CollectionViewController: UIViewController {
     private let presenter: any ICollectionPresenter
     private let layoutProvider: any ILayoutProvider
 
-    private var collectionItems = [PersonalizedNft]() {
+    private var collectionItems = [CollectionViewModel]() {
         didSet { applySnapshot() }
     }
 
@@ -75,6 +78,7 @@ final class CollectionViewController: UIViewController {
         label.font = .Caption.medium
         label.text = .loc.Collection.authorLabelTitle
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        label.isHidden = true
 
         return label
     }()
@@ -184,7 +188,7 @@ final class CollectionViewController: UIViewController {
     private func cellProvider(
         collectionView: UICollectionView,
         indexPath: IndexPath,
-        item: PersonalizedNft
+        item: CollectionViewModel
     ) -> UICollectionViewCell {
         let cell: VerticalNftCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         let model = VerticalNftCellModel(
@@ -227,16 +231,25 @@ final class CollectionViewController: UIViewController {
 // MARK: - ICollectionView
 
 extension CollectionViewController: ICollectionView {
-    func updateNfts(_ items: [PersonalizedNft]) {
+    func updateNfts(_ items: [CollectionViewModel]) {
         collectionItems = items
+        authorLabel.isHidden = false
     }
 
-    func updateCollectionInfo(_ item: CollectionItem, profileInfo: ProfileInfo) {
+    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo) {
         downloadCover(with: item.cover)
 
         profileLink = profileInfo.website
         authorLabelLink.text = profileInfo.name
         descriptionLabel.text = item.description
         titleLabel.text = item.name
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func dismissLoader() {
+        UIBlockingProgressHUD.dismiss()
     }
 }

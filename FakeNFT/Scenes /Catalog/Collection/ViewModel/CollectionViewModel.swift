@@ -1,5 +1,5 @@
 //
-//  PersonalizedNft.swift
+//  CollectionViewModel.swift
 //  FakeNFT
 //
 //  Created by MAKOVEY Vladislav on 24.03.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PersonalizedNft: Hashable {
+struct CollectionViewModel: Hashable {
     let id: String
     let name: String
     let price: Decimal

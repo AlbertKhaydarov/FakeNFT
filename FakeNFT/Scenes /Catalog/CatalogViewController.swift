@@ -5,11 +5,14 @@
 //  Created by MAKOVEY Vladislav on 19.03.2024.
 //
 
+import ProgressHUD
 import UIKit
 
 protocol ICatalogView: AnyObject {
-    func updateCollectionItems(_ items: [CollectionItem])
+    func updateCatalogItems(_ items: [CatalogItem])
     func showSortingAlert()
+    func showLoader()
+    func dismissLoader()
 }
 
 final class CatalogViewController: UIViewController {
@@ -23,7 +26,7 @@ final class CatalogViewController: UIViewController {
     // MARK: - Properties
 
     private let presenter: any ICatalogPresenter
-    private var collectionItems = [CollectionItem]()
+    private var collectionItems = [CatalogItem]()
 
     // MARK: - UI
 
@@ -51,6 +54,13 @@ final class CatalogViewController: UIViewController {
         return button
     }()
 
+    private lazy var refreshCatalogControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(pullToRefreshDragged), for: .valueChanged)
+
+        return control
+    }()
+
     // MARK: - Lifecycle
 
     init(presenter: some ICatalogPresenter) {
@@ -63,8 +73,8 @@ final class CatalogViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        presenter.viewDidLoad()
         setupUI()
+        presenter.viewDidLoad()
     }
 
     // MARK: - Private
@@ -80,11 +90,18 @@ final class CatalogViewController: UIViewController {
             tableView.right.constraint(equalTo: view.right, constant: -Constant.baseInset),
             tableView.bottom.constraint(equalTo: view.bottom, constant: -Constant.extraInset)
         ])
+
+        tableView.refreshControl = refreshCatalogControl
     }
 
     @objc
     private func sortIconTapped() {
         presenter.sortButtonTapped()
+    }
+
+    @objc
+    private func pullToRefreshDragged() {
+        presenter.pullToRefreshDragged()
     }
 }
 
@@ -125,9 +142,18 @@ extension CatalogViewController: ICatalogView {
         present(alertController, animated: true)
     }
 
-    func updateCollectionItems(_ items: [CollectionItem]) {
+    func updateCatalogItems(_ items: [CatalogItem]) {
         collectionItems = items
         tableView.reloadData()
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func dismissLoader() {
+        UIBlockingProgressHUD.dismiss()
+        refreshCatalogControl.endRefreshing()
     }
 }
 

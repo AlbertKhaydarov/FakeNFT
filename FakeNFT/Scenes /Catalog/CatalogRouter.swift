@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ICatalogRouter {
-    func openCollectionScreen(with item: CollectionItem)
+    func openCollectionScreen(with item: CatalogItem)
 }
 
 final class CatalogRouter: ICatalogRouter {
@@ -18,7 +18,7 @@ final class CatalogRouter: ICatalogRouter {
 
     // MARK: - Public
 
-    func openCollectionScreen(with item: CollectionItem) {
+    func openCollectionScreen(with item: CatalogItem) {
         guard let navigationController = viewController?.navigationController else {
             assertionFailure("NavigationController is nil")
             return
