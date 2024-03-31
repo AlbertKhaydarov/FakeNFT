@@ -11,7 +11,7 @@ typealias ProfileInfoResult = (ProfileInfo?) -> Void
 
 protocol IProfileService {
     func loadProfile(completion: @escaping ProfileInfoResult)
-    func saveProfile(profileInfo: ProfileInfo?, likedId: String, completion: @escaping ProfileInfoResult)
+    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult)
 }
 
 final class ProfileService: IProfileService {
@@ -43,17 +43,8 @@ final class ProfileService: IProfileService {
         }
     }
 
-    func saveProfile(profileInfo: ProfileInfo?, likedId: String, completion: @escaping ProfileInfoResult) {
-        guard let profileInfo else { return }
-        
-        let requestDto = ProfileInfoRequest(
-            name: profileInfo.name,
-            description: profileInfo.description,
-            website: profileInfo.website,
-            likes: [likedId]
-        )
-
-        let request = SaveProfileRequest(infoRequestDto: requestDto)
+    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult) {
+        let request = SaveProfileRequest(requestDto: requestDto)
 
         networkClient.send(
             request: request,

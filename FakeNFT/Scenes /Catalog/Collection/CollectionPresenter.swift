@@ -64,7 +64,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         profileService.loadProfile { [weak self] profileInfo in
             guard let profileInfo else {
-                assertionFailure("Profile can't be loaded") // TODO: handle error
+                assertionFailure("Profile can't be loaded")
                 return
             }
 
@@ -77,7 +77,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         orderService.loadOrder { [weak self] order in
             guard let order else {
-                assertionFailure("Order can't be loaded") // TODO: handle error
+                assertionFailure("Order can't be loaded")
                 return
             }
             self?.order = order
@@ -91,7 +91,7 @@ final class CollectionPresenter {
             dispatchGroup.enter()
             nftService.loadNft(id: $0) { [weak self] nft in
                 guard let nft, let self else {
-                    assertionFailure("Nft can't be loaded") // TODO: handle error
+                    assertionFailure("Nft can't be loaded")
                     return
                 }
 
@@ -137,13 +137,31 @@ extension CollectionPresenter: ICollectionPresenter {
     }
 
     func favoriteButtonTapped(id: String, state: Bool) {
-        profileService.saveProfile(
-            profileInfo: profileInfo,
-            likedId: id
-        ) { [weak self] profileInfo in
+        guard let profileInfo else { return }
 
+        let dto: ProfileInfoRequest
+        if state {
+            var newLikes = profileInfo.likes
+            newLikes.append(id)
+
+            dto = .init(
+                name: profileInfo.name,
+                description: profileInfo.description,
+                website: profileInfo.website,
+                likes: newLikes
+            )
+        } else {
+            dto = .init(
+                name: profileInfo.name,
+                description: profileInfo.description,
+                website: profileInfo.website,
+                likes: profileInfo.likes.filter { $0 != id }
+            )
+        }
+
+        profileService.updateProfile(requestDto: dto) { [weak self] profileInfo in
             guard let profileInfo else {
-                assertionFailure("Profile can't be loaded") // TODO: handle error
+                assertionFailure("Can't update profile")
                 return
             }
 
@@ -154,7 +172,7 @@ extension CollectionPresenter: ICollectionPresenter {
     func cartButtonTapped(id: String, state: Bool) {
         orderService.saveOrder(nftId: id) { [weak self] order in
             guard let order else {
-                assertionFailure("Order can't be loaded") // TODO: handle error
+                assertionFailure("Can't save order")
                 return
             }
             self?.order = order

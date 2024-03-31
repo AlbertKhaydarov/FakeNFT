@@ -50,7 +50,7 @@ final class CatalogPresenter {
                 self.updateItems()
             case let .failure(error):
                 self?.view?.dismissLoader()
-                assertionFailure(error.localizedDescription) // TODO: handle error
+                assertionFailure(error.localizedDescription)
             }
         }
     }
