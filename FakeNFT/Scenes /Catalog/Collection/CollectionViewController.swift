@@ -201,6 +201,7 @@ final class CollectionViewController: UIViewController {
             isInCart: item.inCart
         )
 
+        cell.delegate = self
         cell.configure(model: model)
 
         return cell
@@ -251,5 +252,15 @@ extension CollectionViewController: ICollectionView {
 
     func dismissLoader() {
         UIBlockingProgressHUD.dismiss()
+    }
+}
+
+extension CollectionViewController: IVerticalNftCellDelegate {
+    func favoriteButtonTapped(with id: String, isFavorite: Bool) {
+        presenter.favoriteButtonTapped(id: id, state: isFavorite)
+    }
+
+    func cartButtonTapped(with id: String, isInCart: Bool) {
+        presenter.cartButtonTapped(id: id, state: isInCart)
     }
 }

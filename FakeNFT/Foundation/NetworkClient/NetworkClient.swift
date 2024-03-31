@@ -131,10 +131,14 @@ struct DefaultNetworkClient: NetworkClient {
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue(
+                RequestConstants.contentTypeEncodedValue,
+                forHTTPHeaderField: RequestConstants.contentTypeHeader
+            )
             urlRequest.httpBody = dtoEncoded
         }
 
+        urlRequest.setValue(RequestConstants.acceptValue, forHTTPHeaderField: RequestConstants.acceptHeader)
         urlRequest.setValue(ApiConstants.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
 
         return urlRequest

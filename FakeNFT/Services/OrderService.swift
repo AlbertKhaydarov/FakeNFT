@@ -11,6 +11,7 @@ typealias OrderResult = (Order?) -> Void
 
 protocol IOrderService {
     func loadOrder(completion: @escaping OrderResult)
+    func saveOrder(nftId: String, completion: @escaping OrderResult)
 }
 
 final class OrderService: IOrderService {
@@ -26,7 +27,24 @@ final class OrderService: IOrderService {
     }
 
     func loadOrder(completion: @escaping OrderResult) {
-        let request = OrderRequest()
+        let request = GetOrderRequest()
+
+        networkClient.send(
+            request: request,
+            type: Order.self,
+            completionQueue: .main
+        ) {
+            switch $0 {
+            case let .success(model):
+                completion(model)
+            case .failure:
+                completion(nil)
+            }
+        }
+    }
+
+    func saveOrder(nftId: String, completion: @escaping OrderResult) {
+        let request = SaveOrderRequest(nftIds: [nftId])
 
         networkClient.send(
             request: request,

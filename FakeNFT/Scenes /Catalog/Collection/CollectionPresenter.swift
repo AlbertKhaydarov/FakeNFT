@@ -11,6 +11,9 @@ import Foundation
 protocol ICollectionPresenter {
     func viewDidLoad()
     func authorsLinkTapped(with link: String?)
+
+    func favoriteButtonTapped(id: String, state: Bool)
+    func cartButtonTapped(id: String, state: Bool)
 }
 
 final class CollectionPresenter {
@@ -131,5 +134,30 @@ extension CollectionPresenter: ICollectionPresenter {
     func authorsLinkTapped(with link: String?) {
         guard let link, let url = URL(string: link) else { return }
         router.openWebView(with: url)
+    }
+
+    func favoriteButtonTapped(id: String, state: Bool) {
+        profileService.saveProfile(
+            profileInfo: profileInfo,
+            likedId: id
+        ) { [weak self] profileInfo in
+
+            guard let profileInfo else {
+                assertionFailure("Profile can't be loaded") // TODO: handle error
+                return
+            }
+
+            self?.profileInfo = profileInfo
+        }
+    }
+
+    func cartButtonTapped(id: String, state: Bool) {
+        orderService.saveOrder(nftId: id) { [weak self] order in
+            guard let order else {
+                assertionFailure("Order can't be loaded") // TODO: handle error
+                return
+            }
+            self?.order = order
+        }
     }
 }
