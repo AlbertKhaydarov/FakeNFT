@@ -22,7 +22,7 @@ final class CollectionPresenter {
     }
     // MARK: Properties
 
-    weak var view: (any ICollectionView)?
+    weak var view: (any ICollectionView & ErrorView)?
     private let chosenItem: CatalogItem
     private let profileService: any IProfileService
     private let orderService: any IOrderService
@@ -64,7 +64,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         profileService.loadProfile { [weak self] profileInfo in
             guard let profileInfo else {
-                assertionFailure("Profile can't be loaded")
+                self?.showError()
                 return
             }
 
@@ -77,7 +77,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         orderService.loadOrder { [weak self] order in
             guard let order else {
-                assertionFailure("Order can't be loaded")
+                self?.showError()
                 return
             }
             self?.order = order
@@ -91,7 +91,7 @@ final class CollectionPresenter {
             dispatchGroup.enter()
             nftService.loadNft(id: $0) { [weak self] nft in
                 guard let nft, let self else {
-                    assertionFailure("Nft can't be loaded")
+                    self?.showError()
                     return
                 }
 
@@ -120,6 +120,17 @@ final class CollectionPresenter {
         view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
         view?.updateNfts(collectionViewModel)
         view?.dismissLoader()
+    }
+
+    private func showError() {
+        self.view?.showError(
+            .init(
+                message: .loc.Common.errorTitle,
+                actionText: .loc.Common.errorRepeatTitle
+            ) {
+                self.loadAllInfo()
+            }
+        )
     }
 }
 
@@ -161,7 +172,7 @@ extension CollectionPresenter: ICollectionPresenter {
 
         profileService.updateProfile(requestDto: dto) { [weak self] profileInfo in
             guard let profileInfo else {
-                assertionFailure("Can't update profile")
+                self?.showError()
                 return
             }
 
@@ -172,7 +183,7 @@ extension CollectionPresenter: ICollectionPresenter {
     func cartButtonTapped(id: String, state: Bool) {
         orderService.saveOrder(nftId: id) { [weak self] order in
             guard let order else {
-                assertionFailure("Can't save order")
+                self?.showError()
                 return
             }
             self?.order = order

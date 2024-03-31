@@ -30,6 +30,12 @@ internal enum Localization {
     /// Автор коллекции:
     internal static let authorLabelTitle = Localization.tr("Localizable", "Collection.author_label_title", fallback: "Автор коллекции:")
   }
+  internal enum Common {
+    /// Попробовать еще раз
+    internal static let errorRepeatTitle = Localization.tr("Localizable", "Common.error_repeat_title", fallback: "Попробовать еще раз")
+    /// Что-то пошло не так
+    internal static let errorTitle = Localization.tr("Localizable", "Common.error_title", fallback: "Что-то пошло не так")
+  }
   internal enum Profile {
     /// Профиль
     internal static let title = Localization.tr("Localizable", "Profile.title", fallback: "Профиль")

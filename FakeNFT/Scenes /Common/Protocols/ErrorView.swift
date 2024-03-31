@@ -13,10 +13,9 @@ protocol ErrorView {
 extension ErrorView where Self: UIViewController {
 
     func showError(_ model: ErrorModel) {
-        let title = NSLocalizedString("Error.title", comment: "")
         let alert = UIAlertController(
-            title: title,
-            message: model.message,
+            title: model.message,
+            message: nil,
             preferredStyle: .alert
         )
         let action = UIAlertAction(title: model.actionText, style: UIAlertAction.Style.default) {_ in

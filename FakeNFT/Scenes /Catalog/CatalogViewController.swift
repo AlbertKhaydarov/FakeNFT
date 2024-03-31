@@ -15,7 +15,7 @@ protocol ICatalogView: AnyObject {
     func dismissLoader()
 }
 
-final class CatalogViewController: UIViewController {
+final class CatalogViewController: UIViewController, ErrorView {
     private enum Constant {
         static let cellHeight: CGFloat = 180
 

@@ -24,7 +24,7 @@ protocol ICollectionView: AnyObject {
     func dismissLoader()
 }
 
-final class CollectionViewController: UIViewController {
+final class CollectionViewController: UIViewController, ErrorView {
     private enum Constant {
         static let minInset: CGFloat = 8
         static let baseInset: CGFloat = 16
