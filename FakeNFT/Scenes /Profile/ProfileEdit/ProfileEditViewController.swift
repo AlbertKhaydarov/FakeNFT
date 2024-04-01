@@ -8,14 +8,13 @@
 import UIKit
 
 protocol ProfileEditViewProtocol: AnyObject {
-    func updateUserPic(with image: UIImage)
 }
 
 class ProfileEditViewController: UIViewController {
-    
+
     // MARK: - Properties
     private let presenter: any ProfileEditPresenterProtocol
-    
+
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,14 +23,14 @@ class ProfileEditViewController: UIViewController {
         imageView.addGestureRecognizer(tapGesture)
         return imageView
     }()
-    
+
     private lazy var userProfileImageOverlayView: UIView = {
         let overlayView = UIView()
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.backgroundColor = Assets.ypBlackUniversal.color.withAlphaComponent(0.5)
         return overlayView
     }()
-    
+
     private lazy var editImagelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +41,7 @@ class ProfileEditViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-    
+
     private lazy var userProfileImageDownloadLinkTextField: UITextField = {
         let textField = UITextField()
         textField.isHidden = true
@@ -56,7 +55,7 @@ class ProfileEditViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
+
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +65,7 @@ class ProfileEditViewController: UIViewController {
         label.text = .loc.Profile.UserNamelabel.title
         return label
     }()
-    
+
     private lazy var userNameTextField: UITextField = {
         let textField = UITextField()
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
@@ -79,9 +78,10 @@ class ProfileEditViewController: UIViewController {
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isUserInteractionEnabled = true
         return textField
     }()
-    
+
     private lazy var userNameStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +91,7 @@ class ProfileEditViewController: UIViewController {
         stackView.addArrangedSubview(userNameTextField)
         return stackView
     }()
-    
+
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +102,7 @@ class ProfileEditViewController: UIViewController {
         label.text = .loc.Profile.DescriptionLabel.title
         return label
     }()
-    
+
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = Assets.ypLightGrey.color
@@ -117,7 +117,7 @@ class ProfileEditViewController: UIViewController {
         textView.delegate = self
         return textView
     }()
-    
+
     private lazy var descriptionStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,7 +127,7 @@ class ProfileEditViewController: UIViewController {
         stackView.addArrangedSubview(descriptionTextView)
         return stackView
     }()
-    
+
     private lazy var websiteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +136,7 @@ class ProfileEditViewController: UIViewController {
         label.text = .loc.Profile.WebsiteLabel.title
         return label
     }()
-    
+
     private lazy var websiteTextField: UITextField = {
         let textField = UITextField()
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
@@ -151,17 +151,16 @@ class ProfileEditViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
+
     private lazy var websiteStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.addArrangedSubview(websiteLabel)
-        stackView.addArrangedSubview(websiteTextField)
         return stackView
     }()
-    
+
     private lazy var commonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -172,7 +171,7 @@ class ProfileEditViewController: UIViewController {
         stackView.addArrangedSubview(websiteStackView)
         return stackView
     }()
-    
+
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -180,115 +179,146 @@ class ProfileEditViewController: UIViewController {
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+
+    private let contentViewForScrollView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = Assets.ypWhite.color
+        return contentView
+    }()
+
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = Assets.ypWhite.color
+        scrollView.isScrollEnabled = true
+        return scrollView
+    }()
+
     init(presenter: some ProfileEditPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) { nil }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = nil
         view.backgroundColor = Assets.ypWhite.color
         presenter.viewDidLoad()
+        websiteTextField.delegate = self
         setupSubview()
         layoutSubviews()
         navigationController?.navigationBar.prefersLargeTitles = false
         updateProfileDetails()
-        presenter.updateUserPicImage()
+        updateUserPic()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
         userProfileImageView.layer.masksToBounds = true
     }
-    
-    //MARK: - Private
+
+    // MARK: - Private
     private func updateProfileDetails() {
         userNameTextField.text = presenter.profile.name
         descriptionTextView.text = presenter.profile.description
         websiteTextField.text = presenter.profile.website
     }
-    
-    //MARK: - Public
-    func updateUserPic(with image: UIImage) {
-        userProfileImageView.kf.indicatorType = .activity
-        userProfileImageView.image = image
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+        scrollView.setContentOffset(CGPoint.zero, animated: true)
     }
-    
+
+    private func updateUserPic() {
+        userProfileImageView.kf.indicatorType = .activity
+        let profileImageString = presenter.profile.userPic
+             guard
+                 let url = URL(string: profileImageString)
+             else {
+                 print("Failed to create full URL")
+                 return
+             }
+        userProfileImageView.kf.setImage(with: url)
+    }
+
     @objc private func userProfileImageTapped() {
         userProfileImageDownloadLinkTextField.isHidden  = false
     }
-    
+
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
     }
-    
+
     private func setupSubview() {
         view.addSubview(closeButton)
-        view.addSubview(commonStackView)
-        view.addSubview(userProfileImageView)
-        view.addSubview(userProfileImageDownloadLinkTextField)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentViewForScrollView)
+        contentViewForScrollView.addSubview(commonStackView)
+        contentViewForScrollView.addSubview(websiteTextField)
+        contentViewForScrollView.addSubview(userProfileImageView)
+        contentViewForScrollView.addSubview(userProfileImageDownloadLinkTextField)
         userProfileImageView.addSubview(userProfileImageOverlayView)
         userProfileImageView.addSubview(editImagelabel)
     }
-    
+
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            userProfileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            userProfileImageView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
+
+            scrollView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            contentViewForScrollView.widthAnchor.constraint(equalToConstant: view.bounds.width),
+            contentViewForScrollView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentViewForScrollView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentViewForScrollView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentViewForScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+
+            userProfileImageView.centerXAnchor.constraint(equalTo: contentViewForScrollView.centerXAnchor),
+            userProfileImageView.topAnchor.constraint(equalTo: contentViewForScrollView.topAnchor),
             userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
-            
+
             userProfileImageOverlayView.topAnchor.constraint(equalTo: userProfileImageView.topAnchor),
             userProfileImageOverlayView.bottomAnchor.constraint(equalTo: userProfileImageView.bottomAnchor),
             userProfileImageOverlayView.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
             userProfileImageOverlayView.trailingAnchor.constraint(equalTo: userProfileImageView.trailingAnchor),
             userProfileImageOverlayView.widthAnchor.constraint(equalToConstant: 70),
             userProfileImageOverlayView.heightAnchor.constraint(equalToConstant: 70),
-            
+
             editImagelabel.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
             editImagelabel.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
             editImagelabel.widthAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
-            
-            userProfileImageDownloadLinkTextField.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 4),
-            userProfileImageDownloadLinkTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            userProfileImageDownloadLinkTextField.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor,
+                                                                       constant: 4),
+            userProfileImageDownloadLinkTextField.centerXAnchor.constraint(equalTo:
+                                                                            contentViewForScrollView.centerXAnchor),
             userProfileImageDownloadLinkTextField.heightAnchor.constraint(equalToConstant: 44),
             userProfileImageDownloadLinkTextField.widthAnchor.constraint(equalToConstant: 250),
-            
-            commonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            commonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
             commonStackView.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 24),
-            
+            commonStackView.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
+            commonStackView.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
+
             userNameStackView.topAnchor.constraint(equalTo: commonStackView.topAnchor),
             userNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            
+
+            websiteTextField.topAnchor.constraint(equalTo: commonStackView.bottomAnchor, constant: 8),
+            websiteTextField.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
+            websiteTextField.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
             websiteTextField.heightAnchor.constraint(equalToConstant: 44),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24),
+
+            descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24)
         ])
-    }
-}
-// MARK: - ProfileEditViewProtocol
-
-extension ProfileEditViewController: ProfileEditViewProtocol {
-    //TODO: -
-}
-
-extension ProfileEditViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: textView.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        textView.constraints.forEach { (constraint) in
-            if constraint.firstAttribute == .height {
-                constraint.constant = estimatedSize.height
-            }
-        }
     }
 }

@@ -7,5 +7,4 @@
 
 import UIKit
 
-protocol ProfileButtonFactoryProtocol {
-  }
+protocol ProfileButtonFactoryProtocol {}

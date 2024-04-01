@@ -10,8 +10,7 @@ import UIKit
 protocol ProfileEditRouterProtocol {}
 
 final class ProfileEditRouter: ProfileEditRouterProtocol {
-    
+
     // MARK: - Properties
     weak var viewController: UIViewController?
-
 }

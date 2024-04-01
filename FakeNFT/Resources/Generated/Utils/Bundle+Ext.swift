@@ -14,3 +14,4 @@ extension Bundle {
         return Bundle(for: __.self)
     }
 }
+// swiftlint:enable type_name

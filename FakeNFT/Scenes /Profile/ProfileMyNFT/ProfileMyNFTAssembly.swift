@@ -8,7 +8,7 @@
 import UIKit
 
 final class ProfileMyNFTAssembly {
- 
+
     // MARK: - Public
 
     static func assemble() -> UIViewController {
@@ -18,7 +18,7 @@ final class ProfileMyNFTAssembly {
 
         presenter.view = view
         router.viewController = view
-        
+
         return view
     }
 }

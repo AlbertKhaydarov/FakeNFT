@@ -29,7 +29,6 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
-    
 
 }
 

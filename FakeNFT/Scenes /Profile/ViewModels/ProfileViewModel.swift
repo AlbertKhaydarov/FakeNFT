@@ -14,13 +14,17 @@ struct ProfileViewModel: Decodable {
     let website: String
 }
 
+// MARK: - Mock data
+// swiftlint:disable all
 extension ProfileViewModel {
     static func getProfile() -> ProfileViewModel {
         .init(
             name: "IOS разработчик",
             userPic: "https://careers.itmo.ru/images/company/small/logo_756.png",
-            description: "Групповой проект, чтобы научиться работать в команде. That’s one small step for man. One giant leap for mankind ",
+            description:
+            "Групповой проект, чтобы научиться работать в команде. That’s one small step for man. One giant leap for mankind",
             website: "https://practicum.yandex.ru/ios-developer"
         )
     }
 }
+// swiftlint:enable all

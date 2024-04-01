@@ -7,26 +7,25 @@
 
 import UIKit
 
-protocol ProfileRouterProtocol{
-//    func switchToProfileEditView(from: UIViewController)
-    func switchToProfileEditView(from: UIViewController, profile: ProfileViewModel)
+protocol ProfileRouterProtocol {
+    func switchToProfileEditView(profile: ProfileViewModel)
     func switchToProfileMyNFTView()
     func switchToProfileFavoriteView()
     func switchToProfileUserWebViewViewController(with url: URL)
 }
 
 final class ProfileRouter: ProfileRouterProtocol {
- 
+
     // MARK: - Properties
-    
+
     weak var viewController: UIViewController?
-    
+
     // MARK: - Public
-    func switchToProfileEditView(from: UIViewController, profile: ProfileViewModel) {
+    func switchToProfileEditView(profile: ProfileViewModel) {
         let destination = ProfileEditAssembly.assemble(profile: profile)
-        from.present(destination, animated: true)
+        viewController?.present(destination, animated: true)
     }
-    
+
     func switchToProfileMyNFTView() {
         guard let navigationController = viewController?.navigationController else {
             assertionFailure("NavigationController is nil")
@@ -36,7 +35,7 @@ final class ProfileRouter: ProfileRouterProtocol {
         destination.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(destination, animated: true)
     }
-    
+
     func switchToProfileFavoriteView() {
         guard let navigationController = viewController?.navigationController else {
             assertionFailure("NavigationController is nil")
@@ -46,7 +45,7 @@ final class ProfileRouter: ProfileRouterProtocol {
         destination.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(destination, animated: true)
     }
-    
+
     func switchToProfileUserWebViewViewController(with url: URL) {
         let destination = ProfileUserWebViewAssembly.assemble(with: url)
         destination.modalPresentationStyle = .fullScreen

@@ -32,7 +32,6 @@ final class SplashPresenter {
 
 extension SplashPresenter: ISplashPresenter {
     func viewDidLoad() {
-        // TODO: implement entry logic
         router.openMainScreen()
     }
 }

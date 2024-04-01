@@ -8,16 +8,16 @@
 import UIKit
 
 class ProfileViewTableViewCell: UITableViewCell {
-    
+
     // MARK: - Properties
     static let profileViewCellIdentifier = String(describing: ProfileViewTableViewCell.self)
-    
+
     private var presenter: ProfilePresenterProtocol?
-    
+
     private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,
                                            .loc.Profile.FavoriteNFTButton.title,
                                            .loc.Profile.AboutDesignerButton.title]
-    
+
     private lazy var accessoryImageView: UIImageView = {
         let сhevronImage = UIImage(systemName: "chevron.forward")
         let imageView = UIImageView(image: сhevronImage)
@@ -26,7 +26,7 @@ class ProfileViewTableViewCell: UITableViewCell {
         imageView.tintColor = Assets.ypBlack.color
         return imageView
     }()
-    
+
     private lazy var titleButtonsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ class ProfileViewTableViewCell: UITableViewCell {
         label.textColor = Assets.ypBlack.color
         return label
     }()
-    
+
     private lazy var countLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ class ProfileViewTableViewCell: UITableViewCell {
         label.textColor = Assets.ypBlack.color
         return label
     }()
-    
+
     private lazy var labelsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@ class ProfileViewTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(countLabel)
         return stackView
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.presenter = nil
@@ -61,31 +61,30 @@ class ProfileViewTableViewCell: UITableViewCell {
         setupSubview()
         layoutSetup()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - Private
+
+    // MARK: - Private
     private func setupSubview() {
         contentView.addSubview(labelsStackView)
         contentView.addSubview(accessoryImageView)
     }
-    
+
     private func layoutSetup() {
         NSLayoutConstraint.activate([
             labelsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             labelsStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+
             accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
-    //MARK: - Public
+
+    // MARK: - Public
     func configureCell(indexPath: IndexPath, with presenter: ProfilePresenterProtocol) {
         titleButtonsLabel.text = buttonsTitles[indexPath.row]
         countLabel.text = "(\(presenter.countTitleButtons[indexPath.row]))"
     }
-    
-   
 }

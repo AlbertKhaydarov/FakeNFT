@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileButtonFactory: ProfileButtonFactoryProtocol {
-    
+
     func createButton(with title: String) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
@@ -17,7 +17,7 @@ class ProfileButtonFactory: ProfileButtonFactoryProtocol {
 
         let shevronImage = UIImage(systemName: "chevron.forward")
         button.setImage(shevronImage, for: .normal)
-        
+
         setupButton(button: button)
         layoutSubviews(button: button)
         return button
@@ -38,11 +38,11 @@ class ProfileButtonFactory: ProfileButtonFactoryProtocol {
             right: -buttonWidth
         )
     }
-    
+
     private func layoutSubviews(button: UIButton) {
         NSLayoutConstraint.activate([
             button.heightAnchor.constraint(equalToConstant: 54),
-            button.widthAnchor.constraint(equalToConstant: 375),            
+            button.widthAnchor.constraint(equalToConstant: 375)
         ])
     }
 }
