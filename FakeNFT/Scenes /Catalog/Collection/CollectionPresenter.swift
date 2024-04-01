@@ -14,6 +14,8 @@ protocol ICollectionPresenter {
 
     func favoriteButtonTapped(id: String, state: Bool)
     func cartButtonTapped(id: String, state: Bool)
+
+    func didSelectNft(id: String)
 }
 
 final class CollectionPresenter {
@@ -51,6 +53,8 @@ final class CollectionPresenter {
     }
 
     private func loadAllInfo() {
+        view?.showLoader()
+
         loadProfile()
         loadOrder()
         loadNft()
@@ -104,7 +108,7 @@ final class CollectionPresenter {
     private func assembleViewModel() {
         guard let nfts, let profileInfo, let order else { return }
 
-        let collectionViewModel = nfts.map { nft in
+        let collectionViewModel = nfts.sorted(by: { $0.name < $1.name }).map { nft in
             CollectionViewModel(
                 id: nft.id,
                 name: nft.name,
@@ -123,6 +127,7 @@ final class CollectionPresenter {
     }
 
     private func showError() {
+        self.view?.dismissLoader()
         self.view?.showError(
             .init(
                 message: .loc.Common.errorTitle,
@@ -138,7 +143,6 @@ final class CollectionPresenter {
 
 extension CollectionPresenter: ICollectionPresenter {
     func viewDidLoad() {
-        view?.showLoader()
         loadAllInfo()
     }
 
@@ -181,12 +185,26 @@ extension CollectionPresenter: ICollectionPresenter {
     }
 
     func cartButtonTapped(id: String, state: Bool) {
-        orderService.saveOrder(nftId: id) { [weak self] order in
+        guard let order else { return }
+
+        var ids = order.nfts
+
+        if state {
+            ids.append(id)
+        } else {
+            ids = ids.filter { $0 != id }
+        }
+
+        orderService.updateOrder(nftIds: ids) { [weak self] order in
             guard let order else {
                 self?.showError()
                 return
             }
             self?.order = order
         }
+    }
+
+    func didSelectNft(id: String) {
+        router.openNftDetal(with: id)
     }
 }

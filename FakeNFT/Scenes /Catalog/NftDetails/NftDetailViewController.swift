@@ -23,15 +23,7 @@ final class NftDetailViewController: UIViewController {
         collectionView.isPagingEnabled = true
         return collectionView
     }()
-
-    private lazy var closeButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = .closeButton
-        button.setImage(UIImage(named: "close"), for: .normal)
-        button.addTarget(self, action: #selector(close), for: .touchUpInside)
-        return button
-    }()
-
+    
     private lazy var pageControl = LinePageControl()
     internal lazy var activityIndicator = UIActivityIndicatorView()
 
@@ -74,18 +66,6 @@ final class NftDetailViewController: UIViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: collectionView.safeAreaLayoutGuide.bottomAnchor)
         ])
-
-        view.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-    }
-
-    @objc
-    private func close() {
-        dismiss(animated: true)
     }
 }
 

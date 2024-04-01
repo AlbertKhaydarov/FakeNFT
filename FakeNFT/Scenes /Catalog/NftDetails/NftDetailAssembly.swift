@@ -1,20 +1,19 @@
 import UIKit
 
 public final class NftDetailAssembly {
+    // MARK: - Public
 
-    private let servicesAssembler: ServicesAssembly
+    static func assemble(with input: NftDetailInput) -> UIViewController {
+        let nftService: INftService = NftService(networkClient: DefaultNetworkClient(), storage: NftStorage())
 
-    init(servicesAssembler: ServicesAssembly) {
-        self.servicesAssembler = servicesAssembler
-    }
-
-    public func build(with input: NftDetailInput) -> UIViewController {
         let presenter = NftDetailPresenterImpl(
             input: input,
-            service: servicesAssembler.nftService
+            service: nftService
         )
         let viewController = NftDetailViewController(presenter: presenter)
+
         presenter.view = viewController
+
         return viewController
     }
 }

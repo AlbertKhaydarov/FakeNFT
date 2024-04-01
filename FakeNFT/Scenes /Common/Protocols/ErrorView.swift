@@ -14,8 +14,8 @@ extension ErrorView where Self: UIViewController {
 
     func showError(_ model: ErrorModel) {
         let alert = UIAlertController(
-            title: model.message,
-            message: nil,
+            title: nil,
+            message: model.message,
             preferredStyle: .alert
         )
         let action = UIAlertAction(title: model.actionText, style: UIAlertAction.Style.default) {_ in

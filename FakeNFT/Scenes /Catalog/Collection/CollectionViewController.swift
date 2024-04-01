@@ -109,6 +109,7 @@ final class CollectionViewController: UIViewController, ErrorView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
         collectionView.register(VerticalNftCell.self)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
 
         return collectionView
     }()
@@ -255,6 +256,8 @@ extension CollectionViewController: ICollectionView {
     }
 }
 
+// MARK: - IVerticalNftCellDelegate
+
 extension CollectionViewController: IVerticalNftCellDelegate {
     func favoriteButtonTapped(with id: String, isFavorite: Bool) {
         presenter.favoriteButtonTapped(id: id, state: isFavorite)
@@ -262,5 +265,13 @@ extension CollectionViewController: IVerticalNftCellDelegate {
 
     func cartButtonTapped(with id: String, isInCart: Bool) {
         presenter.cartButtonTapped(id: id, state: isInCart)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension CollectionViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.didSelectNft(id: collectionItems[indexPath.row].id)
     }
 }

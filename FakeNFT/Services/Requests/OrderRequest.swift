@@ -22,5 +22,16 @@ struct SaveOrderRequest: NetworkRequest {
 
     var httpMethod: HttpMethod { .put }
 
-    var dto: Encodable? { nftIds }
+    var data: Data? {
+        var dataString = "nfts="
+        if nftIds.isEmpty {
+            dataString = "null"
+        } else {
+            nftIds.forEach {
+                dataString += "\($0),"
+            }
+        }
+
+        return dataString.data(using: .utf8)
+    }
 }

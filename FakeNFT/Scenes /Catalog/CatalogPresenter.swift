@@ -40,6 +40,8 @@ final class CatalogPresenter {
     }
 
     private func loadCatalogItems() {
+        view?.showLoader()
+
         service.loadCollectionItems { [weak self] in
             switch $0 {
             case let .success(models):
@@ -89,7 +91,6 @@ extension CatalogPresenter: ICatalogPresenter {
     }
 
     func viewDidLoad() {
-        view?.showLoader()
         loadCatalogItems()
     }
 

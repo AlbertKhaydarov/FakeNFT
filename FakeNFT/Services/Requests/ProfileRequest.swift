@@ -25,7 +25,7 @@ struct SaveProfileRequest: NetworkRequest {
     var data: Data? {
         var dataString = "name=\(requestDto.name)&description=\(requestDto.description)&website=\(requestDto.website)&likes="
         if requestDto.likes.isEmpty {
-            dataString += ","
+            dataString += "null"
         } else {
             requestDto.likes.forEach {
                 dataString += "\($0),"

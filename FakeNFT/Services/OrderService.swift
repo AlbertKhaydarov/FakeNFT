@@ -11,7 +11,7 @@ typealias OrderResult = (Order?) -> Void
 
 protocol IOrderService {
     func loadOrder(completion: @escaping OrderResult)
-    func saveOrder(nftId: String, completion: @escaping OrderResult)
+    func updateOrder(nftIds: [String], completion: @escaping OrderResult)
 }
 
 final class OrderService: IOrderService {
@@ -43,8 +43,8 @@ final class OrderService: IOrderService {
         }
     }
 
-    func saveOrder(nftId: String, completion: @escaping OrderResult) {
-        let request = SaveOrderRequest(nftIds: [nftId])
+    func updateOrder(nftIds: [String], completion: @escaping OrderResult) {
+        let request = SaveOrderRequest(nftIds: nftIds)
 
         networkClient.send(
             request: request,
