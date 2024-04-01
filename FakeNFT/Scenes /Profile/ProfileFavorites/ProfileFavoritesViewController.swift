@@ -24,10 +24,7 @@ class ProfileFavoritesViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(
-            ProfileFavoritesCollectionViewCell.self,
-            forCellWithReuseIdentifier: ProfileFavoritesCollectionViewCell.profileFavoritesCellIdentifier
-        )
+        collectionView.register(ProfileFavoritesCollectionViewCell.self)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = Assets.ypWhite.color
         collectionView.dataSource = self
@@ -103,7 +100,7 @@ extension ProfileFavoritesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProfileFavoritesCollectionViewCell.profileFavoritesCellIdentifier,
+            withReuseIdentifier: ProfileFavoritesCollectionViewCell.defaultReuseIdentifier,
             for: indexPath) as? ProfileFavoritesCollectionViewCell
         else {
             return UICollectionViewCell()

@@ -19,8 +19,7 @@ class ProfileMyNFTViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = Assets.ypWhite.color
-        tableView.register(ProfileMyNFTTableViewCell.self,
-                           forCellReuseIdentifier: ProfileMyNFTTableViewCell.profileMyNFTCellIdentifier)
+        tableView.register(ProfileMyNFTTableViewCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
@@ -111,7 +110,7 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileMyNFTTableViewCell.profileMyNFTCellIdentifier,
+            withIdentifier: ProfileMyNFTTableViewCell.defaultReuseIdentifier,
             for: indexPath) as? ProfileMyNFTTableViewCell
         else {
             return UITableViewCell()

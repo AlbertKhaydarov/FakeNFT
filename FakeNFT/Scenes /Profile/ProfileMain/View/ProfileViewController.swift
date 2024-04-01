@@ -74,8 +74,7 @@ final class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = Assets.ypWhite.color
-        tableView.register(ProfileViewTableViewCell.self,
-                           forCellReuseIdentifier: ProfileViewTableViewCell.profileViewCellIdentifier)
+        tableView.register(ProfileViewTableViewCell.self)
         tableView.isScrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
@@ -97,14 +96,11 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = nil
-        presenter.viewDidLoad()
+        setupView()
         setupSubview()
         layoutSubviews()
         addEditButton()
         updateProfileDetails()
-        navigationController?.navigationBar.prefersLargeTitles = false
-        activityIndicator.startAnimating()
         updateUserPic()
     }
 
@@ -131,6 +127,13 @@ final class ProfileViewController: UIViewController {
     @objc private func websiteLinkLabelTapped() {
         guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
         presenter.switchToProfileUserWebViewViewController(with: url)
+    }
+
+    private func setupView() {
+        self.title = nil
+        presenter.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = false
+        activityIndicator.startAnimating()
     }
 
     private func setupSubview() {
@@ -189,7 +192,6 @@ final class ProfileViewController: UIViewController {
         guard
             let url = URL(string: profileImageString)
         else {
-            print("Failed to create full URL")
             return
         }
         userProfileImageView.kf.setImage(with: url)
@@ -208,8 +210,7 @@ extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileViewTableViewCell.profileViewCellIdentifier,
-            for: indexPath) as? ProfileViewTableViewCell
+                withIdentifier: ProfileViewTableViewCell.defaultReuseIdentifier) as? ProfileViewTableViewCell
         else {
             return UITableViewCell()
         }
