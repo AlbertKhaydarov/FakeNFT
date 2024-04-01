@@ -7,11 +7,9 @@ final class TabBarController: UITabBarController {
         static let cartImageName = "figure.wave"
         static let statisticsImageName = "figure.wave"
     }
-    
-    // Dependencies
-    
+
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Assets.ypWhite.color
@@ -19,9 +17,9 @@ final class TabBarController: UITabBarController {
         setupViewControllers()
         setupNavigationAppearance()
     }
-    
+
     // MARK: = Private
-    
+
     private func setupViewControllers() {
         let profile = prepareViewController(
             ProfileAssembly.assemble(),
@@ -29,32 +27,32 @@ final class TabBarController: UITabBarController {
             title: .loc.Profile.title,
             tag: 0
         )
-        
+
         let catalog = prepareViewController(
             CatalogAssembly.assemble(),
             image: Constant.catalogImageIcon,
             title: .loc.Catalog.title,
             tag: 1
         )
-        
+
         let cart = prepareViewController(
             CartAssembly.assemble(),
             image: .init(systemName: Constant.cartImageName),
             title: .loc.Cart.title,
             tag: 2
         )
-        
+
         let statistics = prepareViewController(
             StatisticsAssembly.assemble(),
             image: .init(systemName: Constant.statisticsImageName),
             title: .loc.Statistics.title,
             tag: 3
         )
-        
+
         viewControllers = [profile, catalog, cart, statistics]
         selectedIndex = 1
     }
-    
+
     private func prepareViewController(
         _ viewController: UIViewController,
         image: UIImage?,
@@ -66,12 +64,14 @@ final class TabBarController: UITabBarController {
         viewController.tabBarItem = tabBarItem
         return navigationController
     }
-    
+
     private func setupNavigationAppearance() {
         UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
         UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .highlighted)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear],
+                                                            for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear],
+                                                            for: .highlighted)
     }
 }

@@ -18,4 +18,3 @@ final class ProfileUserWebViewAssembly {
         return view
     }
 }
-

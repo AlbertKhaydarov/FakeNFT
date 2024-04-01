@@ -11,15 +11,15 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     static let profileMyNFTCellIdentifier = String(describing: ProfileMyNFTTableViewCell.self)
-    
+
     private var presenter: ProfileMyNFTPresenterProtocol?
-    
+
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -28,13 +28,13 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var starsRatingImageView: RatingStarsView = {
         let imageView = RatingStarsView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +43,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var nameAndRatingStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(authorLabel)
         return stackView
     }()
-    
+
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +74,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    
+
     private lazy var priceStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,15 +84,15 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(priceTitleLabel)
         stackView.addArrangedSubview(priceLabel)
         return stackView
-    }() 
-    
+    }()
+
     lazy var favoriteActiveButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         return button
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.presenter = nil
@@ -100,11 +100,11 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         setupSubview()
         layoutSetup()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         nftImageView.kf.cancelDownloadTask()
@@ -113,8 +113,8 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         authorLabel.text = nil
         priceLabel.text = nil
     }
-    
-    //MARK: - Public
+
+    // MARK: - Public
     func configureCell(indexPath: IndexPath, with presenter: ProfileMyNFTPresenterProtocol) {
         downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
         nameLabel.text = presenter.myNFT[indexPath.row].name
@@ -123,18 +123,18 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
         setIsLiked(isLiked: presenter.myNFT[indexPath.row].isFavorite)
     }
-    
+
     func setIsLiked(isLiked: Bool) {
         var favoriteActiveImage = UIImage()
         favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
         self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
-    
-    //MARK: - Private
+
+    // MARK: - Private
    @objc private func likeButtonClicked() {
-        //TODO: -
+        // MARK: - TBD in 2nd part
     }
-    
+
     private func setupSubview() {
         contentView.addSubview(nftImageView)
         contentView.addSubview(nameAndRatingStackView)
@@ -144,7 +144,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
         nftImageView.layer.cornerRadius = 12
         nftImageView.layer.masksToBounds = true
     }
-    
+
     private func layoutSetup() {
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -158,20 +158,21 @@ class ProfileMyNFTTableViewCell: UITableViewCell {
             favoriteActiveButton.widthAnchor.constraint(equalToConstant: 42),
             favoriteActiveButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
             favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
-            
+
             nameAndRatingStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
             nameAndRatingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -39),
             nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nameAndRatingStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            priceStackView.leadingAnchor.constraint(greaterThanOrEqualTo: nameAndRatingStackView.trailingAnchor, constant: 39),
+            priceStackView.leadingAnchor.constraint(greaterThanOrEqualTo: nameAndRatingStackView.trailingAnchor,
+                                                    constant: 39),
             priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -39),
             priceStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 49),
-            priceStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -49),
+            priceStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -49)
         ])
     }
-    
-    //MARK: - Download images
+
+    // MARK: - Download images
     private func downloadImage(path: String) {
         guard let url = URL(string: path) else { return }
         nftImageView.kf.indicatorType = .activity

@@ -13,18 +13,18 @@ protocol ProfileFavoritesPresenterProtocol {
 }
 
 final class ProfileFavoritesPresenter {
-    
+
     // MARK: Properties
     var favoritesNFT: [MyNFTViewModel] = []
-    
+
     weak var view: (any ProfileFavoritesViewProtocol)?
     private let router: any ProfileFavoritesRouterProtocol
-    
+
     init(router: some ProfileFavoritesRouterProtocol) {
         self.router = router
         getMockData()
     }
-    
+
     // MARK: - Generate Mock Data
     func getMockData() {
         favoritesNFT.append(MyNFTViewModel.getNFT())
@@ -37,8 +37,6 @@ final class ProfileFavoritesPresenter {
 
 extension ProfileFavoritesPresenter: ProfileFavoritesPresenterProtocol {
     func viewDidLoad() {
-        //TODO: -
+        // MARK: - TBD in 2nd partb
     }
-    
-    
 }

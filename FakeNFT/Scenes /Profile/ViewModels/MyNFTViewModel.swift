@@ -16,7 +16,7 @@ struct MyNFTViewModel {
     let isFavorite: Bool
 }
 
-//MARK: - Mock data
+// MARK: - Mock data
 extension MyNFTViewModel {
     static func getNFT() -> MyNFTViewModel {
         .init(

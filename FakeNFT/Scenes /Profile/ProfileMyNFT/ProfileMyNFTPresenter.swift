@@ -13,19 +13,19 @@ protocol ProfileMyNFTPresenterProtocol {
 }
 
 final class ProfileMyNFTPresenter {
+
     // MARK: Properties
-    
+
     var myNFT: [MyNFTViewModel] = []
-    
-    
+
     weak var view: (any ProfileMyNFTViewProtocol)?
     private let router: any ProfileMyNFTRouterProtocol
-    
+
     init(router: some ProfileMyNFTRouterProtocol) {
         self.router = router
         getMockData()
     }
-    
+
     // MARK: - Generate Mock Data
     func getMockData() {
         myNFT.append(MyNFTViewModel.getNFT())
@@ -37,8 +37,5 @@ final class ProfileMyNFTPresenter {
 // MARK: - ProfileEditPresenterProtocol
 
 extension ProfileMyNFTPresenter: ProfileMyNFTPresenterProtocol {
-    func viewDidLoad() {
-    }
-    
-    
+    func viewDidLoad() {}
 }

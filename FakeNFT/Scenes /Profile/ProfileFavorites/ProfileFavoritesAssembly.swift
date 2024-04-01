@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 final class ProfileFavoritesAssembly {
- 
+
     // MARK: - Public
 
     static func assemble() -> UIViewController {
@@ -20,7 +20,7 @@ final class ProfileFavoritesAssembly {
 
         presenter.view = view
         router.viewController = view
-        
+
         return view
     }
 }

@@ -7,23 +7,22 @@
 
 import Foundation
 
-
 protocol ProfileUserWebViewPresenterProtocol {
     func didUpdateProgressValue(_ newValue: Double)
     func viewDidLoad()
 }
 
 final class ProfileUserWebViewPresenter {
-    
+
     // MARK: Properties
     weak var view: (any ProfileUserWebViewViewControllerProtocol)?
-    
+
     private let url: URL
-    
+
     init(url: URL) {
         self.url = url
     }
-    
+
     // MARK: - Public
     func didUpdateProgressValue(_ newValue: Double) {
         let newProgressValue = Float(newValue)
@@ -31,7 +30,7 @@ final class ProfileUserWebViewPresenter {
         let shouldHideProgress = shouldHideProgress(for: newProgressValue)
         view?.setProgressHidden(shouldHideProgress)
     }
-    
+
     func shouldHideProgress(for value: Float) -> Bool {
         abs(value - 1.0) <= 0.0001
     }

@@ -10,10 +10,7 @@ import UIKit
 protocol ProfileMyNFTRouterProtocol {}
 
 final class ProfileMyNFTRouter: ProfileMyNFTRouterProtocol {
-    
+
     // MARK: - Properties
     weak var viewController: UIViewController?
-    // MARK: - Public
-  
-    // MARK: - Private
 }

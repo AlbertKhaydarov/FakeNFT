@@ -11,3 +11,4 @@ import Foundation
 extension String {
     typealias loc = Localization
 }
+// swiftlint:enable type_name

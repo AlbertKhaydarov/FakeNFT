@@ -10,10 +10,7 @@ import UIKit
 protocol ProfileFavoritesRouterProtocol {}
 
 final class ProfileFavoritesRouter: ProfileFavoritesRouterProtocol {
-    
+
     // MARK: - Properties
     weak var viewController: UIViewController?
-    // MARK: - Public
-  
-    // MARK: - Private
 }
