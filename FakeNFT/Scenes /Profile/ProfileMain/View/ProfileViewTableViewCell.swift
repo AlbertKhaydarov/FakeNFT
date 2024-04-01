@@ -7,11 +7,9 @@
 
 import UIKit
 
-class ProfileViewTableViewCell: UITableViewCell {
+class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Properties
-    static let profileViewCellIdentifier = String(describing: ProfileViewTableViewCell.self)
-
     private var presenter: ProfilePresenterProtocol?
 
     private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,

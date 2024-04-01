@@ -7,9 +7,7 @@
 
 import UIKit
 
-class ProfileFavoritesCollectionViewCell: UICollectionViewCell {
-
-    static let profileFavoritesCellIdentifier = String(describing: ProfileFavoritesCollectionViewCell.self)
+class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()

@@ -7,11 +7,9 @@
 import Kingfisher
 import UIKit
 
-class ProfileMyNFTTableViewCell: UITableViewCell {
+class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Properties
-    static let profileMyNFTCellIdentifier = String(describing: ProfileMyNFTTableViewCell.self)
-
     private var presenter: ProfileMyNFTPresenterProtocol?
 
     private lazy var nftImageView: UIImageView = {

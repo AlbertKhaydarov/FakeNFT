@@ -147,6 +147,7 @@ class ProfileEditViewController: UIViewController {
         textField.font = .bodyRegular
         textField.textColor = Assets.ypBlack.color
         textField.becomeFirstResponder()
+        textField.delegate = self
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -204,17 +205,11 @@ class ProfileEditViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = nil
-        view.backgroundColor = Assets.ypWhite.color
-        presenter.viewDidLoad()
-        websiteTextField.delegate = self
+        setupView()
         setupSubview()
         layoutSubviews()
-        navigationController?.navigationBar.prefersLargeTitles = false
         updateProfileDetails()
         updateUserPic()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
     }
 
     override func viewDidLayoutSubviews() {
@@ -241,7 +236,6 @@ class ProfileEditViewController: UIViewController {
              guard
                  let url = URL(string: profileImageString)
              else {
-                 print("Failed to create full URL")
                  return
              }
         userProfileImageView.kf.setImage(with: url)
@@ -253,6 +247,15 @@ class ProfileEditViewController: UIViewController {
 
     @objc private func closeButtonTapped() {
         dismiss(animated: true)
+    }
+
+    private func setupView() {
+        self.title = nil
+        presenter.viewDidLoad()
+        view.backgroundColor = Assets.ypWhite.color
+        navigationController?.navigationBar.prefersLargeTitles = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
 
     private func setupSubview() {
