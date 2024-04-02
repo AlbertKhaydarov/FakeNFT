@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject {}
+protocol ProfileViewProtocol: AnyObject {
+    func updateProfileDetails(profileModel: ProfileViewModel)
+}
 
 final class ProfileViewController: UIViewController {
 
@@ -81,6 +83,8 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    private var profileViewModel: ProfileViewModel?
+
     lazy var activityIndicator: UIActivityIndicatorView = {
         activityIndicator =  UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -100,8 +104,6 @@ final class ProfileViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         addEditButton()
-        updateProfileDetails()
-        updateUserPic()
     }
 
     override func viewDidLayoutSubviews() {
@@ -125,8 +127,29 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func websiteLinkLabelTapped() {
-        guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
+        guard let profileViewModel = profileViewModel,
+        let url = URL(string: profileViewModel.website)
+        else { return }
         presenter.switchToProfileUserWebViewViewController(with: url)
+    }
+
+    func updateProfileDetails(profileModel: ProfileViewModel) {
+        userNamelabel.text = profileModel.name
+        descriptionLabel.text = profileModel.description
+        websiteLinkLabel.text = profileModel.website
+        updateUserPic(url: profileModel.userPic)
+        self.profileViewModel = profileModel
+        tableView.reloadData()
+    }
+
+    private func updateUserPic(url: String) {
+        userProfileImageView.kf.indicatorType = .activity
+        guard
+            let url = URL(string: url)
+        else {
+            return
+        }
+        userProfileImageView.kf.setImage(with: url)
     }
 
     private func setupView() {
@@ -178,24 +201,6 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -221)
         ])
     }
-
-    private func updateProfileDetails() {
-        let profileModel = presenter.getProfileDetails()
-        userNamelabel.text = profileModel.name
-        descriptionLabel.text = profileModel.description
-        websiteLinkLabel.text = profileModel.website
-    }
-
-    private func updateUserPic() {
-        userProfileImageView.kf.indicatorType = .activity
-        let profileImageString = presenter.getProfileDetails().userPic
-        guard
-            let url = URL(string: profileImageString)
-        else {
-            return
-        }
-        userProfileImageView.kf.setImage(with: url)
-    }
 }
 
 // MARK: - ProfileViewProtocol
@@ -215,7 +220,9 @@ extension ProfileViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        cell.configureCell(indexPath: indexPath, with: presenter)
+        if let profileViewModel = profileViewModel {
+            cell.configureCell(indexPath: indexPath, with: profileViewModel)
+        }
         return cell
     }
 }
@@ -230,7 +237,9 @@ extension ProfileViewController: UITableViewDelegate {
         } else if indexPath.row == 1 {
             presenter.switchToProfileFavoriteView()
         } else if indexPath.row == 2 {
-            guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
+            guard let profileViewModel = profileViewModel,
+            let url = URL(string: profileViewModel.website)
+            else { return }
             presenter.switchToProfileUserWebViewViewController(with: url)
         }
     }
