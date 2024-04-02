@@ -7,20 +7,21 @@ protocol NftStorage: AnyObject {
     func saveProfile(_ profile: Profile)
     func getProfile() -> Profile?
 
-    func saveProfileMyNFT(_ myNFT: ProfileMyNFT)
-    func getProfileMyNFT(with id: String) -> ProfileMyNFT?
+    func saveProfileMyNFTs(_ myNFTs: [ProfileMyNFT])
+    func getProfileMyNFTs(with id: String) -> ProfileMyNFT?
 }
 
 // Пример простого класса, который сохраняет данные из сети
 final class NftStorageImpl: NftStorage {
+    
     private var storage: [String: Nft] = [:]
 
     private let syncQueue = DispatchQueue(label: "sync-nft-queue")
     private var storageProfile: Profile?
     private let syncQueueProfile = DispatchQueue(label: "sync-profile-queue")
 
-    private var storageProfileMyNFT: ProfileMyNFT?
-    private let syncQueueProfileMyNFT = DispatchQueue(label: "sync-profileProfileMyNFT-queue")
+    private var storageProfileMyNFTs: [ProfileMyNFT]?
+    private let syncQueueProfileMyNFTs = DispatchQueue(label: "sync-profileProfileMyNFT-queue")
 
     func saveNft(_ nft: Nft) {
         syncQueue.async { [weak self] in
@@ -49,16 +50,16 @@ final class NftStorageImpl: NftStorage {
         }
     }
 
-    func saveProfileMyNFT(_ myNFT: ProfileMyNFT) {
-        syncQueueProfileMyNFT.async { [weak self] in
-            self?.storageProfileMyNFT = myNFT
+    func saveProfileMyNFTs(_ myNFTs: [ProfileMyNFT]) {
+        syncQueueProfileMyNFTs.async { [weak self] in
+            self?.storageProfileMyNFTs = myNFTs
         }
     }
 
-    func getProfileMyNFT(with id: String) -> ProfileMyNFT? {
-        syncQueueProfileMyNFT.sync {
-            if let storageProfileMyNFT = storageProfileMyNFT {
-                return storageProfileMyNFT
+    func getProfileMyNFTs(with id: String) -> ProfileMyNFT? {
+        syncQueueProfileMyNFTs.sync {
+            if let profileMyNFT = self.storageProfileMyNFTs?.first(where: { $0.id == id }) {
+                return profileMyNFT
             }
             return nil
         }

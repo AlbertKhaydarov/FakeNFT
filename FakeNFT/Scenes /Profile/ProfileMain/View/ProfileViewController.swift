@@ -123,7 +123,8 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editButtontapped() {
-        presenter.switchToProfileEditView(profile: presenter.getProfileDetails())
+        guard let profileViewModel = profileViewModel else { return }
+        presenter.switchToProfileEditView(profile: profileViewModel)
     }
 
     @objc private func websiteLinkLabelTapped() {
@@ -214,11 +215,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: ProfileViewTableViewCell.defaultReuseIdentifier) as? ProfileViewTableViewCell
-        else {
-            return UITableViewCell()
-        }
+        let cell: ProfileViewTableViewCell = tableView.dequeueReusableCell()
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         if let profileViewModel = profileViewModel {
             cell.configureCell(indexPath: indexPath, with: profileViewModel)
