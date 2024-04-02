@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ProfileMyNFTViewProtocol: AnyObject { }
+protocol ProfileMyNFTViewProtocol: AnyObject { 
+    func updateMyNFTs(myNFTs: [MyNFTViewModel])
+}
 
 class ProfileMyNFTViewController: UIViewController {
 
@@ -35,6 +37,8 @@ class ProfileMyNFTViewController: UIViewController {
         label.isHidden = true
         return label
     }()
+    
+    private var myNFTs: [MyNFTViewModel]?
 
     init(presenter: some ProfileMyNFTPresenterProtocol) {
         self.presenter = presenter
@@ -45,16 +49,23 @@ class ProfileMyNFTViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
         title = .loc.Profile.MyNFTButton.title
         setupSubview()
         layoutSubviews()
         sortButton()
         isStubHidden()
     }
+    
+    func updateMyNFTs(myNFTs: [MyNFTViewModel]) {
+        self.myNFTs = myNFTs
+//        isStubHidden()
+        tableView.reloadData()
+    }
 
     // MARK: - Private
     private func isStubHidden() {
-        if presenter.myNFT.count == 0 {
+        if myNFTs?.count == 0 {
             stubMyNFTLabel.isHidden = false
         } else {
             stubMyNFTLabel.isHidden = true
@@ -82,7 +93,7 @@ class ProfileMyNFTViewController: UIViewController {
     }
 
     private func layoutSubviews() {
-        let height = presenter.myNFT.count * 140
+        let height = (myNFTs?.count ?? 0) * 140
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -100,22 +111,23 @@ class ProfileMyNFTViewController: UIViewController {
 // MARK: - ProfileMyNFTViewProtocol
 
 // MARK: - TBD in the 2nd part
-extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol { }
+extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {}
 
 // MARK: - UITableViewDataSource
 extension ProfileMyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        guard let myNFTs = self.myNFTs else {return 0}
+        return myNFTs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileMyNFTTableViewCell.defaultReuseIdentifier,
-            for: indexPath) as? ProfileMyNFTTableViewCell
-        else {
-            return UITableViewCell()
+        let cell: ProfileMyNFTTableViewCell = tableView.dequeueReusableCell()
+      
+        if let myNFTs = myNFTs {
+            let item = myNFTs[indexPath.row]
+            cell.configureCell(with: item)
         }
-        cell.configureCell(indexPath: indexPath, with: presenter)
+        cell.selectionStyle = .none
         return cell
     }
 }

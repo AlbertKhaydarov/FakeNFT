@@ -8,9 +8,7 @@ import Kingfisher
 import UIKit
 
 class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
-
     // MARK: - Properties
-    private var presenter: ProfileMyNFTPresenterProtocol?
 
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -93,7 +91,6 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.presenter = nil
         contentView.backgroundColor = Assets.ypWhite.color
         setupSubview()
         layoutSetup()
@@ -112,14 +109,23 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         priceLabel.text = nil
     }
 
+   
     // MARK: - Public
-    func configureCell(indexPath: IndexPath, with presenter: ProfileMyNFTPresenterProtocol) {
-        downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
-        nameLabel.text = presenter.myNFT[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: presenter.myNFT[indexPath.row].starsRating)
-        authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
-        priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
-        setIsLiked(isLiked: presenter.myNFT[indexPath.row].isFavorite)
+    func configureCell(with nft: MyNFTViewModel) {
+        downloadImage(path: nft.imagePath)
+        nameLabel.text = nft.name
+        nameLabel.text = nft.imagePath
+        starsRatingImageView.setRatingStars(rating: nft.starsRating)
+        authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(nft.author)"
+        priceLabel.text = "\(nft.price) ETH"
+        setIsLiked(isLiked: nft.isFavorite)
+
+//        downloadImage(path: nft.imagePath) { image in
+//                DispatchQueue.main.async {
+//                    self.nftImageView.image = image
+//                }
+//            }
+     
     }
 
     func setIsLiked(isLiked: Bool) {
@@ -176,4 +182,18 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         nftImageView.kf.indicatorType = .activity
         nftImageView.kf.setImage(with: url)
     }
+//    private func downloadImage(path: String, completion: @escaping (UIImage?) -> Void) {
+//        guard let url = URL(string: path) else { return }
+//        nftImageView.kf.indicatorType = .activity
+//        nftImageView.kf.setImage(with: url) { result in
+//            switch result {
+//            case .success(let value):
+//                completion(value.image)
+//            case .failure(let error):
+//                print("Error downloading image: \(error)")
+//                completion(nil)
+//            }
+//        }
+//    }
+
 }

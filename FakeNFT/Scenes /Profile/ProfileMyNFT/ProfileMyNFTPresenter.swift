@@ -9,33 +9,50 @@ import Foundation
 
 protocol ProfileMyNFTPresenterProtocol {
     func viewDidLoad()
-    var myNFT: [MyNFTViewModel] { get set }
+//    var myNFT: [MyNFTViewModel] { get set }
 }
 
 final class ProfileMyNFTPresenter {
-
+    
     // MARK: Properties
-
-    var myNFT: [MyNFTViewModel] = []
-
+    
+//    var myNFT: [MyNFTViewModel] = []/
+    
     weak var view: (any ProfileMyNFTViewProtocol)?
     private let router: any ProfileMyNFTRouterProtocol
-
-    init(router: some ProfileMyNFTRouterProtocol) {
+    private let service: ProfileMyNftServiceProtocol
+    
+    init(router: some ProfileMyNFTRouterProtocol, service: ProfileMyNftServiceProtocol) {
         self.router = router
-        getMockData()
+        self.service = service
+        
     }
-
-    // MARK: - Generate Mock Data
-    func getMockData() {
-        myNFT.append(MyNFTViewModel.getNFT())
-        myNFT.append(MyNFTViewModel.getNFT())
-        myNFT.append(MyNFTViewModel.getNFT())
+    
+    func getMyNFTs() {
+        service.loadNfts { [weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success(let nfts):
+                let myNfts = nfts.map { item in
+                    return MyNFTViewModel(name: item.name,
+                                          imagePath: item.images[0],
+                                          starsRating: item.rating,
+                                          author: item.author,
+                                          price: item.price,
+                                          isFavorite: false)
+                }
+                self.view?.updateMyNFTs(myNFTs: myNfts)
+            case .failure(let error):
+                assertionFailure("Failed to load Profile \(error)")
+            }
+        }
     }
 }
 
 // MARK: - ProfileEditPresenterProtocol
 
 extension ProfileMyNFTPresenter: ProfileMyNFTPresenterProtocol {
-    func viewDidLoad() {}
+    func viewDidLoad() {
+        getMyNFTs()
+    }
 }
