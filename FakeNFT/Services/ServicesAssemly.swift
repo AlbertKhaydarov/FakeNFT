@@ -17,4 +17,16 @@ final class ServicesAssembly {
             storage: nftStorage
         )
     }
+    
+    var profileService: ProfileServiceProtocol {
+        ProfileService(
+            networkClient: networkClient,
+            storage: nftStorage
+        )
+    }
+
+    var profileMyNFTService: ProfileMyNftServiceProtocol {
+        ProfileMyNftService(networkClient: networkClient,
+                            storage: nftStorage)
+    }
 }

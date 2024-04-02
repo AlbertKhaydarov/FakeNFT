@@ -10,8 +10,6 @@ import UIKit
 class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     // MARK: - Properties
-    private var presenter: ProfilePresenterProtocol?
-
     private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,
                                            .loc.Profile.FavoriteNFTButton.title,
                                            .loc.Profile.AboutDesignerButton.title]
@@ -54,7 +52,6 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.presenter = nil
         contentView.backgroundColor = Assets.ypWhite.color
         setupSubview()
         layoutSetup()
@@ -81,8 +78,12 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     // MARK: - Public
-    func configureCell(indexPath: IndexPath, with presenter: ProfilePresenterProtocol) {
+    func configureCell(indexPath: IndexPath, with profileModel: ProfileViewModel) {
         titleButtonsLabel.text = buttonsTitles[indexPath.row]
-        countLabel.text = "(\(presenter.countTitleButtons[indexPath.row]))"
+        if indexPath.row == 0 {
+            countLabel.text = "(\(profileModel.nfts.count))"
+        } else if indexPath.row == 1 {
+            countLabel.text = "(\(profileModel.likes.count))"
+        }
     }
 }
