@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol ProfileFavoritesViewProtocol: AnyObject { }
+protocol ProfileFavoritesViewProtocol: AnyObject {
+    func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel])
+}
 
 class ProfileFavoritesViewController: UIViewController {
 
@@ -42,6 +44,8 @@ class ProfileFavoritesViewController: UIViewController {
         label.isHidden = false
         return label
     }()
+    
+    private var favoriteNFTs: [MyNFTViewModel]?
 
     init(presenter: some ProfileFavoritesPresenterProtocol) {
         self.presenter = presenter
@@ -53,9 +57,15 @@ class ProfileFavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = .loc.Profile.FavoriteNFTButton.title
+        presenter.viewDidLoad()
         isStubHidden()
         setupSubviews()
         layoutSubviews()
+    }
+
+    func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel]) {
+        self.favoriteNFTs = favoriteNFTs
+        collectionView.reloadData()
     }
 
     private func setupSubviews() {
@@ -64,7 +74,7 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
-        if presenter.favoritesNFT.count == 0 {
+        if favoriteNFTs?.count == 0 {
             stubFavotitesLabel.isHidden = false
         } else {
             stubFavotitesLabel.isHidden = true
@@ -94,18 +104,21 @@ extension ProfileFavoritesViewController: ProfileFavoritesViewProtocol { }
 extension ProfileFavoritesViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.favoritesNFT.count
+        guard let favoriteNFTs = self.favoriteNFTs else {return 0}
+        return favoriteNFTs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProfileFavoritesCollectionViewCell.defaultReuseIdentifier,
-            for: indexPath) as? ProfileFavoritesCollectionViewCell
-        else {
-            return UICollectionViewCell()
+        let cell: ProfileFavoritesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+//            withReuseIdentifier:  ProfileFavoritesCollectionViewCell.defaultReuseIdentifier,
+//            for: indexPath) as? ProfileFavoritesCollectionViewCell
+        if let favoriteNFTs = favoriteNFTs {
+            let item = favoriteNFTs[indexPath.row]
+            cell.configureCell(with: item)
+//            cell.configureCell(indexPath: indexPath, with: presenter)
         }
-        cell.configureCell(indexPath: indexPath, with: presenter)
+    
         return cell
     }
 }

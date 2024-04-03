@@ -24,7 +24,7 @@ final class ProfileMyNFTPresenter {
         self.service = service
     }
 
-    func getMyNFTs() {
+   private func getMyNFTs() {
         service.loadNfts { [weak self] result in
             guard let self = self else {return}
             switch result {

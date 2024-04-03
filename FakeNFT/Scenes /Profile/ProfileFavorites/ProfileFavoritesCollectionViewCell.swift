@@ -51,7 +51,6 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 4
-        stackView.distribution = .equalCentering
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(priceLabel)
@@ -67,14 +66,23 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func configureCell(indexPath: IndexPath, with presenter: ProfileFavoritesPresenterProtocol) {
-        downloadImage(path: presenter.favoritesNFT[indexPath.row].imagePath)
-        nameLabel.text = presenter.favoritesNFT[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: presenter.favoritesNFT[indexPath.row].starsRating)
-        priceLabel.text = "\(presenter.favoritesNFT[indexPath.row].price) ETH"
-        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
+    
+    func configureCell(with nfts: MyNFTViewModel) {
+        downloadImage(path: nfts.imagePath)
+        nameLabel.text = nfts.name
+        starsRatingImageView.setRatingStars(rating: nfts.starsRating)
+        priceLabel.text = "\(nfts.price) ETH"
+        setIsLiked(isLiked: nfts.isFavorite)
     }
+
+
+//    func configureCell(indexPath: IndexPath, with presenter: ProfileFavoritesPresenterProtocol) {
+//        downloadImage(path: presenter.favoritesNFT[indexPath.row].imagePath)
+//        nameLabel.text = presenter.favoritesNFT[indexPath.row].name
+//        starsRatingImageView.setRatingStars(rating: presenter.favoritesNFT[indexPath.row].starsRating)
+//        priceLabel.text = "\(presenter.favoritesNFT[indexPath.row].price) ETH"
+//        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
+//    }
 
     @objc private func likeButtonClicked() {
         // MARK: - TBD in 2nd part
@@ -111,9 +119,10 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
             favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
 
             commonStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
+            commonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             commonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             commonStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
-            commonStackView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7)
+            commonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7)
         ])
     }
 

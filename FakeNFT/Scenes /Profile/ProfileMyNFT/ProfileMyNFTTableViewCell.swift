@@ -75,7 +75,6 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 2
-        stackView.distribution = .equalCentering
         stackView.addArrangedSubview(priceTitleLabel)
         stackView.addArrangedSubview(priceLabel)
         return stackView
