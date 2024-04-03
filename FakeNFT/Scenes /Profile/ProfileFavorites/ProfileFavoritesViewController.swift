@@ -44,7 +44,7 @@ class ProfileFavoritesViewController: UIViewController {
         label.isHidden = false
         return label
     }()
-    
+
     private var favoriteNFTs: [MyNFTViewModel]?
 
     init(presenter: some ProfileFavoritesPresenterProtocol) {
@@ -57,6 +57,7 @@ class ProfileFavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = .loc.Profile.FavoriteNFTButton.title
+        view.backgroundColor = Assets.ypWhite.color
         presenter.viewDidLoad()
         isStubHidden()
         setupSubviews()

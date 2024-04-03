@@ -10,7 +10,7 @@ import Foundation
 typealias ProfileMyNftCompletion = (Result<ProfileMyNFT, Error>) -> Void
 typealias ProfileMyNftsCompletion = (Result<[ProfileMyNFT], Error>) -> Void
 
-protocol ProfileMyNftServiceProtocol {
+ protocol ProfileMyNftServiceProtocol {
     func loadNfts(completion: @escaping ProfileMyNftsCompletion)
     func loadFavoritesNfts(completion: @escaping ProfileMyNftsCompletion) 
 }
