@@ -46,7 +46,9 @@ final class RatingStarsView: UIView {
 
     private func layoutSetup(stackView: UIStackView) {
         NSLayoutConstraint.activate([
-            stackView.widthAnchor.constraint(equalToConstant: 68)
+            stackView.widthAnchor.constraint(equalToConstant: 68),
+            stackView.heightAnchor.constraint(equalToConstant: 12),
+            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 }
