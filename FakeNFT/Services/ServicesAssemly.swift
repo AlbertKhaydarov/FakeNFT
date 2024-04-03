@@ -17,7 +17,7 @@ final class ServicesAssembly {
             storage: nftStorage
         )
     }
-    
+
     var profileService: ProfileServiceProtocol {
         ProfileService(
             networkClient: networkClient,
@@ -29,4 +29,11 @@ final class ServicesAssembly {
         ProfileMyNftService(networkClient: networkClient,
                             storage: nftStorage)
     }
+
+//    var profileUpdateService: ProfileUpdateServiceProtocol {
+//        ProfileUpdateService(
+//            networkClient: networkClient,
+//            storage: nftStorage
+//        )
+//    }
 }

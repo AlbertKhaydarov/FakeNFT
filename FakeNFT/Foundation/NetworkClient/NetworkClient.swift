@@ -116,16 +116,17 @@ struct DefaultNetworkClient: NetworkClient {
             assertionFailure("Empty endpoint")
             return nil
         }
-
+    
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
-
-        if let dto = request.dto,
-           let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let dto = request.dto {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            encoder.outputFormatting = .withoutEscapingSlashes
+            let dtoEncoded = try? encoder.encode(dto)
             urlRequest.httpBody = dtoEncoded
-        }
-
+    }
         return urlRequest
     }
 

@@ -13,3 +13,5 @@ struct ProfileRequest: NetworkRequest {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/1")
     }
 }
+
+

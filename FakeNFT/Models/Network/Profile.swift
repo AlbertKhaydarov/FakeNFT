@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Profile: Decodable {
+struct Profile: Codable {
     let name: String
     let avatar: String
     let description: String
@@ -15,4 +15,57 @@ struct Profile: Decodable {
     let nfts: [String]
     let likes: [String]
     let id: String
+}
+
+extension Profile {
+    
+    func toQueryString() -> String {
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "name", value: name),
+            URLQueryItem(name: "avatar", value: avatar),
+            URLQueryItem(name: "description", value: description),
+            URLQueryItem(name: "website", value: website),
+            URLQueryItem(name: "nfts", value: nfts.joined(separator: ",")),
+            URLQueryItem(name: "likes", value: likes.joined(separator: ",")),
+            URLQueryItem(name: "id", value: id)
+        ]
+        guard let query = components.percentEncodedQuery else {
+            return ""
+        }
+        return query
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func getQueryString() -> String {
+        
+        let parameters = [
+            "name": name,
+            "avatar": avatar,
+            "description": description,
+            "website": website,
+            "nfts": nfts.joined(separator: ","),
+            "likes": likes.joined(separator: ","),
+            "id": id
+        ]
+        
+        var parametersString = ""
+        
+        for (key, value) in parameters {
+            if !parametersString.isEmpty {
+                parametersString += "&"
+            }
+            
+            parametersString += "\(key)=\(value)"
+        }
+        return parametersString
+    }
+    
+   
 }
