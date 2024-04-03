@@ -45,7 +45,6 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 4
-        stackView.distribution = .equalCentering
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(authorLabel)
@@ -109,23 +108,14 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         priceLabel.text = nil
     }
 
-   
     // MARK: - Public
     func configureCell(with nft: MyNFTViewModel) {
         downloadImage(path: nft.imagePath)
         nameLabel.text = nft.name
-        nameLabel.text = nft.imagePath
         starsRatingImageView.setRatingStars(rating: nft.starsRating)
         authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(nft.author)"
         priceLabel.text = "\(nft.price) ETH"
         setIsLiked(isLiked: nft.isFavorite)
-
-//        downloadImage(path: nft.imagePath) { image in
-//                DispatchQueue.main.async {
-//                    self.nftImageView.image = image
-//                }
-//            }
-     
     }
 
     func setIsLiked(isLiked: Bool) {
@@ -150,6 +140,9 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     private func layoutSetup() {
+        authorLabel.setContentHuggingPriority(.required, for: .horizontal)
+        nameAndRatingStackView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
         NSLayoutConstraint.activate([
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -168,6 +161,8 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
             nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
             nameAndRatingStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
+            authorLabel.widthAnchor.constraint(equalToConstant: 78),
+
             priceStackView.leadingAnchor.constraint(greaterThanOrEqualTo: nameAndRatingStackView.trailingAnchor,
                                                     constant: 39),
             priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -39),
@@ -182,18 +177,4 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         nftImageView.kf.indicatorType = .activity
         nftImageView.kf.setImage(with: url)
     }
-//    private func downloadImage(path: String, completion: @escaping (UIImage?) -> Void) {
-//        guard let url = URL(string: path) else { return }
-//        nftImageView.kf.indicatorType = .activity
-//        nftImageView.kf.setImage(with: url) { result in
-//            switch result {
-//            case .success(let value):
-//                completion(value.image)
-//            case .failure(let error):
-//                print("Error downloading image: \(error)")
-//                completion(nil)
-//            }
-//        }
-//    }
-
 }

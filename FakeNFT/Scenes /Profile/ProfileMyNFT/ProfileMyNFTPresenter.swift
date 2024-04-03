@@ -9,25 +9,21 @@ import Foundation
 
 protocol ProfileMyNFTPresenterProtocol {
     func viewDidLoad()
-//    var myNFT: [MyNFTViewModel] { get set }
 }
 
 final class ProfileMyNFTPresenter {
-    
+
     // MARK: Properties
-    
-//    var myNFT: [MyNFTViewModel] = []/
-    
+
     weak var view: (any ProfileMyNFTViewProtocol)?
     private let router: any ProfileMyNFTRouterProtocol
     private let service: ProfileMyNftServiceProtocol
-    
+
     init(router: some ProfileMyNFTRouterProtocol, service: ProfileMyNftServiceProtocol) {
         self.router = router
         self.service = service
-        
     }
-    
+
     func getMyNFTs() {
         service.loadNfts { [weak self] result in
             guard let self = self else {return}
@@ -37,7 +33,7 @@ final class ProfileMyNFTPresenter {
                     return MyNFTViewModel(name: item.name,
                                           imagePath: item.images[0],
                                           starsRating: item.rating,
-                                          author: item.author,
+                                          author: item.name,
                                           price: item.price,
                                           isFavorite: false)
                 }

@@ -37,7 +37,7 @@ class ProfileMyNFTViewController: UIViewController {
         label.isHidden = true
         return label
     }()
-    
+
     private var myNFTs: [MyNFTViewModel]?
 
     init(presenter: some ProfileMyNFTPresenterProtocol) {
@@ -50,16 +50,16 @@ class ProfileMyNFTViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+        view.backgroundColor = Assets.ypWhite.color
         title = .loc.Profile.MyNFTButton.title
         setupSubview()
         layoutSubviews()
         sortButton()
         isStubHidden()
     }
-    
+
     func updateMyNFTs(myNFTs: [MyNFTViewModel]) {
         self.myNFTs = myNFTs
-//        isStubHidden()
         tableView.reloadData()
     }
 
@@ -93,12 +93,11 @@ class ProfileMyNFTViewController: UIViewController {
     }
 
     private func layoutSubviews() {
-        let height = (myNFTs?.count ?? 0) * 140
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: CGFloat(height)),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
 
             stubMyNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubMyNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -122,7 +121,7 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileMyNFTTableViewCell = tableView.dequeueReusableCell()
-      
+
         if let myNFTs = myNFTs {
             let item = myNFTs[indexPath.row]
             cell.configureCell(with: item)
