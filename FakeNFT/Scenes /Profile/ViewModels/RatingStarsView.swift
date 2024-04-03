@@ -35,7 +35,6 @@ final class RatingStarsView: UIView {
         let stackView = UIStackView(arrangedSubviews: starImageViews)
         stackView.axis  = .horizontal
         stackView.spacing = 2
-        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         setupSubviews(stackView: stackView)
         layoutSetup(stackView: stackView)
@@ -47,10 +46,7 @@ final class RatingStarsView: UIView {
 
     private func layoutSetup(stackView: UIStackView) {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+            stackView.widthAnchor.constraint(equalToConstant: 68)
         ])
     }
 }

@@ -11,9 +11,8 @@ protocol NftStorage: AnyObject {
     func getProfileMyNFTs(with id: String) -> ProfileMyNFT?
 }
 
-// Пример простого класса, который сохраняет данные из сети
 final class NftStorageImpl: NftStorage {
-    
+
     private var storage: [String: Nft] = [:]
 
     private let syncQueue = DispatchQueue(label: "sync-nft-queue")
