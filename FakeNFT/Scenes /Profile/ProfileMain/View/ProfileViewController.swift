@@ -141,13 +141,16 @@ final class ProfileViewController: UIViewController {
         updateUserPic(url: profileModel.userPic)
         self.profileViewModel = profileModel
         tableView.reloadData()
+        activityIndicator.stopAnimating()
+    }
+
+    func getUpdate() {
+        presenter.getProfile()
     }
 
     private func updateUserPic(url: String) {
         userProfileImageView.kf.indicatorType = .activity
-        guard
-            let url = URL(string: url)
-        else {
+        guard let url = URL(string: url) else {
             return
         }
         userProfileImageView.kf.setImage(with: url)
@@ -182,8 +185,8 @@ final class ProfileViewController: UIViewController {
             userProfileImageView.topAnchor.constraint(equalTo: horizontalStackView.topAnchor),
             userProfileImageView.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
 
-            activityIndicator.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             userNamelabel.centerYAnchor.constraint(equalTo: horizontalStackView.centerYAnchor),
             userNamelabel.trailingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor),

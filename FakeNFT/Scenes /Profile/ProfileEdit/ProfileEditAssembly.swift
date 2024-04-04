@@ -13,7 +13,10 @@ final class ProfileEditAssembly {
 
     static func assemble(profile: ProfileViewModel) -> UIViewController {
         let router = ProfileEditRouter()
-        let presenter = ProfileEditPresenter(router: router, profile: profile)
+        let servicesAssembler = ServicesAssembly( networkClient: DefaultNetworkClient(),
+                                                  nftStorage: NftStorageImpl() )
+
+        let presenter = ProfileEditPresenter(router: router, profile: profile, service: servicesAssembler.profileService)
         let view = ProfileEditViewController(presenter: presenter)
 
         presenter.view = view

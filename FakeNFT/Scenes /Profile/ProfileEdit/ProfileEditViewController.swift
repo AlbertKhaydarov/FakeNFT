@@ -53,6 +53,7 @@ class ProfileEditViewController: UIViewController {
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
         return textField
     }()
 
@@ -79,6 +80,7 @@ class ProfileEditViewController: UIViewController {
         textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.isUserInteractionEnabled = true
+        textField.delegate = self
         return textField
     }()
 
@@ -108,7 +110,7 @@ class ProfileEditViewController: UIViewController {
         textView.backgroundColor = Assets.ypLightGrey.color
         textView.layer.cornerRadius = 12
         textView.clipsToBounds = true
-        textView.textContainerInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
         textView.font = .bodyRegular
         textView.textColor = Assets.ypBlack.color
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -196,6 +198,13 @@ class ProfileEditViewController: UIViewController {
         return scrollView
     }()
 
+    var profileUpdate: ProfileViewModel?
+    var profileUpdateName: Bool = false
+    var profileUpdateUserProfileImageDownloadLinkTextField: Bool = false
+    var profileUpdateDescriptionTextView: Bool = false
+    var profileUpdateWebsiteTextField: Bool = false
+  
+
     init(presenter: some ProfileEditPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -208,9 +217,11 @@ class ProfileEditViewController: UIViewController {
         setupView()
         setupSubview()
         layoutSubviews()
-        updateProfileDetails()
+        getInitialProfileDetails()
         updateUserPic()
     }
+    
+    weak var delegate: ObserverProtocol?
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -219,10 +230,13 @@ class ProfileEditViewController: UIViewController {
     }
 
     // MARK: - Private
-    private func updateProfileDetails() {
-        userNameTextField.text = presenter.profile.name
-        descriptionTextView.text = presenter.profile.description
-        websiteTextField.text = presenter.profile.website
+    private func getInitialProfileDetails() {
+        profileUpdate = presenter.getProfileViewModel()
+        if let profileUpdate = profileUpdate {
+            userNameTextField.text = profileUpdate.name
+            descriptionTextView.text = profileUpdate.description
+            websiteTextField.text = profileUpdate.website
+        }
     }
 
     @objc private func dismissKeyboard() {
@@ -231,21 +245,46 @@ class ProfileEditViewController: UIViewController {
     }
 
     private func updateUserPic() {
-        userProfileImageView.kf.indicatorType = .activity
-        let profileImageString = presenter.profile.userPic
-             guard
-                 let url = URL(string: profileImageString)
-             else {
-                 return
-             }
-        userProfileImageView.kf.setImage(with: url)
+        if let profileUpdate = profileUpdate {
+            userProfileImageView.kf.indicatorType = .activity
+            let profileImageString = profileUpdate.userPic
+            guard
+                let url = URL(string: profileImageString)
+            else {
+                return
+            }
+            userProfileImageView.kf.setImage(with: url)
+        }
     }
+    
+
 
     @objc private func userProfileImageTapped() {
         userProfileImageDownloadLinkTextField.isHidden  = false
     }
 
     @objc private func closeButtonTapped() {
+        guard var profileUpdate = profileUpdate else {return}
+        guard var name = userNameTextField.text, !name.isEmpty,
+              var avatar = userProfileImageDownloadLinkTextField.text,
+              var description = descriptionTextView.text, !description.isEmpty,
+              var website =  websiteTextField.text, !website.isEmpty
+        else {return}
+
+        let updateName = profileUpdateName ? name : profileUpdate.name
+        let updateAvatar = profileUpdateUserProfileImageDownloadLinkTextField ? avatar : profileUpdate.userPic
+        let updateDescription = profileUpdateDescriptionTextView ? description : profileUpdate.description
+        let updateWebsite = profileUpdateWebsiteTextField ? website : profileUpdate.website
+        
+       let profileUpdateModel = Profile(name: name,
+                                        avatar: updateAvatar,
+                                         description: updateDescription,
+                                         website: updateWebsite,
+                                         nfts: profileUpdate.nfts,
+                                         likes: profileUpdate.likes,
+                                         id: profileUpdate.id)
+        
+        delegate?.didCloseViewController(model: profileUpdateModel)
         dismiss(animated: true)
     }
 
@@ -325,3 +364,51 @@ class ProfileEditViewController: UIViewController {
         ])
     }
 }
+
+// MARK: - ProfileEditViewProtocol
+extension ProfileEditViewController: ProfileEditViewProtocol {}
+
+extension ProfileEditViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: textView.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        textView.constraints.forEach { (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+        if textView == descriptionTextView {
+            profileUpdateDescriptionTextView = true
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension ProfileEditViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let scrollFrame = scrollView.frame
+        let textFieldFrame = textField.frame
+        let textFieldY = scrollView.convert(textFieldFrame.origin, from: textField).y + textFieldFrame.size.height
+        if textFieldY > scrollFrame.size.height {
+            let scrollPoint = CGPoint(x: 0, y: textFieldY - scrollFrame.size.height - textFieldFrame.height )
+            scrollView.setContentOffset(scrollPoint, animated: true)
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        scrollView.setContentOffset(CGPoint.zero, animated: true)
+        return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField == userNameTextField {
+                profileUpdateName = true
+            } else if textField == userProfileImageDownloadLinkTextField {
+                profileUpdateUserProfileImageDownloadLinkTextField = true
+            } else if textField == websiteTextField {
+                profileUpdateWebsiteTextField = true
+            }
+    }
+}
+

@@ -19,7 +19,8 @@ struct ProfileUpdateRequest: NetworkRequest {
         .put }
 
     var dto: Encodable? { 
-        let str =  model?.getQueryString()
+//        let str = model?.getQueryString()
+        let str = model?.toQueryString()
         return str
     }
 }

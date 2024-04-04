@@ -84,6 +84,8 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
             countLabel.text = "(\(profileModel.nfts.count))"
         } else if indexPath.row == 1 {
             countLabel.text = "(\(profileModel.likes.count))"
+        } else if indexPath.row == 2 {
+            countLabel.text = ""
         }
     }
 }
