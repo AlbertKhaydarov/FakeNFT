@@ -7,10 +7,16 @@
 
 import UIKit
 
-protocol ProfileEditRouterProtocol {}
+protocol ProfileEditRouterProtocol {
+    func switchToProfileMainViewViewController()
+}
 
 final class ProfileEditRouter: ProfileEditRouterProtocol {
 
     // MARK: - Properties
     weak var viewController: UIViewController?
+    
+    func switchToProfileMainViewViewController() {
+//        viewController?.dismiss(animated: true)
+    }
 }

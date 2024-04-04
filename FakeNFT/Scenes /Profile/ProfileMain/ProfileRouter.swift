@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileRouterProtocol {
-    func switchToProfileEditView(profile: ProfileViewModel)
+    func switchToProfileEditView(to: UIViewController, profile: ProfileViewModel)
     func switchToProfileMyNFTView()
     func switchToProfileFavoriteView()
     func switchToProfileUserWebViewViewController(with url: URL)
@@ -21,9 +21,8 @@ final class ProfileRouter: ProfileRouterProtocol {
     weak var viewController: UIViewController?
 
     // MARK: - Public
-    func switchToProfileEditView(profile: ProfileViewModel) {
-        let destination = ProfileEditAssembly.assemble(profile: profile)
-        viewController?.present(destination, animated: true)
+    func switchToProfileEditView(to: UIViewController, profile: ProfileViewModel) {
+        viewController?.present(to, animated: true)
     }
 
     func switchToProfileMyNFTView() {
