@@ -232,11 +232,13 @@ class ProfileEditViewController: UIViewController {
     // MARK: - Private
     private func getInitialProfileDetails() {
         profileUpdate = presenter.getProfileViewModel()
+        
         if let profileUpdate = profileUpdate {
             userNameTextField.text = profileUpdate.name
             descriptionTextView.text = profileUpdate.description
             websiteTextField.text = profileUpdate.website
         }
+        
     }
 
     @objc private func dismissKeyboard() {
@@ -270,7 +272,7 @@ class ProfileEditViewController: UIViewController {
               var description = descriptionTextView.text, !description.isEmpty,
               var website =  websiteTextField.text, !website.isEmpty
         else {return}
-
+        
         let updateName = profileUpdateName ? name : profileUpdate.name
         let updateAvatar = profileUpdateUserProfileImageDownloadLinkTextField ? avatar : profileUpdate.userPic
         let updateDescription = profileUpdateDescriptionTextView ? description : profileUpdate.description

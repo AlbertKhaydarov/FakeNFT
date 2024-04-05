@@ -114,14 +114,14 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         starsRatingImageView.setRatingStars(rating: nft.starsRating)
         authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(nft.author)"
         priceLabel.text = "\(nft.price) ETH"
-        setIsLiked(isLiked: nft.isFavorite)
+//        setIsLiked(isLiked: nft.isFavorite)
     }
 
-    func setIsLiked(isLiked: Bool) {
-        var favoriteActiveImage = UIImage()
-        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
-        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
-    }
+//    func setIsLiked(isLiked: Bool) {
+//        var favoriteActiveImage = UIImage()
+//        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
+//        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+//    }
 
     // MARK: - Private
    @objc private func likeButtonClicked() {

@@ -35,7 +35,7 @@ final class ProfileMyNFTPresenter {
                                           starsRating: item.rating,
                                           author: item.name,
                                           price: item.price,
-                                          isFavorite: false)
+                                          id: item.id)
                 }
                 self.view?.updateMyNFTs(myNFTs: myNfts)
             case .failure(let error):

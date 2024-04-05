@@ -22,7 +22,7 @@ final class ProfilePresenter {
     weak var view: (any ProfileViewProtocol)?
     private let router: any ProfileRouterProtocol
     private let service: ProfileServiceProtocol
-    private var profileServiceObserver: NSObjectProtocol?
+//    private var profileServiceObserver: NSObjectProtocol?
 
     init(router: some ProfileRouterProtocol, service: ProfileServiceProtocol) {
         self.router = router
@@ -43,7 +43,6 @@ final class ProfilePresenter {
                                                       likes: profile.likes,
                                                       id: profile.id)
                 self.view?.updateProfileDetails(profileModel: profileDetails)
-
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
             }

@@ -112,11 +112,10 @@ extension ProfileFavoritesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ProfileFavoritesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-//            withReuseIdentifier:  ProfileFavoritesCollectionViewCell.defaultReuseIdentifier,
-//            for: indexPath) as? ProfileFavoritesCollectionViewCell
+        cell.delegate = self
         if let favoriteNFTs = favoriteNFTs {
-            let item = favoriteNFTs[indexPath.row]
-            cell.configureCell(with: item)
+//            let item = favoriteNFTs[indexPath.row]
+            cell.configureCell(indexPath: indexPath, with: favoriteNFTs)
 //            cell.configureCell(indexPath: indexPath, with: presenter)
         }
     
@@ -156,4 +155,14 @@ extension ProfileFavoritesViewController: UICollectionViewDelegateFlowLayout & U
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return params.lineSpacingForSectionAt
     }
+}
+
+extension ProfileFavoritesViewController: ProfileFavoritesCollectionViewCellDelegate {
+    func favoriteCancell(indexPath: IndexPath) {
+        self.favoriteNFTs?.remove(at: indexPath.row)
+        presenter.updateProfile(favorites: self.favoriteNFTs)
+        isStubHidden()
+        collectionView.reloadData()
+    }
+
 }
