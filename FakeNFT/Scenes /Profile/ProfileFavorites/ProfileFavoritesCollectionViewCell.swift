@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ProfileFavoritesCollectionViewCellDelegate: AnyObject {
+    func favoriteCancell(indexPath: IndexPath)
+}
+
 class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 
     private lazy var nftImageView: UIImageView = {
@@ -19,6 +23,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        button.setImage(Assets.onActiveFavorites.image , for: .normal)
         return button
     }()
 
@@ -56,6 +61,10 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         stackView.addArrangedSubview(priceLabel)
         return stackView
     }()
+    
+    private var indexPath: IndexPath?
+    
+    weak var delegate: ProfileFavoritesCollectionViewCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,32 +76,27 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with nfts: MyNFTViewModel) {
-        downloadImage(path: nfts.imagePath)
-        nameLabel.text = nfts.name
-        starsRatingImageView.setRatingStars(rating: nfts.starsRating)
-        priceLabel.text = "\(nfts.price) ETH"
-        setIsLiked(isLiked: nfts.isFavorite)
-    }
-
-
-//    func configureCell(indexPath: IndexPath, with presenter: ProfileFavoritesPresenterProtocol) {
-//        downloadImage(path: presenter.favoritesNFT[indexPath.row].imagePath)
-//        nameLabel.text = presenter.favoritesNFT[indexPath.row].name
-//        starsRatingImageView.setRatingStars(rating: presenter.favoritesNFT[indexPath.row].starsRating)
-//        priceLabel.text = "\(presenter.favoritesNFT[indexPath.row].price) ETH"
-//        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
+//    func configureCell(with nfts: MyNFTViewModel) {
+//        downloadImage(path: nfts.imagePath)
+//        nameLabel.text = nfts.name
+//        starsRatingImageView.setRatingStars(rating: nfts.starsRating)
+//        priceLabel.text = "\(nfts.price) ETH"
 //    }
 
-    @objc private func likeButtonClicked() {
-        // MARK: - TBD in 2nd part
+    func configureCell(indexPath: IndexPath, with nfts: [MyNFTViewModel]) {
+        downloadImage(path: nfts[indexPath.row].imagePath)
+        nameLabel.text = nfts[indexPath.row].name
+        starsRatingImageView.setRatingStars(rating: nfts[indexPath.row].starsRating)
+        priceLabel.text = "\(nfts[indexPath.row].price) ETH"
+        self.indexPath = indexPath
+//        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
     }
 
-    func setIsLiked(isLiked: Bool) {
-        var favoriteActiveImage = UIImage()
-        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
-        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+    @objc private func likeButtonClicked() {
+        guard let indexPath = indexPath else {return}
+        delegate?.favoriteCancell(indexPath: indexPath)
     }
+
 
     private func setupCell() {
         self.backgroundColor = .clear

@@ -9,6 +9,7 @@ import Foundation
 
 protocol ProfileFavoritesPresenterProtocol {
     func viewDidLoad()
+    func updateProfile(favorites: [MyNFTViewModel]?) 
 //    var favoritesNFT: [MyNFTViewModel] { get set }
 }
 
@@ -37,7 +38,7 @@ final class ProfileFavoritesPresenter {
                                           starsRating: item.rating,
                                           author: item.name,
                                           price: item.price,
-                                          isFavorite: false)
+                                          id: item.id)
                 }
                 self.view?.updateFavoritesNFTs(favoriteNFTs: favoriteNfts)
             case .failure(let error):
@@ -46,7 +47,28 @@ final class ProfileFavoritesPresenter {
         }
     }
 
-//   b
+        func updateProfile(favorites: [MyNFTViewModel]?) {
+            guard let favorites = favorites else {return}
+            service.uploadFavorites(favorites: favorites) {[weak self] result in
+                guard let self = self else {return}
+                switch result {
+                case .success(let profile):
+    
+                    let profileDetails = ProfileViewModel(name: profile.name,
+                                                          userPic: profile.avatar,
+                                                          description: profile.description,
+                                                          website: profile.website,
+                                                          nfts: profile.nfts,
+                                                          likes: profile.likes,
+                                                          id: profile.id)
+                    getFavoritesNFTs()
+//print(profileDetails)
+                case .failure(let error):
+                    assertionFailure("Failed to load Profile \(error)")
+                }
+            }
+        }
+
 }
 
 // MARK: - ProfileEditPresenterProtocol

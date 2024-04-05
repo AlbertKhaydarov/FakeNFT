@@ -22,12 +22,12 @@ extension Profile {
     func toQueryString() -> String {
         var components = URLComponents()
         components.queryItems = [
+            URLQueryItem(name: "nfts", value: nfts.joined(separator: ",")),
             URLQueryItem(name: "likes", value: likes.joined(separator: ",")),
             URLQueryItem(name: "avatar", value: avatar),
             URLQueryItem(name: "name", value: name),
             URLQueryItem(name: "description", value: description),
             URLQueryItem(name: "website", value: website),
-            URLQueryItem(name: "nfts", value: nfts.joined(separator: ",")),
             URLQueryItem(name: "id", value: id)
         ]
 
