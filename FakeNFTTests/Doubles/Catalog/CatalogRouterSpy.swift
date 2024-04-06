@@ -8,6 +8,7 @@
 @testable import FakeNFT
 import Foundation
 
+// swiftlint:disable identifier_name
 final class CatalogRouterSpy: ICatalogRouter {
 
     var invokedOpenCollectionScreen = false

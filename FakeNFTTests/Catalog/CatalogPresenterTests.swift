@@ -1,5 +1,5 @@
 //
-//  CatalogUnitTests.swift
+//  CatalogPresenterTests.swift
 //  FakeNFTTests
 //
 //  Created by MAKOVEY Vladislav on 03.04.2024.
@@ -8,13 +8,13 @@
 @testable import FakeNFT
 import XCTest
 
-final class CatalogUnitTests: XCTestCase {
+final class CatalogPresenterTests: XCTestCase {
     func test_presenterLoadCatalogItems_whenViewDidLoad() {
         // arrange
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
-            service: CatalogItemServiceStub(state: .success),
-            sortStorage: SortStorageStub(type: .none)
+            service: CatalogItemServiceStub(),
+            sortStorage: SortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -34,7 +34,7 @@ final class CatalogUnitTests: XCTestCase {
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
             service: CatalogItemServiceStub(state: .failure),
-            sortStorage: SortStorageStub(type: .none)
+            sortStorage: SortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -53,8 +53,8 @@ final class CatalogUnitTests: XCTestCase {
         // arrange
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
-            service: CatalogItemServiceStub(state: .success),
-            sortStorage: SortStorageStub(type: .none)
+            service: CatalogItemServiceStub(),
+            sortStorage: SortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -73,8 +73,8 @@ final class CatalogUnitTests: XCTestCase {
         // arrange
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
-            service: CatalogItemServiceStub(state: .success),
-            sortStorage: SortStorageStub(type: .none)
+            service: CatalogItemServiceStub(),
+            sortStorage: SortStorageStub()
         )
 
         let view = CatalogViewSpy()

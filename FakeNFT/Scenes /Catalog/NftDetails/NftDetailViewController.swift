@@ -23,7 +23,7 @@ final class NftDetailViewController: UIViewController {
         collectionView.isPagingEnabled = true
         return collectionView
     }()
-    
+
     private lazy var pageControl = LinePageControl()
     internal lazy var activityIndicator = UIActivityIndicatorView()
 

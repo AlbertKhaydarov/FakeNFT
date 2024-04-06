@@ -68,6 +68,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         profileService.loadProfile { [weak self] profileInfo in
             guard let profileInfo else {
+                self?.dispatchGroup.leave()
                 self?.showError()
                 return
             }
@@ -81,6 +82,7 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         orderService.loadOrder { [weak self] order in
             guard let order else {
+                self?.dispatchGroup.leave()
                 self?.showError()
                 return
             }
@@ -94,13 +96,14 @@ final class CollectionPresenter {
         chosenItem.nfts.forEach {
             dispatchGroup.enter()
             nftService.loadNft(id: $0) { [weak self] nft in
-                guard let nft, let self else {
+                guard let nft else {
+                    self?.dispatchGroup.leave()
                     self?.showError()
                     return
                 }
 
-                self.nfts?.append(nft)
-                self.dispatchGroup.leave()
+                self?.nfts?.append(nft)
+                self?.dispatchGroup.leave()
             }
         }
     }

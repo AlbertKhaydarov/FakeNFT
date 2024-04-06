@@ -23,7 +23,12 @@ struct SaveProfileRequest: NetworkRequest {
     var httpMethod: HttpMethod { .put }
 
     var data: Data? {
-        var dataString = "name=\(requestDto.name)&description=\(requestDto.description)&website=\(requestDto.website)&likes="
+        var dataString = """
+        name=\(requestDto.name)
+        &description=\(requestDto.description)
+        &website=\(requestDto.website)
+        &likes=
+        """
         if requestDto.likes.isEmpty {
             dataString += "null"
         } else {

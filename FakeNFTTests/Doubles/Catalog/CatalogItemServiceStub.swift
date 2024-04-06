@@ -19,7 +19,7 @@ final class CatalogItemServiceStub: ICatalogItemService {
 
     let state: State
 
-    init(state: State) {
+    init(state: State = .success) {
         self.state = state
     }
 

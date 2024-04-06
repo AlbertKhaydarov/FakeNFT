@@ -8,11 +8,12 @@
 @testable import FakeNFT
 import Foundation
 
+// swiftlint:disable all
 final class SortStorageStub: ISortStorage {
 
     let type: SortType
 
-    init(type: SortType) {
+    init(type: SortType = .none) {
         self.type = type
     }
 
