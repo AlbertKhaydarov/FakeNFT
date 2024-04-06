@@ -75,7 +75,7 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
-        if favoriteNFTs?.count == 0 {
+        if favoriteNFTs?.count == 0 || favoriteNFTs == nil {
             stubFavotitesLabel.isHidden = false
         } else {
             stubFavotitesLabel.isHidden = true
@@ -156,6 +156,8 @@ extension ProfileFavoritesViewController: UICollectionViewDelegateFlowLayout & U
         return params.lineSpacingForSectionAt
     }
 }
+
+// MARK: - ProfileFavoritesCollectionViewCellDelegate
 
 extension ProfileFavoritesViewController: ProfileFavoritesCollectionViewCellDelegate {
     func favoriteCancell(indexPath: IndexPath) {

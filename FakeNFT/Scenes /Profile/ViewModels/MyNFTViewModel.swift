@@ -8,10 +8,13 @@
 import Foundation
 
 struct MyNFTViewModel {
+    let createdAt: String
     let name: String
-    let imagePath: String
-    let starsRating: Int
-    let author: String
+    let images: [String]
+    let rating: Int
+    let description: String
     let price: Decimal
+    let author: String
     let id: String
+    let isLiked: Bool
 }

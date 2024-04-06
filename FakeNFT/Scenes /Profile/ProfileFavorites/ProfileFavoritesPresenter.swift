@@ -33,12 +33,15 @@ final class ProfileFavoritesPresenter {
             switch result {
             case .success(let nfts):
                 let favoriteNfts = nfts.map { item in
-                    return MyNFTViewModel(name: item.name,
-                                          imagePath: item.images[0],
-                                          starsRating: item.rating,
-                                          author: item.name,
+                    return MyNFTViewModel(createdAt: item.createdAt,
+                                          name: item.name,
+                                          images: item.images,
+                                          rating: item.rating,
+                                          description: item.description,
                                           price: item.price,
-                                          id: item.id)
+                                          author: item.author,
+                                          id: item.id,
+                                          isLiked: true)
                 }
                 self.view?.updateFavoritesNFTs(favoriteNFTs: favoriteNfts)
             case .failure(let error):
@@ -49,7 +52,7 @@ final class ProfileFavoritesPresenter {
 
         func updateProfile(favorites: [MyNFTViewModel]?) {
             guard let favorites = favorites else {return}
-            service.uploadFavorites(favorites: favorites) {[weak self] result in
+            service.uploadFavoritesNFTs(nfts: favorites) {[weak self] result in
                 guard let self = self else {return}
                 switch result {
                 case .success(let profile):
@@ -68,7 +71,6 @@ final class ProfileFavoritesPresenter {
                 }
             }
         }
-
 }
 
 // MARK: - ProfileEditPresenterProtocol
