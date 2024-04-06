@@ -141,7 +141,7 @@ struct DefaultNetworkClient: NetworkClient {
             forHTTPHeaderField: RequestConstants.contentTypeHeader
         )
         urlRequest.setValue(RequestConstants.acceptValue, forHTTPHeaderField: RequestConstants.acceptHeader)
-        urlRequest.setValue(ApiConstants.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
+        urlRequest.setValue(ApiConstant.apiToken, forHTTPHeaderField: RequestConstants.tokenHeader)
 
         return urlRequest
     }

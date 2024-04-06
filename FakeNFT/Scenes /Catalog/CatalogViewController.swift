@@ -49,6 +49,7 @@ final class CatalogViewController: UIViewController, ErrorView {
             action: #selector(sortIconTapped)
         )
 
+        button.accessibilityIdentifier = AccessibilityConstant.sortButton
         button.tintColor = .label
 
         return button
@@ -122,6 +123,7 @@ extension CatalogViewController: ICatalogView {
                 self?.presenter.sortByNameChosen()
             }
         )
+        byNameAction.accessibilityIdentifier = AccessibilityConstant.sortItemByName
 
         let byQuantityOfNftAction = UIAlertAction(
             title: .loc.Catalog.alertAction2Title,
@@ -130,6 +132,7 @@ extension CatalogViewController: ICatalogView {
                 self?.presenter.sortByQuantityChosen()
             }
         )
+        byQuantityOfNftAction.accessibilityIdentifier = AccessibilityConstant.sortItemByNft
 
         let cancelAction = UIAlertAction(
             title: .loc.Catalog.alertCloseActionTitle,
@@ -139,6 +142,7 @@ extension CatalogViewController: ICatalogView {
         alertController.addAction(byNameAction)
         alertController.addAction(byQuantityOfNftAction)
         alertController.addAction(cancelAction)
+        alertController.view.accessibilityIdentifier = AccessibilityConstant.sortingAlert
         present(alertController, animated: true)
     }
 

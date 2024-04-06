@@ -29,7 +29,6 @@
 		3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68069829CBBAF100B4F915 /* SceneDelegate.swift */; };
 		3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F68069F29CBBAF200B4F915 /* Assets.xcassets */; };
 		3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6806A129CBBAF200B4F915 /* LaunchScreen.storyboard */; };
-		3F6806B829CBBAF200B4F915 /* FakeNFTUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806B729CBBAF200B4F915 /* FakeNFTUITests.swift */; };
 		3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */; };
 		3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */; };
 		3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6806D429CBBEC700B4F915 /* NetworkTask.swift */; };
@@ -48,7 +47,7 @@
 		5E13B0D22BADCB2B006EB5AA /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E13B0D12BADCB2B006EB5AA /* RatingView.swift */; };
 		5E1D0C102BB1E4AB0067AB47 /* CollectionItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C0F2BB1E4AB0067AB47 /* CollectionItemService.swift */; };
 		5E1D0C122BB1E6E20067AB47 /* CatalogItemRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C112BB1E6E20067AB47 /* CatalogItemRequest.swift */; };
-		5E1D0C152BB1EC260067AB47 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C142BB1EC260067AB47 /* ApiConstants.swift */; };
+		5E1D0C152BB1EC260067AB47 /* ApiConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C142BB1EC260067AB47 /* ApiConstant.swift */; };
 		5E1D0C172BB1EF240067AB47 /* UIBlockProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C162BB1EF240067AB47 /* UIBlockProgressHUD.swift */; };
 		5E1D0C1A2BB3054C0067AB47 /* VerticalNftCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1D0C192BB3054C0067AB47 /* VerticalNftCellModel.swift */; };
 		5E2EC62B2BB33588004769C6 /* SortStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2EC62A2BB33588004769C6 /* SortStorage.swift */; };
@@ -77,6 +76,10 @@
 		5EC401462BC052DB00F7864E /* NftServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC401452BC052DB00F7864E /* NftServiceStub.swift */; };
 		5EC401482BC0548800F7864E /* CollectionRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC401472BC0548800F7864E /* CollectionRouterSpy.swift */; };
 		5EC4014A2BC054E900F7864E /* CatalogItem+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC401492BC054E900F7864E /* CatalogItem+Fake.swift */; };
+		5EC4014C2BC1CEE700F7864E /* CatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC4014B2BC1CEE700F7864E /* CatalogUITests.swift */; };
+		5EC4014E2BC1DA3E00F7864E /* AccessibilityConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC4014D2BC1DA3E00F7864E /* AccessibilityConstant.swift */; };
+		5EC4014F2BC1DB1400F7864E /* AccessibilityConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC4014D2BC1DA3E00F7864E /* AccessibilityConstant.swift */; };
+		5EC401502BC1E9AE00F7864E /* SortStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2EC62A2BB33588004769C6 /* SortStorage.swift */; };
 		5EE4C1982BACDF480089100B /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE4C1972BACDF480089100B /* CatalogCell.swift */; };
 		5EE7BEE62BAA028400A32EC0 /* SplashAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BEE52BAA028400A32EC0 /* SplashAssembly.swift */; };
 		5EE7BEE82BAA028D00A32EC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BEE72BAA028D00A32EC0 /* SplashViewController.swift */; };
@@ -151,7 +154,6 @@
 		3F6806A429CBBAF200B4F915 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6806A929CBBAF200B4F915 /* FakeNFTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeNFTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F6806B329CBBAF200B4F915 /* FakeNFTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeNFTUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F6806B729CBBAF200B4F915 /* FakeNFTUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNFTUITests.swift; sourceTree = "<group>"; };
 		3F6806D029CBBE6B00B4F915 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		3F6806D229CBBE9600B4F915 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		3F6806D429CBBEC700B4F915 /* NetworkTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
@@ -170,7 +172,7 @@
 		5E13B0D12BADCB2B006EB5AA /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		5E1D0C0F2BB1E4AB0067AB47 /* CollectionItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemService.swift; sourceTree = "<group>"; };
 		5E1D0C112BB1E6E20067AB47 /* CatalogItemRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogItemRequest.swift; sourceTree = "<group>"; };
-		5E1D0C142BB1EC260067AB47 /* ApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConstants.swift; sourceTree = "<group>"; };
+		5E1D0C142BB1EC260067AB47 /* ApiConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConstant.swift; sourceTree = "<group>"; };
 		5E1D0C162BB1EF240067AB47 /* UIBlockProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockProgressHUD.swift; sourceTree = "<group>"; };
 		5E1D0C192BB3054C0067AB47 /* VerticalNftCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalNftCellModel.swift; sourceTree = "<group>"; };
 		5E2EC62A2BB33588004769C6 /* SortStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStorage.swift; sourceTree = "<group>"; };
@@ -199,6 +201,8 @@
 		5EC401452BC052DB00F7864E /* NftServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftServiceStub.swift; sourceTree = "<group>"; };
 		5EC401472BC0548800F7864E /* CollectionRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRouterSpy.swift; sourceTree = "<group>"; };
 		5EC401492BC054E900F7864E /* CatalogItem+Fake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CatalogItem+Fake.swift"; sourceTree = "<group>"; };
+		5EC4014B2BC1CEE700F7864E /* CatalogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogUITests.swift; sourceTree = "<group>"; };
+		5EC4014D2BC1DA3E00F7864E /* AccessibilityConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstant.swift; sourceTree = "<group>"; };
 		5EE4C1972BACDF480089100B /* CatalogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
 		5EE7BEE52BAA028400A32EC0 /* SplashAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashAssembly.swift; sourceTree = "<group>"; };
 		5EE7BEE72BAA028D00A32EC0 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -387,7 +391,7 @@
 		3F6806B629CBBAF200B4F915 /* FakeNFTUITests */ = {
 			isa = PBXGroup;
 			children = (
-				3F6806B729CBBAF200B4F915 /* FakeNFTUITests.swift */,
+				5EC4014B2BC1CEE700F7864E /* CatalogUITests.swift */,
 			);
 			path = FakeNFTUITests;
 			sourceTree = "<group>";
@@ -507,8 +511,9 @@
 		5E1D0C132BB1EC150067AB47 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5E1D0C142BB1EC260067AB47 /* ApiConstants.swift */,
+				5E1D0C142BB1EC260067AB47 /* ApiConstant.swift */,
 				5E1D0C162BB1EF240067AB47 /* UIBlockProgressHUD.swift */,
+				5EC4014D2BC1DA3E00F7864E /* AccessibilityConstant.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -936,6 +941,7 @@
 				5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */,
 				5E1D0C102BB1E4AB0067AB47 /* CollectionItemService.swift in Sources */,
 				5EE4C1982BACDF480089100B /* CatalogCell.swift in Sources */,
+				5EC4014E2BC1DA3E00F7864E /* AccessibilityConstant.swift in Sources */,
 				5E1D0C1A2BB3054C0067AB47 /* VerticalNftCellModel.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				5EE7BEF92BAA19C700A32EC0 /* CartAssembly.swift in Sources */,
@@ -980,7 +986,7 @@
 				5E8774752BB01B2E00CFDA5E /* WebViewAssembly.swift in Sources */,
 				5EE7BEEC2BAA029C00A32EC0 /* SplashRouter.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
-				5E1D0C152BB1EC260067AB47 /* ApiConstants.swift in Sources */,
+				5E1D0C152BB1EC260067AB47 /* ApiConstant.swift in Sources */,
 				5EE7BEEA2BAA029400A32EC0 /* SplashPresenter.swift in Sources */,
 				5E13B0D02BADCAEE006EB5AA /* ProductImageView.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
@@ -1017,7 +1023,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F6806B829CBBAF200B4F915 /* FakeNFTUITests.swift in Sources */,
+				5EC4014F2BC1DB1400F7864E /* AccessibilityConstant.swift in Sources */,
+				5EC401502BC1E9AE00F7864E /* SortStorage.swift in Sources */,
+				5EC4014C2BC1CEE700F7864E /* CatalogUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
