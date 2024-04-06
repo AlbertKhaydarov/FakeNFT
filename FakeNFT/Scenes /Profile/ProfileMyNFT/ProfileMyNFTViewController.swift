@@ -121,10 +121,10 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileMyNFTTableViewCell = tableView.dequeueReusableCell()
-
+        cell.delegate = self
         if let myNFTs = myNFTs {
             let item = myNFTs[indexPath.row]
-            cell.configureCell(with: item)
+            cell.configureCell(with: item, indexPath: indexPath, isLiked: item.isLiked/*, with: presenter*/)
         }
         cell.selectionStyle = .none
         return cell
@@ -136,5 +136,16 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
 extension ProfileMyNFTViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140.0
+    }
+}
+
+// MARK: - ProfileFavoritesCollectionViewCellDelegate
+
+extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellViewCellDelegate {
+    
+    func setFavorite(indexPath: IndexPath) {
+        guard let myNFTs = myNFTs else {return}
+        let nft = myNFTs[indexPath.row]
+        presenter.setFavorite(with: nft)
     }
 }

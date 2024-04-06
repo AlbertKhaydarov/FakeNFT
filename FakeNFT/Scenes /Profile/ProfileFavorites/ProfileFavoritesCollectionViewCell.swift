@@ -84,9 +84,10 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
 //    }
 
     func configureCell(indexPath: IndexPath, with nfts: [MyNFTViewModel]) {
-        downloadImage(path: nfts[indexPath.row].imagePath)
+        let imagePath = nfts[indexPath.row].images[0]
+        downloadImage(path: imagePath)
         nameLabel.text = nfts[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: nfts[indexPath.row].starsRating)
+        starsRatingImageView.setRatingStars(rating: nfts[indexPath.row].rating)
         priceLabel.text = "\(nfts[indexPath.row].price) ETH"
         self.indexPath = indexPath
 //        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)

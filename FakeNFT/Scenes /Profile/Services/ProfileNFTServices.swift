@@ -10,10 +10,10 @@ import Foundation
 typealias ProfileMyNftCompletion = (Result<ProfileMyNFT, Error>) -> Void
 typealias ProfileMyNftsCompletion = (Result<[ProfileMyNFT], Error>) -> Void
 
- protocol ProfileMyNftServiceProtocol {
+protocol ProfileMyNftServiceProtocol {
     func loadNfts(completion: @escaping ProfileMyNftsCompletion)
     func loadFavoritesNfts(completion: @escaping ProfileMyNftsCompletion)
-    func uploadFavorites(favorites: [MyNFTViewModel], completion: @escaping ProfileCompletion)
+    func uploadFavoritesNFTs(nfts: [MyNFTViewModel], completion: @escaping ProfileCompletion)
 }
 
 final class ProfileMyNftService: ProfileMyNftServiceProtocol {
@@ -61,24 +61,25 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
         }
     }
 
-    func uploadFavorites(favorites: [MyNFTViewModel], completion: @escaping ProfileCompletion) {
+    func uploadFavoritesNFTs(nfts: [MyNFTViewModel], completion: @escaping ProfileCompletion) {
 
         if let profile = storage.getProfile() {
             self.profile = profile
                 }
-
-        let likes = favorites.map { $0.id }
-        
+        var favorites: [String] = nfts.map { $0.id }
+        if favorites.count == 0 {
+            favorites = ["null"]
+        }
         let model = Profile(name: profile?.name ?? "",
                             avatar: profile?.avatar ?? "",
                             description: profile?.description ?? "",
                             website: profile?.website ?? "",
-                            nfts: profile?.nfts ?? [],
-                            likes: likes,
+                            nfts: profile?.nfts ?? ["null"],
+                            likes: favorites,
                             id: profile?.id ?? "")
 
         var request = ProfileUpdateRequest(model: model)
-        print(request.dto)
+
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):

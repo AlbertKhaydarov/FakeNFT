@@ -278,8 +278,8 @@ class ProfileEditViewController: UIViewController {
         let updateDescription = profileUpdateDescriptionTextView ? description : profileUpdate.description
         let updateWebsite = profileUpdateWebsiteTextField ? website : profileUpdate.website
         
-       let profileUpdateModel = Profile(name: name,
-                                        avatar: updateAvatar,
+        let profileUpdateModel = Profile(name: name,
+                                         avatar: updateAvatar,
                                          description: updateDescription,
                                          website: updateWebsite,
                                          nfts: profileUpdate.nfts,

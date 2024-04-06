@@ -106,6 +106,11 @@ final class ProfileViewController: UIViewController {
         addEditButton()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2

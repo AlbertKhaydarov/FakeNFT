@@ -7,6 +7,10 @@
 import Kingfisher
 import UIKit
 
+protocol ProfileMyNFTTableViewCellViewCellDelegate: AnyObject {
+    func setFavorite(indexPath: IndexPath)
+}
+
 class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Properties
 
@@ -86,6 +90,10 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         return button
     }()
+    
+    private var indexPath: IndexPath? 
+    
+    weak var delegate: ProfileMyNFTTableViewCellViewCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -108,24 +116,41 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     // MARK: - Public
-    func configureCell(with nft: MyNFTViewModel) {
-        downloadImage(path: nft.imagePath)
+    func configureCell(with nft: MyNFTViewModel,indexPath: IndexPath, isLiked: Bool/*, with presenter: ProfileMyNFTPresenterProtocol*/) {
+        self.indexPath = indexPath
+        let imagePath = nft.images[0]
+        downloadImage(path: imagePath)
         nameLabel.text = nft.name
-        starsRatingImageView.setRatingStars(rating: nft.starsRating)
+        starsRatingImageView.setRatingStars(rating: nft.rating)
         authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(nft.author)"
         priceLabel.text = "\(nft.price) ETH"
-//        setIsLiked(isLiked: nft.isFavorite)
+        setIsLiked(isLiked: isLiked)
     }
 
-//    func setIsLiked(isLiked: Bool) {
-//        var favoriteActiveImage = UIImage()
-//        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
-//        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
-//    }
+   private func setIsLiked(isLiked: Bool) {
+        var favoriteActiveImage = UIImage()
+        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
+        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+    }
+    
+    private func isLiked(nft: MyNFTViewModel, with presenter: ProfileMyNFTPresenterProtocol) -> Bool {
+//        let nfts = presenter.getAllNFTs()
+//        
+//        let nftIdToFind = nft.id
+//        
+//        if nfts.contains(where: { $0.id == nftIdToFind }) {
+//            print("NFT с ID \(nftIdToFind) найден в массиве nfts")
+//            return true
+//        } else {
+//            print("NFT с ID \(nftIdToFind) не найден в массиве nfts")
+            return false                 
+    }
 
     // MARK: - Private
    @objc private func likeButtonClicked() {
-        // MARK: - TBD in 2nd part
+       if let indexPath = indexPath {
+           delegate?.setFavorite(indexPath: indexPath)
+       }
     }
 
     private func setupSubview() {
