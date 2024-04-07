@@ -108,6 +108,7 @@ final class ProfileViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        presenter.getProfile()
         tableView.reloadData()
     }
      
@@ -148,10 +149,10 @@ final class ProfileViewController: UIViewController {
         tableView.reloadData()
         activityIndicator.stopAnimating()
     }
-
-    func getUpdate() {
-        presenter.getProfile()
-    }
+//
+//    func getUpdate() {
+//        presenter.getProfile()
+//    }
 
     private func updateUserPic(url: String) {
         userProfileImageView.kf.indicatorType = .activity

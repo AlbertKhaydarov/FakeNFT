@@ -8,7 +8,7 @@ import Kingfisher
 import UIKit
 
 protocol ProfileMyNFTTableViewCellViewCellDelegate: AnyObject {
-    func setFavorite(indexPath: IndexPath)
+    func setFavorite(indexPath: IndexPath, isFavorite: Bool) 
 }
 
 class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
@@ -90,9 +90,10 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
         return button
     }()
-    
-    private var indexPath: IndexPath? 
-    
+
+    private var indexPath: IndexPath?
+    private var isFavorite: Bool = false
+
     weak var delegate: ProfileMyNFTTableViewCellViewCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -116,7 +117,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     // MARK: - Public
-    func configureCell(with nft: MyNFTViewModel,indexPath: IndexPath, isLiked: Bool/*, with presenter: ProfileMyNFTPresenterProtocol*/) {
+    func configureCell(with nft: MyNFTViewModel, indexPath: IndexPath, isLiked: Bool) {
         self.indexPath = indexPath
         let imagePath = nft.images[0]
         downloadImage(path: imagePath)
@@ -129,27 +130,16 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
 
    private func setIsLiked(isLiked: Bool) {
         var favoriteActiveImage = UIImage()
+        isFavorite = isLiked
         favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
         self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
-    }
-    
-    private func isLiked(nft: MyNFTViewModel, with presenter: ProfileMyNFTPresenterProtocol) -> Bool {
-//        let nfts = presenter.getAllNFTs()
-//        
-//        let nftIdToFind = nft.id
-//        
-//        if nfts.contains(where: { $0.id == nftIdToFind }) {
-//            print("NFT с ID \(nftIdToFind) найден в массиве nfts")
-//            return true
-//        } else {
-//            print("NFT с ID \(nftIdToFind) не найден в массиве nfts")
-            return false                 
     }
 
     // MARK: - Private
    @objc private func likeButtonClicked() {
        if let indexPath = indexPath {
-           delegate?.setFavorite(indexPath: indexPath)
+           isFavorite = !isFavorite
+           delegate?.setFavorite(indexPath: indexPath, isFavorite: isFavorite)
        }
     }
 
