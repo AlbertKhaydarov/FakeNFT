@@ -7,9 +7,6 @@
 
 import XCTest
 
-// swiftlint:disable type_name
-typealias AC = AccessibilityConstant
-
 final class CatalogUITests: XCTestCase {
     enum Constant {
         static let minTimeout: Double = 3
@@ -17,6 +14,7 @@ final class CatalogUITests: XCTestCase {
     }
 
     private let app = XCUIApplication()
+    private lazy var page = CatalogPage(app: app)
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -24,66 +22,51 @@ final class CatalogUITests: XCTestCase {
     }
 
     func test_catalogSortingByName() {
-        let tables = app.tables
-        let cellBeforeSorting = tables.children(matching: .cell).element(boundBy: .zero)
-        XCTAssertTrue(cellBeforeSorting.waitForExistence(timeout: Constant.baseTimeout))
-        let beforeSortingLabel = cellBeforeSorting.staticTexts.element(boundBy: .zero).label
+        XCTAssertTrue(page.firstCell.waitForExistence(timeout: Constant.baseTimeout))
+        let beforeSortingLabel = page.labelOf(element: page.firstCell)
 
-        app.buttons[AC.sortButton].tap()
+        page.sortButton.tap()
 
-        let alert = app.otherElements[AC.sortingAlert]
+        let alert = page.sortingAlert
         XCTAssertTrue(alert.exists)
 
-        alert.buttons[AC.sortItemByName].tap()
+        page.sortingButtonByName.tap()
 
-        let cellAfterSorting = tables.children(matching: .cell).element(boundBy: .zero)
-        let afterSortingLabel = cellAfterSorting.staticTexts.element(boundBy: .zero).label
+        let afterSortingLabel = page.labelOf(element: page.firstCell)
 
         XCTAssertNotEqual(
             beforeSortingLabel,
             afterSortingLabel
         )
 
-        resetSorting()
+        page.resetSorting()
     }
 
     func test_catalogSortingByNft() {
-        let tables = app.tables
-        let cellBeforeSorting = tables.children(matching: .cell).element(boundBy: 2)
-        XCTAssertTrue(cellBeforeSorting.waitForExistence(timeout: Constant.baseTimeout))
-        let beforeSortingLabel = cellBeforeSorting.staticTexts.element(boundBy: .zero).label
+        XCTAssertTrue(page.cellInTheMiddle.waitForExistence(timeout: Constant.baseTimeout))
+        let beforeSortingLabel = page.labelOf(element: page.cellInTheMiddle)
 
-        app.buttons[AC.sortButton].tap()
+        page.sortButton.tap()
 
-        let alert = app.otherElements[AC.sortingAlert]
+        let alert = page.sortingAlert
         XCTAssertTrue(alert.exists)
 
-        alert.buttons[AC.sortItemByNft].tap()
+        page.sortingButtonByNft.tap()
 
-        let cellAfterSorting = tables.children(matching: .cell).element(boundBy: .zero)
-        let afterSortingLabel = cellAfterSorting.staticTexts.element(boundBy: .zero).label
+        let afterSortingLabel = page.labelOf(element: page.firstCell)
 
         XCTAssertNotEqual(
             beforeSortingLabel,
             afterSortingLabel
         )
 
-        resetSorting()
+        page.resetSorting()
     }
 
     func test_didSelectCell() {
-        let tables = app.tables
-        let firstCell = tables.children(matching: .cell).element(boundBy: .zero)
-        XCTAssertTrue(firstCell.waitForExistence(timeout: Constant.baseTimeout))
-        firstCell.tap()
+        XCTAssertTrue(page.firstCell.waitForExistence(timeout: Constant.baseTimeout))
+        page.firstCell.tap()
 
-        XCTAssertFalse(firstCell.exists)
-    }
-
-    private func resetSorting() {
-        let firstCell = app.tables.children(matching: .cell).element(boundBy: .zero)
-        let start = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 10))
-        start.press(forDuration: 0, thenDragTo: finish)
+        XCTAssertFalse(page.firstCell.exists)
     }
 }

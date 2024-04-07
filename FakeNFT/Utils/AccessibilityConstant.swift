@@ -8,6 +8,8 @@
 import Foundation
 
 enum AccessibilityConstant {
+    // MARK: Catalog
+
     static let sortButton = "SortButton"
     static let sortingAlert = "SortingAlert"
     static let sortItemByName = "SortItemByName"
