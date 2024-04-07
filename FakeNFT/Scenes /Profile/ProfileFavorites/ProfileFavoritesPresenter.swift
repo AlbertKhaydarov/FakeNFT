@@ -43,7 +43,9 @@ final class ProfileFavoritesPresenter {
                                           id: item.id,
                                           isLiked: true)
                 }
-                self.view?.updateFavoritesNFTs(favoriteNFTs: favoriteNfts)
+                var favoritesNFTsSortedDefault = favoriteNfts
+                favoritesNFTsSortedDefault = favoritesNFTsSortedDefault.sorted { $0.name < $1.name }
+                self.view?.updateFavoritesNFTs(favoriteNFTs: favoritesNFTsSortedDefault)
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
             }
@@ -65,7 +67,6 @@ final class ProfileFavoritesPresenter {
                                                           likes: profile.likes,
                                                           id: profile.id)
                     getFavoritesNFTs()
-//print(profileDetails)
                 case .failure(let error):
                     assertionFailure("Failed to load Profile \(error)")
                 }

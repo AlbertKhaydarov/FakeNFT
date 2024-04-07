@@ -124,7 +124,7 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
         cell.delegate = self
         if let myNFTs = myNFTs {
             let item = myNFTs[indexPath.row]
-            cell.configureCell(with: item, indexPath: indexPath, isLiked: item.isLiked/*, with: presenter*/)
+            cell.configureCell(with: item, indexPath: indexPath, isLiked: item.isLiked)
         }
         cell.selectionStyle = .none
         return cell
@@ -142,10 +142,20 @@ extension ProfileMyNFTViewController: UITableViewDelegate {
 // MARK: - ProfileFavoritesCollectionViewCellDelegate
 
 extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellViewCellDelegate {
-    
-    func setFavorite(indexPath: IndexPath) {
+    func setFavorite(indexPath: IndexPath, isFavorite: Bool) {
         guard let myNFTs = myNFTs else {return}
-        let nft = myNFTs[indexPath.row]
-        presenter.setFavorite(with: nft)
+        
+        let nft = MyNFTViewModel(createdAt: myNFTs[indexPath.row].createdAt,
+                                 name: myNFTs[indexPath.row].name,
+                                 images: myNFTs[indexPath.row].images,
+                                 rating: myNFTs[indexPath.row].rating,
+                                 description: myNFTs[indexPath.row].description,
+                                 price: myNFTs[indexPath.row].price,
+                                 author: myNFTs[indexPath.row].author,
+                                 id: myNFTs[indexPath.row].id,
+                                 isLiked: isFavorite)
+        
+        presenter.setFavorite(with: nft, isFavorite: isFavorite)
+//        tableView.reloadData()
     }
 }

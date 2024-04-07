@@ -83,7 +83,6 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
-                print(profile.likes.count)
                 storage?.saveProfile(profile)
                 completion(.success(profile))
             case .failure(let error):

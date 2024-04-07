@@ -66,6 +66,8 @@ class ProfileFavoritesViewController: UIViewController {
 
     func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel]) {
         self.favoriteNFTs = favoriteNFTs
+        print(favoriteNFTs.count)
+        isStubHidden()
         collectionView.reloadData()
     }
 
@@ -75,6 +77,7 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
+  
         if favoriteNFTs?.count == 0 || favoriteNFTs == nil {
             stubFavotitesLabel.isHidden = false
         } else {
