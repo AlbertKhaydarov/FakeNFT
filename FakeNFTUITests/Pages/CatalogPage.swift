@@ -11,12 +11,12 @@ import XCTest
 typealias AC = AccessibilityConstant
 
 struct CatalogPage {
-    // MARK: Dependency
+    // MARK: - Dependency
 
     let app: XCUIApplication
 
-    // MARK: Elements
-    
+    // MARK: - Elements
+
     var firstCell: XCUIElement {
         app.tables.children(matching: .cell).element(boundBy: .zero)
     }
@@ -41,7 +41,11 @@ struct CatalogPage {
         sortingAlert.buttons[AC.sortItemByNft]
     }
 
-    // MARK: Helpers
+    var screen: XCUIElement {
+        app.otherElements[AC.catalogScreen]
+    }
+
+    // MARK: - Helpers
 
     func labelOf(element: XCUIElement) -> String {
         element.staticTexts.element(boundBy: .zero).label

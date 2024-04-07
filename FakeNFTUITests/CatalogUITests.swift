@@ -67,6 +67,6 @@ final class CatalogUITests: XCTestCase {
         XCTAssertTrue(page.firstCell.waitForExistence(timeout: Constant.baseTimeout))
         page.firstCell.tap()
 
-        XCTAssertFalse(page.firstCell.exists)
+        XCTAssertFalse(page.screen.exists)
     }
 }

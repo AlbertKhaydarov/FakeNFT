@@ -140,6 +140,7 @@ final class CollectionViewController: UIViewController, ErrorView {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        view.accessibilityIdentifier = AccessibilityConstant.collectionScreen
 
         topImageView.placedOn(view)
         NSLayoutConstraint.activate([

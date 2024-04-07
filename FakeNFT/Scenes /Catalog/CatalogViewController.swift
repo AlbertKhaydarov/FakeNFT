@@ -82,6 +82,8 @@ final class CatalogViewController: UIViewController, ErrorView {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        view.accessibilityIdentifier = AccessibilityConstant.catalogScreen
+
         navigationItem.rightBarButtonItem = sortButton
 
         tableView.placedOn(view)

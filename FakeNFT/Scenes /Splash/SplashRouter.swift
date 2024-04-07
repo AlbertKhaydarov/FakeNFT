@@ -16,7 +16,7 @@ final class SplashRouter: ISplashRouter {
     // MARK: - Public
 
     func openEntryScreen() {
-        // TODO: implement entry and login route
+        // implement entry and login route
     }
 
     func openMainScreen() {

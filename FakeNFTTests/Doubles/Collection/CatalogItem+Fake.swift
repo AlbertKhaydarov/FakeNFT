@@ -8,6 +8,7 @@
 @testable import FakeNFT
 import Foundation
 
+// swiftlint:disable compiler_protocol_init
 extension CatalogItem {
     static let fake: CatalogItem = .init(
         id: "1",
