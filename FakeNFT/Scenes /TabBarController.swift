@@ -22,8 +22,7 @@ final class TabBarController: UITabBarController {
 
     private func setupViewControllers() {
         let profile = prepareViewController(
-//            ProfileAssembly.assemble(),
-            ProfileAssembly.assemble().0,
+            ProfileAssembly.assemble(),
             image: Constant.profileImageIcon,
             title: .loc.Profile.title,
             tag: 0

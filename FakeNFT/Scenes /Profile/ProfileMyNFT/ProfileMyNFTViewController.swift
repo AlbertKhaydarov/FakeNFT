@@ -13,6 +13,12 @@ protocol ProfileMyNFTViewProtocol: AnyObject {
 
 class ProfileMyNFTViewController: UIViewController {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let tableViewVerticalConstraint: CGFloat = 20
+        static let stubMyNFTLabelHorizontalConstraint: CGFloat = 16
+    }
+
     // MARK: - Properties
     private let presenter: any ProfileMyNFTPresenterProtocol
 
@@ -94,15 +100,19 @@ class ProfileMyNFTViewController: UIViewController {
 
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                           constant: Constants.tableViewVerticalConstraint),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                              constant: -Constants.tableViewVerticalConstraint),
 
             stubMyNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubMyNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stubMyNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stubMyNFTLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            stubMyNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                    constant: Constants.stubMyNFTLabelHorizontalConstraint),
+            stubMyNFTLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                     constant: -Constants.stubMyNFTLabelHorizontalConstraint)
         ])
     }
 }

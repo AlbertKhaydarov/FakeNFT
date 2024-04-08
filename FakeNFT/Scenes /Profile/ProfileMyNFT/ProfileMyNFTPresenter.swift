@@ -28,7 +28,7 @@ final class ProfileMyNFTPresenter {
 
     func setFavorite(with nft: MyNFTViewModel, isFavorite: Bool) {
         UIBlockingProgressHUD.show()
-        if isFavorite == true {
+        if isFavorite {
             profileFavoriteNfts?.append(nft)
         } else {
             if let favoriteNftIndex = profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id }) {

@@ -13,6 +13,17 @@ protocol ProfileViewProtocol: AnyObject {
 
 final class ProfileViewController: UIViewController {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let baseSpacing: CGFloat = 16
+        static let horizontalInset: CGFloat = 16
+        static let imageSize: CGFloat = 70
+        static let topConstraint: CGFloat = 20
+        static let websiteLinkLabelTop: CGFloat = 12
+        static let tableViewTop: CGFloat = 40
+        static let tableViewBotton: CGFloat = 221
+    }
+
     // MARK: - Properties
     private let presenter: any ProfilePresenterProtocol
 
@@ -56,7 +67,7 @@ final class ProfileViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 16
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(userProfileImageView)
         stackView.addArrangedSubview(userNamelabel)
         return stackView
@@ -174,16 +185,19 @@ final class ProfileViewController: UIViewController {
 
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
-            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                       constant: Constants.horizontalInset),
+            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                        constant: -Constants.horizontalInset),
+            verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                   constant: Constants.topConstraint),
 
             horizontalStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             horizontalStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             horizontalStackView.topAnchor.constraint(equalTo: verticalStackView.topAnchor),
 
-            userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
-            userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
+            userProfileImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
+            userProfileImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
             userProfileImageView.topAnchor.constraint(equalTo: horizontalStackView.topAnchor),
             userProfileImageView.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
 
@@ -195,16 +209,21 @@ final class ProfileViewController: UIViewController {
 
             descriptionLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 20),
+            descriptionLabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor,
+                                                  constant: Constants.topConstraint),
 
-            websiteLinkLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            websiteLinkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            websiteLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
+            websiteLinkLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                      constant: Constants.horizontalInset),
+            websiteLinkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                       constant: -Constants.horizontalInset),
+            websiteLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor,
+                                                  constant: Constants.websiteLinkLabelTop),
 
-            tableView.topAnchor.constraint(equalTo: websiteLinkLabel.bottomAnchor, constant: 40),
+            tableView.topAnchor.constraint(equalTo: websiteLinkLabel.bottomAnchor, constant: Constants.tableViewTop),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -221)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                              constant: -Constants.tableViewBotton)
         ])
     }
 }
@@ -221,7 +240,10 @@ extension ProfileViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ProfileViewTableViewCell = tableView.dequeueReusableCell()
-        cell.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        cell.layoutMargins = UIEdgeInsets(top: 0,
+                                          left: Constants.horizontalInset,
+                                          bottom: 0,
+                                          right: Constants.horizontalInset)
         if let profileViewModel = profileViewModel {
             cell.configureCell(indexPath: indexPath, with: profileViewModel)
         }

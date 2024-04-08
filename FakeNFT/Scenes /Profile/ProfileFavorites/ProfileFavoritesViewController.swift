@@ -13,15 +13,24 @@ protocol ProfileFavoritesViewProtocol: AnyObject {
 
 class ProfileFavoritesViewController: UIViewController {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let horizontalInset: CGFloat = 16
+        static let cellSpacing: CGFloat = 7
+        static let lineSpacing: CGFloat = 20
+
+        static let cellCount: Int = 2
+    }
+
     // MARK: - Properties
     private let presenter: any ProfileFavoritesPresenterProtocol
 
     private let params = GeometricParams(
-        cellCount: 2,
-        leftInset: 16,
-        rightInset: 16,
-        cellSpacing: 7,
-        lineSpacingForSectionAt: 20)
+        cellCount: Constants.cellCount,
+        leftInset: Constants.horizontalInset,
+        rightInset: Constants.horizontalInset,
+        cellSpacing: Constants.cellSpacing,
+        lineSpacingForSectionAt: Constants.lineSpacing)
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -93,8 +102,10 @@ class ProfileFavoritesViewController: UIViewController {
 
             stubFavotitesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubFavotitesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stubFavotitesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stubFavotitesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            stubFavotitesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                        constant: Constants.horizontalInset),
+            stubFavotitesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                         constant: -Constants.horizontalInset)
         ])
     }
 }
