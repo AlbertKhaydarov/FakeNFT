@@ -16,8 +16,10 @@ final class ProfileMyNFTAssembly {
                                                   nftStorage: NftStorageImpl() )
 
         let router = ProfileMyNFTRouter()
+        let storage: ProfileUserDefaultsStorageProtocol = ProfileUserDefaultsStorage()
         let presenter = ProfileMyNFTPresenter(router: router,
-                                              service: servicesAssembler.profileMyNFTService)
+                                              service: servicesAssembler.profileMyNFTService,
+                                              profileStorage: storage)
         let view = ProfileMyNFTViewController(presenter: presenter)
 
         presenter.view = view

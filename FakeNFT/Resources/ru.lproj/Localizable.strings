@@ -27,3 +27,8 @@
 "Profile.stubMyNFTLabel.title" = "У Вас ещё нет NFT";
 "Profile.stubFavotitesLabel.title" = "У Вас ещё нет избранных NFT";
 "Profile.editImagelabel.title" = "Сменить фото";
+"Profile.alert.title" = "Сортировка";
+"Profile.alertAction1.title" = "По цене";
+"Profile.alertAction2.title" = "По рейтингу";
+"Profile.alertAction3.title" = "По названию";
+"Profile.alertCloseAction.title" = "Закрыть";
