@@ -29,7 +29,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../FakeNFT.xctestplan"
+            reference = "container:FakeNFT.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

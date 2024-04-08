@@ -8,16 +8,11 @@
 import UIKit
 
 protocol ISplashRouter {
-    func openEntryScreen()
     func openMainScreen()
 }
 
 final class SplashRouter: ISplashRouter {
     // MARK: - Public
-
-    func openEntryScreen() {
-        // implement entry and login route
-    }
 
     func openMainScreen() {
         guard let window = UIApplication.shared.windows.first else {
