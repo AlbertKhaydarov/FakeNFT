@@ -3,7 +3,7 @@
 //  FakeNFT
 //
 //  Created by MAKOVEY Vladislav on 19.03.2024.
-//
+
 import Kingfisher
 import Foundation
 
@@ -22,7 +22,6 @@ final class ProfilePresenter {
     weak var view: (any ProfileViewProtocol)?
     private let router: any ProfileRouterProtocol
     private let service: ProfileServiceProtocol
-//    private var profileServiceObserver: NSObjectProtocol?
 
     init(router: some ProfileRouterProtocol, service: ProfileServiceProtocol) {
         self.router = router
@@ -31,6 +30,7 @@ final class ProfilePresenter {
 
     // MARK: - Public
     func getProfile() {
+        UIBlockingProgressHUD.show()
         service.loadProfile { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -42,9 +42,11 @@ final class ProfilePresenter {
                                                       nfts: profile.nfts,
                                                       likes: profile.likes,
                                                       id: profile.id)
+                UIBlockingProgressHUD.dismiss()
                 self.view?.updateProfileDetails(profileModel: profileDetails)
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
+                UIBlockingProgressHUD.dismiss()
             }
         }
     }
@@ -54,13 +56,6 @@ final class ProfilePresenter {
             guard let self = self else {return}
             switch result {
             case .success(let profile):
-                let profileDetails = ProfileViewModel(name: profile.name,
-                                                      userPic: profile.avatar,
-                                                      description: profile.description,
-                                                      website: profile.website,
-                                                      nfts: profile.nfts,
-                                                      likes: profile.likes,
-                                                      id: profile.id)
                 self.getProfile()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
@@ -80,7 +75,7 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 
     func switchToProfileEditView(profile: ProfileViewModel) {
         if let destination = ProfileEditAssembly.assemble(profile: profile) as? ProfileEditViewController {
-            router.switchToProfileEditView(to: destination, profile: profile)
+            router.switchToProfileEditView(destination: destination, profile: profile)
             destination.delegate = self
         }
     }

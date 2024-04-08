@@ -9,25 +9,23 @@ import Foundation
 
 protocol ProfileFavoritesPresenterProtocol {
     func viewDidLoad()
-    func updateProfile(favorites: [MyNFTViewModel]?) 
-//    var favoritesNFT: [MyNFTViewModel] { get set }
+    func updateProfile(favorites: [MyNFTViewModel]?)
 }
 
 final class ProfileFavoritesPresenter {
 
     // MARK: Properties
-//    var favoritesNFT: [MyNFTViewModel] = []
     weak var view: (any ProfileFavoritesViewProtocol)?
     private let router: any ProfileFavoritesRouterProtocol
     private let service: ProfileMyNftServiceProtocol
-    
+
     init(router: some ProfileFavoritesRouterProtocol, service: ProfileMyNftServiceProtocol) {
         self.router = router
         self.service = service
-
     }
 
     private func getFavoritesNFTs() {
+        UIBlockingProgressHUD.show()
         service.loadFavoritesNfts { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -45,33 +43,27 @@ final class ProfileFavoritesPresenter {
                 }
                 var favoritesNFTsSortedDefault = favoriteNfts
                 favoritesNFTsSortedDefault = favoritesNFTsSortedDefault.sorted { $0.name < $1.name }
+                UIBlockingProgressHUD.dismiss()
                 self.view?.updateFavoritesNFTs(favoriteNFTs: favoritesNFTsSortedDefault)
+            case .failure(let error):
+                assertionFailure("Failed to load Profile \(error)")
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+
+    func updateProfile(favorites: [MyNFTViewModel]?) {
+        guard let favorites = favorites else {return}
+        service.uploadFavoritesNFTs(nfts: favorites) {[weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success(let profile):
+                getFavoritesNFTs()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
             }
         }
     }
-
-        func updateProfile(favorites: [MyNFTViewModel]?) {
-            guard let favorites = favorites else {return}
-            service.uploadFavoritesNFTs(nfts: favorites) {[weak self] result in
-                guard let self = self else {return}
-                switch result {
-                case .success(let profile):
-    
-                    let profileDetails = ProfileViewModel(name: profile.name,
-                                                          userPic: profile.avatar,
-                                                          description: profile.description,
-                                                          website: profile.website,
-                                                          nfts: profile.nfts,
-                                                          likes: profile.likes,
-                                                          id: profile.id)
-                    getFavoritesNFTs()
-                case .failure(let error):
-                    assertionFailure("Failed to load Profile \(error)")
-                }
-            }
-        }
 }
 
 // MARK: - ProfileEditPresenterProtocol

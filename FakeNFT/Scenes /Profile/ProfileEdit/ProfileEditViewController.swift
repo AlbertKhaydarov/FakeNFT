@@ -200,10 +200,9 @@ class ProfileEditViewController: UIViewController {
 
     var profileUpdate: ProfileViewModel?
     var profileUpdateName: Bool = false
-    var profileUpdateUserProfileImageDownloadLinkTextField: Bool = false
+    var profileUpdateUserProfileImageTextField: Bool = false
     var profileUpdateDescriptionTextView: Bool = false
     var profileUpdateWebsiteTextField: Bool = false
-  
 
     init(presenter: some ProfileEditPresenterProtocol) {
         self.presenter = presenter
@@ -220,7 +219,7 @@ class ProfileEditViewController: UIViewController {
         getInitialProfileDetails()
         updateUserPic()
     }
-    
+
     weak var delegate: ObserverProtocol?
 
     override func viewDidLayoutSubviews() {
@@ -232,13 +231,11 @@ class ProfileEditViewController: UIViewController {
     // MARK: - Private
     private func getInitialProfileDetails() {
         profileUpdate = presenter.getProfileViewModel()
-        
         if let profileUpdate = profileUpdate {
             userNameTextField.text = profileUpdate.name
             descriptionTextView.text = profileUpdate.description
             websiteTextField.text = profileUpdate.website
         }
-        
     }
 
     @objc private func dismissKeyboard() {
@@ -250,42 +247,35 @@ class ProfileEditViewController: UIViewController {
         if let profileUpdate = profileUpdate {
             userProfileImageView.kf.indicatorType = .activity
             let profileImageString = profileUpdate.userPic
-            guard
-                let url = URL(string: profileImageString)
-            else {
-                return
-            }
+            guard let url = URL(string: profileImageString)
+            else { return }
             userProfileImageView.kf.setImage(with: url)
         }
     }
-    
-
 
     @objc private func userProfileImageTapped() {
         userProfileImageDownloadLinkTextField.isHidden  = false
     }
 
     @objc private func closeButtonTapped() {
-        guard var profileUpdate = profileUpdate else {return}
-        guard var name = userNameTextField.text, !name.isEmpty,
-              var avatar = userProfileImageDownloadLinkTextField.text,
-              var description = descriptionTextView.text, !description.isEmpty,
-              var website =  websiteTextField.text, !website.isEmpty
+        guard let profileUpdate = profileUpdate else {return}
+        guard let name = userNameTextField.text, !name.isEmpty,
+              let avatar = userProfileImageDownloadLinkTextField.text,
+              let description = descriptionTextView.text, !description.isEmpty,
+              let website =  websiteTextField.text, !website.isEmpty
         else {return}
-        
+
         let updateName = profileUpdateName ? name : profileUpdate.name
-        let updateAvatar = profileUpdateUserProfileImageDownloadLinkTextField ? avatar : profileUpdate.userPic
+        let updateAvatar = profileUpdateUserProfileImageTextField ? avatar : profileUpdate.userPic
         let updateDescription = profileUpdateDescriptionTextView ? description : profileUpdate.description
         let updateWebsite = profileUpdateWebsiteTextField ? website : profileUpdate.website
-        
-        let profileUpdateModel = Profile(name: name,
+        let profileUpdateModel = Profile(name: updateName,
                                          avatar: updateAvatar,
                                          description: updateDescription,
                                          website: updateWebsite,
                                          nfts: profileUpdate.nfts,
                                          likes: profileUpdate.likes,
                                          id: profileUpdate.id)
-        
         delegate?.didCloseViewController(model: profileUpdateModel)
         dismiss(animated: true)
     }
@@ -331,14 +321,12 @@ class ProfileEditViewController: UIViewController {
             userProfileImageView.topAnchor.constraint(equalTo: contentViewForScrollView.topAnchor),
             userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
-
             userProfileImageOverlayView.topAnchor.constraint(equalTo: userProfileImageView.topAnchor),
             userProfileImageOverlayView.bottomAnchor.constraint(equalTo: userProfileImageView.bottomAnchor),
             userProfileImageOverlayView.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
             userProfileImageOverlayView.trailingAnchor.constraint(equalTo: userProfileImageView.trailingAnchor),
             userProfileImageOverlayView.widthAnchor.constraint(equalToConstant: 70),
             userProfileImageOverlayView.heightAnchor.constraint(equalToConstant: 70),
-
             editImagelabel.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
             editImagelabel.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
             editImagelabel.widthAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
@@ -349,11 +337,9 @@ class ProfileEditViewController: UIViewController {
                                                                             contentViewForScrollView.centerXAnchor),
             userProfileImageDownloadLinkTextField.heightAnchor.constraint(equalToConstant: 44),
             userProfileImageDownloadLinkTextField.widthAnchor.constraint(equalToConstant: 250),
-
             commonStackView.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 24),
             commonStackView.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
             commonStackView.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
-
             userNameStackView.topAnchor.constraint(equalTo: commonStackView.topAnchor),
             userNameTextField.heightAnchor.constraint(equalToConstant: 44),
 
@@ -361,7 +347,6 @@ class ProfileEditViewController: UIViewController {
             websiteTextField.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
             websiteTextField.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
             websiteTextField.heightAnchor.constraint(equalToConstant: 44),
-
             descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24)
         ])
     }
@@ -402,15 +387,14 @@ extension ProfileEditViewController: UITextFieldDelegate {
         scrollView.setContentOffset(CGPoint.zero, animated: true)
         return true
     }
-    
+
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField == userNameTextField {
-                profileUpdateName = true
-            } else if textField == userProfileImageDownloadLinkTextField {
-                profileUpdateUserProfileImageDownloadLinkTextField = true
-            } else if textField == websiteTextField {
-                profileUpdateWebsiteTextField = true
-            }
+            profileUpdateName = true
+        } else if textField == userProfileImageDownloadLinkTextField {
+            profileUpdateUserProfileImageTextField = true
+        } else if textField == websiteTextField {
+            profileUpdateWebsiteTextField = true
+        }
     }
 }
-

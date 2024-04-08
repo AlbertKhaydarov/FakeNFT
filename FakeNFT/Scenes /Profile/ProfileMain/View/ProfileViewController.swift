@@ -111,7 +111,7 @@ final class ProfileViewController: UIViewController {
         presenter.getProfile()
         tableView.reloadData()
     }
-     
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
@@ -135,7 +135,7 @@ final class ProfileViewController: UIViewController {
 
     @objc private func websiteLinkLabelTapped() {
         guard let profileViewModel = profileViewModel,
-        let url = URL(string: profileViewModel.website)
+              let url = URL(string: profileViewModel.website)
         else { return }
         presenter.switchToProfileUserWebViewViewController(with: url)
     }
@@ -149,10 +149,6 @@ final class ProfileViewController: UIViewController {
         tableView.reloadData()
         activityIndicator.stopAnimating()
     }
-//
-//    func getUpdate() {
-//        presenter.getProfile()
-//    }
 
     private func updateUserPic(url: String) {
         userProfileImageView.kf.indicatorType = .activity
@@ -232,6 +228,7 @@ extension ProfileViewController: UITableViewDataSource {
         return cell
     }
 }
+
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -244,7 +241,7 @@ extension ProfileViewController: UITableViewDelegate {
             presenter.switchToProfileFavoriteView()
         } else if indexPath.row == 2 {
             guard let profileViewModel = profileViewModel,
-            let url = URL(string: profileViewModel.website)
+                  let url = URL(string: profileViewModel.website)
             else { return }
             presenter.switchToProfileUserWebViewViewController(with: url)
         }

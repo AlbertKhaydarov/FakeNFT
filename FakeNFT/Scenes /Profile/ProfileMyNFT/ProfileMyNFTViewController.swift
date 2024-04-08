@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProfileMyNFTViewProtocol: AnyObject { 
+protocol ProfileMyNFTViewProtocol: AnyObject {
     func updateMyNFTs(myNFTs: [MyNFTViewModel])
 }
 
@@ -79,10 +79,10 @@ class ProfileMyNFTViewController: UIViewController {
     }
 
     private func sortButton() {
-    let rightButton = UIBarButtonItem(image: Assets.sortImage.image,
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(sortButtonTapped))
+        let rightButton = UIBarButtonItem(image: Assets.sortImage.image,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(sortButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
         rightButton.tintColor = Assets.ypBlack.color
     }
@@ -109,7 +109,6 @@ class ProfileMyNFTViewController: UIViewController {
 
 // MARK: - ProfileMyNFTViewProtocol
 
-// MARK: - TBD in the 2nd part
 extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {}
 
 // MARK: - UITableViewDataSource
@@ -141,10 +140,10 @@ extension ProfileMyNFTViewController: UITableViewDelegate {
 
 // MARK: - ProfileFavoritesCollectionViewCellDelegate
 
-extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellViewCellDelegate {
+extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellDelegate {
     func setFavorite(indexPath: IndexPath, isFavorite: Bool) {
         guard let myNFTs = myNFTs else {return}
-        
+
         let nft = MyNFTViewModel(createdAt: myNFTs[indexPath.row].createdAt,
                                  name: myNFTs[indexPath.row].name,
                                  images: myNFTs[indexPath.row].images,
@@ -154,8 +153,7 @@ extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellViewCellDelegate 
                                  author: myNFTs[indexPath.row].author,
                                  id: myNFTs[indexPath.row].id,
                                  isLiked: isFavorite)
-        
+
         presenter.setFavorite(with: nft, isFavorite: isFavorite)
-//        tableView.reloadData()
     }
 }

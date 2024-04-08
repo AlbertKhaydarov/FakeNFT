@@ -19,7 +19,6 @@ final class ProfileMyNFTPresenter {
     weak var view: (any ProfileMyNFTViewProtocol)?
     private let router: any ProfileMyNFTRouterProtocol
     private let service: ProfileMyNftServiceProtocol
-//    private var profileFavoriteNfts: [ProfileMyNFT]?
     private var profileFavoriteNfts: [MyNFTViewModel]?
 
     init(router: some ProfileMyNFTRouterProtocol, service: ProfileMyNftServiceProtocol) {
@@ -28,19 +27,7 @@ final class ProfileMyNFTPresenter {
     }
 
     func setFavorite(with nft: MyNFTViewModel, isFavorite: Bool) {
-//        let existingFavoriteNfts = profileFavoriteNfts?.map({ item in
-//            return MyNFTViewModel(createdAt: item.createdAt,
-//                                  name: item.name,
-//                                  images: item.images,
-//                                  rating: item.rating,
-//                                  description: item.description,
-//                                  price: item.price,
-//                                  author: item.author,
-//                                  id: item.id,
-//                                  isLiked: isFavorite)
-//        })
-//        guard var existingFavoriteNfts = existingFavoriteNfts else {return}
-      
+        UIBlockingProgressHUD.show()
         if isFavorite == true {
             profileFavoriteNfts?.append(nft)
         } else {
@@ -50,21 +37,13 @@ final class ProfileMyNFTPresenter {
         }
         updateProfile(nfts: profileFavoriteNfts)
     }
-    
+
     private func updateProfile(nfts: [MyNFTViewModel]?) {
         guard let nfts = nfts else {return}
         service.uploadFavoritesNFTs(nfts: nfts) {[weak self] result in
             guard let self = self else {return}
             switch result {
             case .success(let profile):
-      
-//                let profileDetails = ProfileViewModel(name: profile.name,
-//                                                      userPic: profile.avatar,
-//                                                      description: profile.description,
-//                                                      website: profile.website,
-//                                                      nfts: profile.nfts,
-//                                                      likes: profile.likes,
-//                                                      id: profile.id)
                 self.getMyNFTs()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
@@ -73,6 +52,7 @@ final class ProfileMyNFTPresenter {
     }
 
     private func getFavoriteNft() {
+        UIBlockingProgressHUD.show()
         service.loadFavoritesNfts { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -101,7 +81,7 @@ final class ProfileMyNFTPresenter {
             switch result {
             case .success(let nfts):
                 let myNfts = nfts.map { nft -> MyNFTViewModel in
-                    if let favoriteNftIndex = self.profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id }) {
+                    if (self.profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id })) != nil {
                         return MyNFTViewModel(createdAt: nft.createdAt,
                                               name: nft.name,
                                               images: nft.images,
@@ -123,11 +103,13 @@ final class ProfileMyNFTPresenter {
                                               isLiked: false)
                     }
                 }
-              var myNFTsSortedDefault = myNfts
+                var myNFTsSortedDefault = myNfts
                 myNFTsSortedDefault = myNFTsSortedDefault.sorted { $0.name < $1.name }
+                UIBlockingProgressHUD.dismiss()
                 self.view?.updateMyNFTs(myNFTs: myNFTsSortedDefault)
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
+                UIBlockingProgressHUD.dismiss()
             }
         }
     }

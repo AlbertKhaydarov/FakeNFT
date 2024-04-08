@@ -8,17 +8,17 @@
 import UIKit
 
 final class RatingStarsView: UIView {
-    
+
     private var starImageViews: [UIImageView] = []
-    
-   init() {
+
+    init() {
         super.init(frame: .zero)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setRatingStars(rating: Int) {
         starImageViews = []
         for item in 1...5 {
@@ -30,21 +30,21 @@ final class RatingStarsView: UIView {
         }
         updateStackView()
     }
-    
+
     private func updateStackView() {
-        var stackView = UIStackView(arrangedSubviews: starImageViews)
+        let stackView = UIStackView(arrangedSubviews: starImageViews)
         stackView.axis  = .horizontal
         stackView.spacing = 2
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         setupSubviews(stackView: stackView)
         layoutSetup(stackView: stackView)
     }
-    
+
     private func setupSubviews(stackView: UIStackView) {
         self.addSubview(stackView)
     }
-    
+
     private func layoutSetup(stackView: UIStackView) {
         NSLayoutConstraint.activate([
             stackView.widthAnchor.constraint(equalToConstant: 68),

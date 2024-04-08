@@ -32,7 +32,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let profile):
-//                storage.saveProfile(profile)
+                //                storage.saveProfile(profile)
                 let iDs = profile.likes
                 var likes: [ProfileMyNFT] = []
                 let group = DispatchGroup()
@@ -45,14 +45,12 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
                         switch result {
                         case .success(let nft):
                             likes.append(nft)
-
                         case .failure(let error):
                             assertionFailure("Failed to load Profile \(error)")
                         }
                     }
                 }
                 group.notify(queue: .main) {
-//                    self.storage.saveProfileMyNFTs(likes)
                     completion(.success(likes))
                 }
             case .failure(let error):
@@ -65,7 +63,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
 
         if let profile = storage.getProfile() {
             self.profile = profile
-                }
+        }
         var favorites: [String] = nfts.map { $0.id }
         if favorites.count == 0 {
             favorites = ["null"]
@@ -78,7 +76,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
                             likes: favorites,
                             id: profile?.id ?? "")
 
-        var request = ProfileUpdateRequest(model: model)
+        let request = ProfileUpdateRequest(model: model)
 
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
@@ -109,7 +107,6 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
                         switch result {
                         case .success(let nft):
                             nfts.append(nft)
-
                         case .failure(let error):
                             assertionFailure("Failed to load Profile \(error)")
                         }
@@ -125,16 +122,15 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
         }
     }
 
-   private func loadProfile(completion: @escaping ProfileCompletion) {
-//       if let profile = storage.getProfile() {
-//           completion(.success(profile))
-//       }
+    private func loadProfile(completion: @escaping ProfileCompletion) {
+        if let profile = storage.getProfile() {
+            completion(.success(profile))
+        }
         let request = ProfileRequest()
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
                 storage?.saveProfile(profile)
-
                 completion(.success(profile))
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
@@ -145,10 +141,10 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
 
     private func loadMyNft(id: String, completion: @escaping ProfileMyNftCompletion) {
 
-//        if let nft = storage.getProfileMyNFTs(with: id) {
-//            completion(.success(nft))
-//            return
-//        }
+        if let nft = storage.getProfileMyNFTs(with: id) {
+            completion(.success(nft))
+            return
+        }
         let request = NFTRequest(id: id)
 
         networkClient.send(request: request, type: ProfileMyNFT.self) { [weak storage] result in
