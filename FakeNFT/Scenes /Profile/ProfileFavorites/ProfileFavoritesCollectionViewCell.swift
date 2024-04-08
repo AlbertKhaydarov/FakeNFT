@@ -13,6 +13,16 @@ protocol ProfileFavoritesCollectionCellDelegate: AnyObject {
 
 class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let baseSpacing: CGFloat = 4
+        static let baseCornerRadius: CGFloat = 12
+        static let imageSize: CGFloat = 80
+        static let buttonSize: CGFloat = 42
+        static let commonStackViewLeft: CGFloat = 12
+        static let commonStackViewVertical: CGFloat = 7
+    }
+
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +65,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(priceLabel)
@@ -96,7 +106,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         contentView.addSubview(favoriteActiveButton)
         contentView.addSubview(commonStackView)
 
-        nftImageView.layer.cornerRadius = 12
+        nftImageView.layer.cornerRadius = Constants.baseCornerRadius
         nftImageView.layer.masksToBounds = true
     }
 
@@ -106,19 +116,22 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
             nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nftImageView.heightAnchor.constraint(equalToConstant: 80),
-            nftImageView.widthAnchor.constraint(equalToConstant: 80),
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
+            nftImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
 
-            favoriteActiveButton.heightAnchor.constraint(equalToConstant: 42),
-            favoriteActiveButton.widthAnchor.constraint(equalToConstant: 42),
+            favoriteActiveButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            favoriteActiveButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
             favoriteActiveButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
             favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
 
-            commonStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
+            commonStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                     constant: Constants.commonStackViewLeft),
             commonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             commonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            commonStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
-            commonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7)
+            commonStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                 constant: Constants.commonStackViewVertical),
+            commonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                    constant: -Constants.commonStackViewVertical)
         ])
     }
 

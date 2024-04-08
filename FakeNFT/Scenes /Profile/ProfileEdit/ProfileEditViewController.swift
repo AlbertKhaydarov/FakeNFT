@@ -12,6 +12,19 @@ protocol ProfileEditViewProtocol: AnyObject {
 
 class ProfileEditViewController: UIViewController {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let verticalInset: CGFloat = 11
+        static let horizontalInset: CGFloat = 16
+        static let baseCornerRadius: CGFloat = 12
+        static let StackViewTopSpacing: CGFloat = 24
+        static let imageSize: CGFloat = 70
+        static let baseHight: CGFloat = 44
+        static let baseSpacing: CGFloat = 8
+        static let textFieldWidth: CGFloat = 250
+        static let textFieldTopConstraint: CGFloat = 4
+    }
+
     // MARK: - Properties
     private let presenter: any ProfileEditPresenterProtocol
 
@@ -69,7 +82,10 @@ class ProfileEditViewController: UIViewController {
 
     private lazy var userNameTextField: UITextField = {
         let textField = UITextField()
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
+        textField.leftView = UIView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: Constants.horizontalInset,
+                                                  height: Constants.baseHight))
         textField.leftViewMode = .always
         textField.backgroundColor = Assets.ypLightGrey.color
         textField.layer.cornerRadius = 12
@@ -88,7 +104,7 @@ class ProfileEditViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(userNamelabel)
         stackView.addArrangedSubview(userNameTextField)
         return stackView
@@ -108,9 +124,12 @@ class ProfileEditViewController: UIViewController {
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = Assets.ypLightGrey.color
-        textView.layer.cornerRadius = 12
+        textView.layer.cornerRadius = Constants.baseCornerRadius
         textView.clipsToBounds = true
-        textView.textContainerInset = UIEdgeInsets(top: 11, left: 16, bottom: 11, right: 16)
+        textView.textContainerInset = UIEdgeInsets(top: Constants.verticalInset,
+                                                   left: Constants.horizontalInset,
+                                                   bottom: Constants.verticalInset,
+                                                   right: Constants.horizontalInset)
         textView.font = .bodyRegular
         textView.textColor = Assets.ypBlack.color
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +143,7 @@ class ProfileEditViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(descriptionTextView)
         return stackView
@@ -141,7 +160,10 @@ class ProfileEditViewController: UIViewController {
 
     private lazy var websiteTextField: UITextField = {
         let textField = UITextField()
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 44))
+        textField.leftView = UIView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: Constants.horizontalInset,
+                                                  height: Constants.baseHight))
         textField.leftViewMode = .always
         textField.backgroundColor = Assets.ypLightGrey.color
         textField.layer.cornerRadius = 12
@@ -159,7 +181,7 @@ class ProfileEditViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(websiteLabel)
         return stackView
     }()
@@ -168,7 +190,7 @@ class ProfileEditViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 24
+        stackView.spacing = Constants.StackViewTopSpacing
         stackView.addArrangedSubview(userNameStackView)
         stackView.addArrangedSubview(descriptionStackView)
         stackView.addArrangedSubview(websiteStackView)
@@ -231,7 +253,7 @@ class ProfileEditViewController: UIViewController {
     // MARK: - Private
     private func getInitialProfileDetails() {
         profileUpdate = presenter.getProfileViewModel()
-        if let profileUpdate = profileUpdate {
+        if let profileUpdate {
             userNameTextField.text = profileUpdate.name
             descriptionTextView.text = profileUpdate.description
             websiteTextField.text = profileUpdate.website
@@ -303,8 +325,9 @@ class ProfileEditViewController: UIViewController {
 
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.horizontalInset),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                  constant: -Constants.horizontalInset),
 
             scrollView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 22),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -319,35 +342,42 @@ class ProfileEditViewController: UIViewController {
 
             userProfileImageView.centerXAnchor.constraint(equalTo: contentViewForScrollView.centerXAnchor),
             userProfileImageView.topAnchor.constraint(equalTo: contentViewForScrollView.topAnchor),
-            userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
-            userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
+            userProfileImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
+            userProfileImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
             userProfileImageOverlayView.topAnchor.constraint(equalTo: userProfileImageView.topAnchor),
             userProfileImageOverlayView.bottomAnchor.constraint(equalTo: userProfileImageView.bottomAnchor),
             userProfileImageOverlayView.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
             userProfileImageOverlayView.trailingAnchor.constraint(equalTo: userProfileImageView.trailingAnchor),
-            userProfileImageOverlayView.widthAnchor.constraint(equalToConstant: 70),
-            userProfileImageOverlayView.heightAnchor.constraint(equalToConstant: 70),
+            userProfileImageOverlayView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
+            userProfileImageOverlayView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
             editImagelabel.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
             editImagelabel.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
             editImagelabel.widthAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
 
             userProfileImageDownloadLinkTextField.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor,
-                                                                       constant: 4),
+                                                                       constant: Constants.textFieldTopConstraint),
             userProfileImageDownloadLinkTextField.centerXAnchor.constraint(equalTo:
                                                                             contentViewForScrollView.centerXAnchor),
-            userProfileImageDownloadLinkTextField.heightAnchor.constraint(equalToConstant: 44),
-            userProfileImageDownloadLinkTextField.widthAnchor.constraint(equalToConstant: 250),
-            commonStackView.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 24),
-            commonStackView.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
-            commonStackView.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
+            userProfileImageDownloadLinkTextField.heightAnchor.constraint(equalToConstant: Constants.baseHight),
+            userProfileImageDownloadLinkTextField.widthAnchor.constraint(equalToConstant: Constants.textFieldWidth),
+            commonStackView.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor,
+                                                 constant: Constants.StackViewTopSpacing),
+            commonStackView.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor,
+                                                     constant: Constants.horizontalInset),
+            commonStackView.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor,
+                                                      constant: -Constants.horizontalInset),
             userNameStackView.topAnchor.constraint(equalTo: commonStackView.topAnchor),
-            userNameTextField.heightAnchor.constraint(equalToConstant: 44),
+            userNameTextField.heightAnchor.constraint(equalToConstant: Constants.baseHight),
 
-            websiteTextField.topAnchor.constraint(equalTo: commonStackView.bottomAnchor, constant: 8),
-            websiteTextField.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor, constant: 16),
-            websiteTextField.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor, constant: -16),
-            websiteTextField.heightAnchor.constraint(equalToConstant: 44),
-            descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 24)
+            websiteTextField.topAnchor.constraint(equalTo: commonStackView.bottomAnchor,
+                                                  constant: Constants.baseSpacing),
+            websiteTextField.leadingAnchor.constraint(equalTo: contentViewForScrollView.leadingAnchor,
+                                                      constant: Constants.horizontalInset),
+            websiteTextField.trailingAnchor.constraint(equalTo: contentViewForScrollView.trailingAnchor,
+                                                       constant: -Constants.horizontalInset),
+            websiteTextField.heightAnchor.constraint(equalToConstant: Constants.baseHight),
+            descriptionLabel.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor,
+                                                  constant: Constants.StackViewTopSpacing)
         ])
     }
 }

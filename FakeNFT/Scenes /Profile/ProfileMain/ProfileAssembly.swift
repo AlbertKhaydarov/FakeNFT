@@ -11,7 +11,7 @@ final class ProfileAssembly {
 
     // MARK: - Public
 
-    static func assemble() -> (UIViewController, ProfilePresenter) {
+    static func assemble() -> (UIViewController) {
         let router = ProfileRouter()
 
         let servicesAssembler = ServicesAssembly( networkClient: DefaultNetworkClient(),
@@ -23,6 +23,6 @@ final class ProfileAssembly {
         presenter.view = view
         router.viewController = view
 
-        return (view, presenter)
+        return (view)
     }
 }

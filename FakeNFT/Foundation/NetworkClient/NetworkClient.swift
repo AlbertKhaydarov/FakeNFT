@@ -61,7 +61,7 @@ struct DefaultNetworkClient: NetworkClient {
             }
         }
         guard var urlRequest = create(request: request) else { return nil }
-        let token = "1e07d999-5de3-47b6-bd74-a643c4d395e4"
+        let token = NetworkConstants.token
         urlRequest.addValue(token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
         let task = session.dataTask(with: urlRequest) { data, response, error in

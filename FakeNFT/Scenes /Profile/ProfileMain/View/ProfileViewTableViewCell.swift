@@ -9,6 +9,12 @@ import UIKit
 
 class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let horizontalInset: CGFloat = 16
+        static let baseSpacing: CGFloat = 8
+    }
+
     // MARK: - Properties
     private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,
                                            .loc.Profile.FavoriteNFTButton.title,
@@ -43,7 +49,7 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = Constants.baseSpacing
         stackView.alignment = .center
         stackView.addArrangedSubview(titleButtonsLabel)
         stackView.addArrangedSubview(countLabel)
@@ -69,10 +75,12 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     private func layoutSetup() {
         NSLayoutConstraint.activate([
-            labelsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                     constant: Constants.horizontalInset),
             labelsStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor
+                                                         , constant: -Constants.horizontalInset),
             accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }

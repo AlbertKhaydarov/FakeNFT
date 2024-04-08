@@ -32,7 +32,6 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
             guard let self = self else { return }
             switch result {
             case .success(let profile):
-                //                storage.saveProfile(profile)
                 let iDs = profile.likes
                 var likes: [ProfileMyNFT] = []
                 let group = DispatchGroup()
