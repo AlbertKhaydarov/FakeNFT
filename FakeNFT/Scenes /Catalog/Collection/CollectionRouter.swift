@@ -10,6 +10,7 @@ import UIKit
 
 protocol ICollectionRouter {
     func openWebView(with url: URL)
+    func openNftDetal(with id: String)
 }
 
 final class CollectionRouter: ICollectionRouter {
@@ -23,5 +24,16 @@ final class CollectionRouter: ICollectionRouter {
         let destination = WebViewAssembly.assemble(with: url)
         destination.modalPresentationStyle = .fullScreen
         viewController?.present(destination, animated: true)
+    }
+
+    func openNftDetal(with id: String) {
+        guard let navigationController = viewController?.navigationController else {
+            assertionFailure("NavigationController is nil")
+            return
+        }
+
+        let destination = NftDetailAssembly.assemble(with: .init(id: id))
+        destination.hidesBottomBarWhenPushed = true
+        navigationController.pushViewController(destination, animated: true)
     }
 }

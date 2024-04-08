@@ -16,9 +16,9 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     // MARK: - Properties
 
-    weak var view: NftDetailView?
+    weak var view: (any NftDetailView)?
     private let input: NftDetailInput
-    private let service: INftService
+    private let service: any INftService
     private var state = NftDetailState.initial {
         didSet {
             stateDidChanged()
@@ -27,7 +27,10 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     // MARK: - Init
 
-    init(input: NftDetailInput, service: INftService) {
+    init(
+        input: NftDetailInput,
+        service: some INftService
+    ) {
         self.input = input
         self.service = service
     }
@@ -58,9 +61,7 @@ final class NftDetailPresenterImpl: NftDetailPresenter {
 
     private func loadNft() {
         service.loadNft(id: input.id) { [weak self] nft in
-            guard let nft else {
-                return // TODO: handle error
-            }
+            guard let nft else { return }
             self?.state = .data(nft)
         }
     }

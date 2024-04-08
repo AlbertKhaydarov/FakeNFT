@@ -11,6 +11,7 @@ typealias ProfileInfoResult = (ProfileInfo?) -> Void
 
 protocol IProfileService {
     func loadProfile(completion: @escaping ProfileInfoResult)
+    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult)
 }
 
 final class ProfileService: IProfileService {
@@ -26,7 +27,24 @@ final class ProfileService: IProfileService {
     }
 
     func loadProfile(completion: @escaping ProfileInfoResult) {
-        let request = ProfileRequest()
+        let request = GetProfileRequest()
+
+        networkClient.send(
+            request: request,
+            type: ProfileInfo.self,
+            completionQueue: .main
+        ) {
+            switch $0 {
+            case let .success(model):
+                completion(model)
+            case .failure:
+                completion(nil)
+            }
+        }
+    }
+
+    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult) {
+        let request = SaveProfileRequest(requestDto: requestDto)
 
         networkClient.send(
             request: request,

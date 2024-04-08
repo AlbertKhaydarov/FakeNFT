@@ -11,6 +11,11 @@ import Foundation
 protocol ICollectionPresenter {
     func viewDidLoad()
     func authorsLinkTapped(with link: String?)
+
+    func favoriteButtonTapped(id: String, state: Bool)
+    func cartButtonTapped(id: String, state: Bool)
+
+    func didSelectNft(id: String)
 }
 
 final class CollectionPresenter {
@@ -19,7 +24,7 @@ final class CollectionPresenter {
     }
     // MARK: Properties
 
-    weak var view: (any ICollectionView)?
+    weak var view: (any ICollectionView & ErrorView)?
     private let chosenItem: CatalogItem
     private let profileService: any IProfileService
     private let orderService: any IOrderService
@@ -48,6 +53,8 @@ final class CollectionPresenter {
     }
 
     private func loadAllInfo() {
+        view?.showLoader()
+
         loadProfile()
         loadOrder()
         loadNft()
@@ -61,7 +68,8 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         profileService.loadProfile { [weak self] profileInfo in
             guard let profileInfo else {
-                assertionFailure("Profile can't be loaded") // TODO: handle error
+                self?.dispatchGroup.leave()
+                self?.showError()
                 return
             }
 
@@ -74,7 +82,8 @@ final class CollectionPresenter {
         dispatchGroup.enter()
         orderService.loadOrder { [weak self] order in
             guard let order else {
-                assertionFailure("Order can't be loaded") // TODO: handle error
+                self?.dispatchGroup.leave()
+                self?.showError()
                 return
             }
             self?.order = order
@@ -87,13 +96,14 @@ final class CollectionPresenter {
         chosenItem.nfts.forEach {
             dispatchGroup.enter()
             nftService.loadNft(id: $0) { [weak self] nft in
-                guard let nft, let self else {
-                    assertionFailure("Nft can't be loaded") // TODO: handle error
+                guard let nft else {
+                    self?.dispatchGroup.leave()
+                    self?.showError()
                     return
                 }
 
-                self.nfts?.append(nft)
-                self.dispatchGroup.leave()
+                self?.nfts?.append(nft)
+                self?.dispatchGroup.leave()
             }
         }
     }
@@ -101,7 +111,7 @@ final class CollectionPresenter {
     private func assembleViewModel() {
         guard let nfts, let profileInfo, let order else { return }
 
-        let collectionViewModel = nfts.map { nft in
+        let collectionViewModel = nfts.sorted(by: { $0.name < $1.name }).map { nft in
             CollectionViewModel(
                 id: nft.id,
                 name: nft.name,
@@ -118,18 +128,86 @@ final class CollectionPresenter {
         view?.updateNfts(collectionViewModel)
         view?.dismissLoader()
     }
+
+    private func showError() {
+        self.view?.dismissLoader()
+        self.view?.showError(
+            .init(
+                message: .loc.Common.errorTitle,
+                actionText: .loc.Common.errorRepeatTitle
+            ) {
+                self.loadAllInfo()
+            }
+        )
+    }
 }
 
 // MARK: - ICollectionPresenter
 
 extension CollectionPresenter: ICollectionPresenter {
     func viewDidLoad() {
-        view?.showLoader()
         loadAllInfo()
     }
 
     func authorsLinkTapped(with link: String?) {
         guard let link, let url = URL(string: link) else { return }
         router.openWebView(with: url)
+    }
+
+    func favoriteButtonTapped(id: String, state: Bool) {
+        guard let profileInfo else { return }
+
+        let dto: ProfileInfoRequest
+        if state {
+            var newLikes = profileInfo.likes
+            newLikes.append(id)
+
+            dto = .init(
+                name: profileInfo.name,
+                description: profileInfo.description,
+                website: profileInfo.website,
+                likes: newLikes
+            )
+        } else {
+            dto = .init(
+                name: profileInfo.name,
+                description: profileInfo.description,
+                website: profileInfo.website,
+                likes: profileInfo.likes.filter { $0 != id }
+            )
+        }
+
+        profileService.updateProfile(requestDto: dto) { [weak self] profileInfo in
+            guard let profileInfo else {
+                self?.showError()
+                return
+            }
+
+            self?.profileInfo = profileInfo
+        }
+    }
+
+    func cartButtonTapped(id: String, state: Bool) {
+        guard let order else { return }
+
+        var ids = order.nfts
+
+        if state {
+            ids.append(id)
+        } else {
+            ids = ids.filter { $0 != id }
+        }
+
+        orderService.updateOrder(nftIds: ids) { [weak self] order in
+            guard let order else {
+                self?.showError()
+                return
+            }
+            self?.order = order
+        }
+    }
+
+    func didSelectNft(id: String) {
+        router.openNftDetal(with: id)
     }
 }

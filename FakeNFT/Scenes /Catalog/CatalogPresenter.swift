@@ -21,7 +21,7 @@ protocol ICatalogPresenter {
 final class CatalogPresenter {
     // MARK: Properties
 
-    weak var view: (any ICatalogView)?
+    weak var view: (any ICatalogView & ErrorView)?
     private let router: any ICatalogRouter
     private let service: any ICatalogItemService
     private var sortStorage: any ISortStorage
@@ -40,6 +40,8 @@ final class CatalogPresenter {
     }
 
     private func loadCatalogItems() {
+        view?.showLoader()
+
         service.loadCollectionItems { [weak self] in
             switch $0 {
             case let .success(models):
@@ -48,9 +50,17 @@ final class CatalogPresenter {
 
                 self.catalogItems = models
                 self.updateItems()
-            case let .failure(error):
+            case .failure:
                 self?.view?.dismissLoader()
-                assertionFailure(error.localizedDescription) // TODO: handle error
+
+                self?.view?.showError(
+                    .init(
+                        message: .loc.Common.errorTitle,
+                        actionText: .loc.Common.errorRepeatTitle
+                    ) {
+                        self?.loadCatalogItems()
+                    }
+                )
             }
         }
     }
@@ -81,7 +91,6 @@ extension CatalogPresenter: ICatalogPresenter {
     }
 
     func viewDidLoad() {
-        view?.showLoader()
         loadCatalogItems()
     }
 

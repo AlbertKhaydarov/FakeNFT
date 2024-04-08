@@ -42,6 +42,7 @@ internal enum Assets {
   internal static let sortIcon = ImageAsset(name: "sortIcon")
   internal static let startIcon = ImageAsset(name: "startIcon")
   internal static let toCartIcon = ImageAsset(name: "toCartIcon")
+  internal static let launchLogo = ImageAsset(name: "LaunchLogo")
   internal static let close = ImageAsset(name: "close")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

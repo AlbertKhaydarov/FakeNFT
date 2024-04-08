@@ -22,17 +22,12 @@ final class SplashPresenter {
     init(router: some ISplashRouter) {
         self.router = router
     }
-
-    // MARK: - Public
-
-    // MARK: - Private
 }
 
 // MARK: - ISplashPresenter
 
 extension SplashPresenter: ISplashPresenter {
     func viewDidLoad() {
-        // TODO: implement entry logic
         router.openMainScreen()
     }
 }

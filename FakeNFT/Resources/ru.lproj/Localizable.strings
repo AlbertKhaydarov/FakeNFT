@@ -1,5 +1,9 @@
 "Profile.title" = "Профиль";
 
+// Common
+"Common.error_title" = "Что-то пошло не так";
+"Common.error_repeat_title" = "Попробовать еще раз";
+
 // Catalog
 "Catalog.title" = "Каталог";
 "Catalog.alert_title" = "Сортировка";

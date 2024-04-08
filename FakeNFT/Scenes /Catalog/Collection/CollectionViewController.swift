@@ -24,7 +24,7 @@ protocol ICollectionView: AnyObject {
     func dismissLoader()
 }
 
-final class CollectionViewController: UIViewController {
+final class CollectionViewController: UIViewController, ErrorView {
     private enum Constant {
         static let minInset: CGFloat = 8
         static let baseInset: CGFloat = 16
@@ -109,6 +109,7 @@ final class CollectionViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider.layout())
         collectionView.register(VerticalNftCell.self)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
 
         return collectionView
     }()
@@ -139,6 +140,7 @@ final class CollectionViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        view.accessibilityIdentifier = AccessibilityConstant.collectionScreen
 
         topImageView.placedOn(view)
         NSLayoutConstraint.activate([
@@ -201,6 +203,7 @@ final class CollectionViewController: UIViewController {
             isInCart: item.inCart
         )
 
+        cell.delegate = self
         cell.configure(model: model)
 
         return cell
@@ -251,5 +254,25 @@ extension CollectionViewController: ICollectionView {
 
     func dismissLoader() {
         UIBlockingProgressHUD.dismiss()
+    }
+}
+
+// MARK: - IVerticalNftCellDelegate
+
+extension CollectionViewController: IVerticalNftCellDelegate {
+    func favoriteButtonTapped(with id: String, isFavorite: Bool) {
+        presenter.favoriteButtonTapped(id: id, state: isFavorite)
+    }
+
+    func cartButtonTapped(with id: String, isInCart: Bool) {
+        presenter.cartButtonTapped(id: id, state: isInCart)
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension CollectionViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.didSelectNft(id: collectionItems[indexPath.row].id)
     }
 }

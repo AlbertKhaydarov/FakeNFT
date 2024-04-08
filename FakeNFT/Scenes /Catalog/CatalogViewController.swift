@@ -15,7 +15,7 @@ protocol ICatalogView: AnyObject {
     func dismissLoader()
 }
 
-final class CatalogViewController: UIViewController {
+final class CatalogViewController: UIViewController, ErrorView {
     private enum Constant {
         static let cellHeight: CGFloat = 180
 
@@ -49,6 +49,7 @@ final class CatalogViewController: UIViewController {
             action: #selector(sortIconTapped)
         )
 
+        button.accessibilityIdentifier = AccessibilityConstant.sortButton
         button.tintColor = .label
 
         return button
@@ -81,6 +82,8 @@ final class CatalogViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        view.accessibilityIdentifier = AccessibilityConstant.catalogScreen
+
         navigationItem.rightBarButtonItem = sortButton
 
         tableView.placedOn(view)
@@ -122,6 +125,7 @@ extension CatalogViewController: ICatalogView {
                 self?.presenter.sortByNameChosen()
             }
         )
+        byNameAction.accessibilityIdentifier = AccessibilityConstant.sortItemByName
 
         let byQuantityOfNftAction = UIAlertAction(
             title: .loc.Catalog.alertAction2Title,
@@ -130,6 +134,7 @@ extension CatalogViewController: ICatalogView {
                 self?.presenter.sortByQuantityChosen()
             }
         )
+        byQuantityOfNftAction.accessibilityIdentifier = AccessibilityConstant.sortItemByNft
 
         let cancelAction = UIAlertAction(
             title: .loc.Catalog.alertCloseActionTitle,
@@ -139,6 +144,7 @@ extension CatalogViewController: ICatalogView {
         alertController.addAction(byNameAction)
         alertController.addAction(byQuantityOfNftAction)
         alertController.addAction(cancelAction)
+        alertController.view.accessibilityIdentifier = AccessibilityConstant.sortingAlert
         present(alertController, animated: true)
     }
 

@@ -44,6 +44,7 @@ final class VerticalNftCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var productImageView: ProductImageView = {
         ProductImageView { [weak self] in
             self?.isFavorite = $0
+            self?.favoriteButtonTapped()
         }
     }()
 
