@@ -77,7 +77,6 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
-  
         if favoriteNFTs?.count == 0 || favoriteNFTs == nil {
             stubFavotitesLabel.isHidden = false
         } else {
@@ -117,11 +116,8 @@ extension ProfileFavoritesViewController: UICollectionViewDataSource {
         let cell: ProfileFavoritesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.delegate = self
         if let favoriteNFTs = favoriteNFTs {
-//            let item = favoriteNFTs[indexPath.row]
             cell.configureCell(indexPath: indexPath, with: favoriteNFTs)
-//            cell.configureCell(indexPath: indexPath, with: presenter)
         }
-    
         return cell
     }
 }
@@ -162,12 +158,11 @@ extension ProfileFavoritesViewController: UICollectionViewDelegateFlowLayout & U
 
 // MARK: - ProfileFavoritesCollectionViewCellDelegate
 
-extension ProfileFavoritesViewController: ProfileFavoritesCollectionViewCellDelegate {
+extension ProfileFavoritesViewController: ProfileFavoritesCollectionCellDelegate {
     func favoriteCancell(indexPath: IndexPath) {
         self.favoriteNFTs?.remove(at: indexPath.row)
         presenter.updateProfile(favorites: self.favoriteNFTs)
         isStubHidden()
         collectionView.reloadData()
     }
-
 }

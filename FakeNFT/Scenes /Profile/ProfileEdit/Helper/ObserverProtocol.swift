@@ -6,7 +6,6 @@
 //
 
 import Foundation
-protocol ObserverProtocol: AnyObject  {
+protocol ObserverProtocol: AnyObject {
     func didCloseViewController(model: Profile)
-//    func updateProfile(model: Profile?)
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProfileFavoritesCollectionViewCellDelegate: AnyObject {
+protocol ProfileFavoritesCollectionCellDelegate: AnyObject {
     func favoriteCancell(indexPath: IndexPath)
 }
 
@@ -23,7 +23,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
-        button.setImage(Assets.onActiveFavorites.image , for: .normal)
+        button.setImage(Assets.onActiveFavorites.image, for: .normal)
         return button
     }()
 
@@ -61,10 +61,10 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         stackView.addArrangedSubview(priceLabel)
         return stackView
     }()
-    
+
     private var indexPath: IndexPath?
-    
-    weak var delegate: ProfileFavoritesCollectionViewCellDelegate?
+
+    weak var delegate: ProfileFavoritesCollectionCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,13 +75,6 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    func configureCell(with nfts: MyNFTViewModel) {
-//        downloadImage(path: nfts.imagePath)
-//        nameLabel.text = nfts.name
-//        starsRatingImageView.setRatingStars(rating: nfts.starsRating)
-//        priceLabel.text = "\(nfts.price) ETH"
-//    }
 
     func configureCell(indexPath: IndexPath, with nfts: [MyNFTViewModel]) {
         let imagePath = nfts[indexPath.row].images[0]
@@ -90,14 +83,12 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         starsRatingImageView.setRatingStars(rating: nfts[indexPath.row].rating)
         priceLabel.text = "\(nfts[indexPath.row].price) ETH"
         self.indexPath = indexPath
-//        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
     }
 
     @objc private func likeButtonClicked() {
         guard let indexPath = indexPath else {return}
         delegate?.favoriteCancell(indexPath: indexPath)
     }
-
 
     private func setupCell() {
         self.backgroundColor = .clear

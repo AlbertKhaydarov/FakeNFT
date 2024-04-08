@@ -37,22 +37,7 @@ extension Profile {
         components.queryItems = queryItems
         return components.query ?? ""
     }
-
-    // MARK: - альтернативный вариант
-//    func getQueryString() -> String {
-//        var queryItems: [String] = []
-//        queryItems.append("name=\(name.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "")")
-//        queryItems.append("avatar=\(avatar.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "")")
-//        queryItems.append("description=\(description.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "")")
-//        queryItems.append("website=\(website.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "")")
-//        queryItems.append("nfts=\(nfts.map { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "" }.joined(separator: ","))")
-//        queryItems.append("likes=\(likes.map { $0.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "" }.joined(separator: ","))")
-//        queryItems.append("id=\(id.addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? "")")
-//        print(queryItems.joined(separator: "&"))
-//
-//        return queryItems.joined(separator: "&")
-//    }
-    }
+}
 
 extension CharacterSet {
     static let urlQueryValueAllowed: CharacterSet = {
@@ -61,4 +46,3 @@ extension CharacterSet {
         return allowed
     }()
 }
-

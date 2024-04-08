@@ -7,8 +7,8 @@
 import Kingfisher
 import UIKit
 
-protocol ProfileMyNFTTableViewCellViewCellDelegate: AnyObject {
-    func setFavorite(indexPath: IndexPath, isFavorite: Bool) 
+protocol ProfileMyNFTTableViewCellDelegate: AnyObject {
+    func setFavorite(indexPath: IndexPath, isFavorite: Bool)
 }
 
 class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
@@ -94,7 +94,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private var indexPath: IndexPath?
     private var isFavorite: Bool = false
 
-    weak var delegate: ProfileMyNFTTableViewCellViewCellDelegate?
+    weak var delegate: ProfileMyNFTTableViewCellDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

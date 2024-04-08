@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProfileUpdateRequest: NetworkRequest {
-    
+
     var model: Profile?
 
     var endpoint: URL? {
@@ -18,8 +18,7 @@ struct ProfileUpdateRequest: NetworkRequest {
     var httpMethod: HttpMethod {
         .put }
 
-    var dto: Encodable? { 
-//        let str = model?.getQueryString()
+    var dto: Encodable? {
         let str = model?.toQueryString()
         return str
     }
