@@ -109,22 +109,22 @@ final class ProfileMyNFTPresenter {
                 let myNfts = nfts.map { nft -> MyNFTViewModel in
                     if (self.profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id })) != nil {
                         return MyNFTViewModel(createdAt: nft.createdAt,
-                                              name: nft.name,
+                                              name: Name.getName(),
                                               images: nft.images,
                                               rating: nft.rating,
                                               description: nft.description,
                                               price: nft.price,
-                                              author: nft.author,
+                                              author: nft.name,
                                               id: nft.id,
                                               isLiked: true)
                     } else {
                         return MyNFTViewModel(createdAt: nft.createdAt,
-                                              name: nft.name,
+                                              name: Name.getName(),
                                               images: nft.images,
                                               rating: nft.rating,
                                               description: nft.description,
                                               price: nft.price,
-                                              author: nft.author,
+                                              author: nft.name,
                                               id: nft.id,
                                               isLiked: false)
                     }

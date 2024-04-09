@@ -428,17 +428,9 @@ extension ProfileEditViewController: UITextFieldDelegate {
         return true
     }
 
-//    func textFieldDidChangeSelection(_ textField: UITextField) {
-//        if textField == userNameTextField {
-//            profileUpdateName = true
-//        } else if textField == userProfileImageDownloadLinkTextField {
-//            profileUpdateUserProfileImageTextField = true
-//        } else if textField == websiteTextField {
-//            profileUpdateWebsiteTextField = true
-//        }
-//    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         if textField == userNameTextField {
             profileUpdateName = true
         } else if textField == userProfileImageDownloadLinkTextField {
@@ -448,7 +440,6 @@ extension ProfileEditViewController: UITextFieldDelegate {
         }
         return true
     }
-
 }
 
 extension ProfileEditViewController {
