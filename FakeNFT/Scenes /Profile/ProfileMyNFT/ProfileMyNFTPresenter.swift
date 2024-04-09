@@ -27,6 +27,7 @@ final class ProfileMyNFTPresenter {
     }
 
     func setFavorite(with nft: MyNFTViewModel, isFavorite: Bool) {
+        view?.showLoader()
         if isFavorite {
             profileFavoriteNfts?.append(nft)
         } else {
@@ -51,6 +52,7 @@ final class ProfileMyNFTPresenter {
     }
 
     private func getFavoriteNft() {
+        view?.showLoader()
         service.loadFavoritesNfts { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -104,8 +106,10 @@ final class ProfileMyNFTPresenter {
                 var myNFTsSortedDefault = myNfts
                 myNFTsSortedDefault = myNFTsSortedDefault.sorted { $0.name < $1.name }
                 self.view?.updateMyNFTs(myNFTs: myNFTsSortedDefault)
+                self.view?.hideLoader()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
+                self.view?.hideLoader()
             }
         }
     }

@@ -25,6 +25,7 @@ final class ProfileFavoritesPresenter {
     }
 
     private func getFavoritesNFTs() {
+        view?.showLoader()
         service.loadFavoritesNfts { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -43,8 +44,10 @@ final class ProfileFavoritesPresenter {
                 var favoritesNFTsSortedDefault = favoriteNfts
                 favoritesNFTsSortedDefault = favoritesNFTsSortedDefault.sorted { $0.name < $1.name }
                 self.view?.updateFavoritesNFTs(favoriteNFTs: favoritesNFTsSortedDefault)
+                self.view?.hideLoader()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
+                self.view?.hideLoader()
             }
         }
     }
