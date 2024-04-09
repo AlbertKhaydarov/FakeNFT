@@ -10,6 +10,10 @@ import Foundation
 protocol ProfileMyNFTPresenterProtocol {
     func viewDidLoad()
     func setFavorite(with nft: MyNFTViewModel, isFavorite: Bool)
+    func sortButtonTapped()
+    func sortByPrice()
+    func sortByRatingAction()
+    func sortByNameAction()
 }
 
 final class ProfileMyNFTPresenter {
@@ -18,12 +22,36 @@ final class ProfileMyNFTPresenter {
 
     weak var view: (any ProfileMyNFTViewProtocol)?
     private let router: any ProfileMyNFTRouterProtocol
-    private let service: ProfileMyNftServiceProtocol
+    private let service: any ProfileMyNftServiceProtocol
     private var profileFavoriteNfts: [MyNFTViewModel]?
+    private var profileStorage: any ProfileUserDefaultsStorageProtocol
+    private var profileMyNfts: [MyNFTViewModel]?
 
-    init(router: some ProfileMyNFTRouterProtocol, service: ProfileMyNftServiceProtocol) {
+    init(router: some ProfileMyNFTRouterProtocol,
+         service: some ProfileMyNftServiceProtocol,
+         profileStorage: some ProfileUserDefaultsStorageProtocol) {
         self.router = router
         self.service = service
+        self.profileStorage = profileStorage
+    }
+
+    private func getSortedItems() {
+        sortedNFTs()
+        guard let profileMyNfts else {return}
+        view?.updateMyNFTs(myNFTs: profileMyNfts)
+    }
+    
+    private func sortedNFTs() {
+        switch profileStorage.chosenTypeSort {
+        case .byPrice:
+            profileMyNfts?.sort(by: { $0.price > $1.price })
+        case .byRating:
+            profileMyNfts?.sort(by: { $0.rating > $1.rating })
+        case .byName:
+            profileMyNfts?.sort(by: { $0.name < $1.name })
+        case .none:
+            break
+        }
     }
 
     func setFavorite(with nft: MyNFTViewModel, isFavorite: Bool) {
@@ -103,6 +131,7 @@ final class ProfileMyNFTPresenter {
                                               isLiked: false)
                     }
                 }
+                profileMyNfts = myNfts
                 var myNFTsSortedDefault = myNfts
                 myNFTsSortedDefault = myNFTsSortedDefault.sorted { $0.name < $1.name }
                 self.view?.updateMyNFTs(myNFTs: myNFTsSortedDefault)
@@ -120,5 +149,29 @@ final class ProfileMyNFTPresenter {
 extension ProfileMyNFTPresenter: ProfileMyNFTPresenterProtocol {
     func viewDidLoad() {
         getFavoriteNft()
+    }
+    
+    func sortButtonTapped() {
+        view?.showSortingAlert()
+    }
+    
+    func sortByPrice() {
+        profileStorage.chosenTypeSort = .byPrice
+        getSortedItems()
+    }
+    
+    func sortByRatingAction() {
+        profileStorage.chosenTypeSort = .byRating
+        getSortedItems()
+    }
+    
+    func sortByNameAction() {
+        profileStorage.chosenTypeSort = .byName
+        getSortedItems()
+    }
+    
+    func refreshAction() {
+        profileStorage.chosenTypeSort = .none
+        getMyNFTs()
     }
 }
