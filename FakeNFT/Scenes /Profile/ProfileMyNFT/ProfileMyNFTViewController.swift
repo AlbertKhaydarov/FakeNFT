@@ -7,9 +7,19 @@
 
 import UIKit
 
-protocol ProfileMyNFTViewProtocol: AnyObject { }
+protocol ProfileMyNFTViewProtocol: AnyObject {
+    func updateMyNFTs(myNFTs: [MyNFTViewModel])
+    func showLoader()
+    func hideLoader()
+}
 
 class ProfileMyNFTViewController: UIViewController {
+
+    // MARK: - Constants
+    private enum Constants {
+        static let tableViewVerticalConstraint: CGFloat = 20
+        static let stubMyNFTLabelHorizontalConstraint: CGFloat = 16
+    }
 
     // MARK: - Properties
     private let presenter: any ProfileMyNFTPresenterProtocol
@@ -36,6 +46,8 @@ class ProfileMyNFTViewController: UIViewController {
         return label
     }()
 
+    private var myNFTs: [MyNFTViewModel]?
+
     init(presenter: some ProfileMyNFTPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -45,6 +57,8 @@ class ProfileMyNFTViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewDidLoad()
+        view.backgroundColor = Assets.ypWhite.color
         title = .loc.Profile.MyNFTButton.title
         setupSubview()
         layoutSubviews()
@@ -52,9 +66,14 @@ class ProfileMyNFTViewController: UIViewController {
         isStubHidden()
     }
 
+    func updateMyNFTs(myNFTs: [MyNFTViewModel]) {
+        self.myNFTs = myNFTs
+        tableView.reloadData()
+    }
+
     // MARK: - Private
     private func isStubHidden() {
-        if presenter.myNFT.count == 0 {
+        if myNFTs?.count == 0 {
             stubMyNFTLabel.isHidden = false
         } else {
             stubMyNFTLabel.isHidden = true
@@ -68,10 +87,10 @@ class ProfileMyNFTViewController: UIViewController {
     }
 
     private func sortButton() {
-    let rightButton = UIBarButtonItem(image: Assets.sortImage.image,
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(sortButtonTapped))
+        let rightButton = UIBarButtonItem(image: Assets.sortImage.image,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(sortButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
         rightButton.tintColor = Assets.ypBlack.color
     }
@@ -82,40 +101,51 @@ class ProfileMyNFTViewController: UIViewController {
     }
 
     private func layoutSubviews() {
-        let height = presenter.myNFT.count * 140
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                           constant: Constants.tableViewVerticalConstraint),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: CGFloat(height)),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                              constant: -Constants.tableViewVerticalConstraint),
 
             stubMyNFTLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubMyNFTLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stubMyNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stubMyNFTLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            stubMyNFTLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                    constant: Constants.stubMyNFTLabelHorizontalConstraint),
+            stubMyNFTLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                     constant: -Constants.stubMyNFTLabelHorizontalConstraint)
         ])
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
     }
 }
 
 // MARK: - ProfileMyNFTViewProtocol
 
-// MARK: - TBD in the 2nd part
-extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol { }
+extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {}
 
 // MARK: - UITableViewDataSource
 extension ProfileMyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        guard let myNFTs = self.myNFTs else {return 0}
+        return myNFTs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: ProfileMyNFTTableViewCell.defaultReuseIdentifier,
-            for: indexPath) as? ProfileMyNFTTableViewCell
-        else {
-            return UITableViewCell()
+        let cell: ProfileMyNFTTableViewCell = tableView.dequeueReusableCell()
+        cell.delegate = self
+        if let myNFTs = myNFTs {
+            let item = myNFTs[indexPath.row]
+            cell.configureCell(with: item, indexPath: indexPath, isLiked: item.isLiked)
         }
-        cell.configureCell(indexPath: indexPath, with: presenter)
+        cell.selectionStyle = .none
         return cell
     }
 }
@@ -125,5 +155,24 @@ extension ProfileMyNFTViewController: UITableViewDataSource {
 extension ProfileMyNFTViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140.0
+    }
+}
+
+// MARK: - ProfileFavoritesCollectionViewCellDelegate
+
+extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellDelegate {
+    func setFavorite(indexPath: IndexPath, isFavorite: Bool) {
+        guard let myNFTs = myNFTs else {return}
+
+        let nft = MyNFTViewModel(createdAt: myNFTs[indexPath.row].createdAt,
+                                 name: myNFTs[indexPath.row].name,
+                                 images: myNFTs[indexPath.row].images,
+                                 rating: myNFTs[indexPath.row].rating,
+                                 description: myNFTs[indexPath.row].description,
+                                 price: myNFTs[indexPath.row].price,
+                                 author: myNFTs[indexPath.row].author,
+                                 id: myNFTs[indexPath.row].id,
+                                 isLiked: isFavorite)
+        presenter.setFavorite(with: nft, isFavorite: isFavorite)
     }
 }

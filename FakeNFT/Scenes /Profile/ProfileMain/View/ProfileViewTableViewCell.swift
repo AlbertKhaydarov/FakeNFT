@@ -9,9 +9,13 @@ import UIKit
 
 class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
-    // MARK: - Properties
-    private var presenter: ProfilePresenterProtocol?
+    // MARK: - Constants
+    private enum Constants {
+        static let horizontalInset: CGFloat = 16
+        static let baseSpacing: CGFloat = 8
+    }
 
+    // MARK: - Properties
     private let buttonsTitles: [String] = [.loc.Profile.MyNFTButton.title,
                                            .loc.Profile.FavoriteNFTButton.title,
                                            .loc.Profile.AboutDesignerButton.title]
@@ -45,7 +49,7 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 8
+        stackView.spacing = Constants.baseSpacing
         stackView.alignment = .center
         stackView.addArrangedSubview(titleButtonsLabel)
         stackView.addArrangedSubview(countLabel)
@@ -54,7 +58,6 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.presenter = nil
         contentView.backgroundColor = Assets.ypWhite.color
         setupSubview()
         layoutSetup()
@@ -72,17 +75,25 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
 
     private func layoutSetup() {
         NSLayoutConstraint.activate([
-            labelsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            labelsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                     constant: Constants.horizontalInset),
             labelsStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-            accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor
+                                                         , constant: -Constants.horizontalInset),
             accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 
     // MARK: - Public
-    func configureCell(indexPath: IndexPath, with presenter: ProfilePresenterProtocol) {
+    func configureCell(indexPath: IndexPath, with profileModel: ProfileViewModel) {
         titleButtonsLabel.text = buttonsTitles[indexPath.row]
-        countLabel.text = "(\(presenter.countTitleButtons[indexPath.row]))"
+        if indexPath.row == 0 {
+            countLabel.text = "(\(profileModel.nfts.count))"
+        } else if indexPath.row == 1 {
+            countLabel.text = "(\(profileModel.likes.count))"
+        } else if indexPath.row == 2 {
+            countLabel.text = ""
+        }
     }
 }

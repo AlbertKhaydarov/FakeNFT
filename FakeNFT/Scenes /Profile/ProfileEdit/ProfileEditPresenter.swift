@@ -9,25 +9,38 @@ import Foundation
 
 protocol ProfileEditPresenterProtocol {
     func viewDidLoad()
-    var profile: ProfileViewModel { get }
+    func getProfileViewModel() -> ProfileViewModel
 }
 
 final class ProfileEditPresenter {
     // MARK: Properties
+    private let router: any ProfileEditRouterProtocol
+    private let service: ProfileServiceProtocol
+    private var profile: ProfileViewModel
 
     weak var view: (any ProfileEditViewProtocol)?
-    private let router: any ProfileEditRouterProtocol
-    var profile: ProfileViewModel
 
-    init(router: some ProfileEditRouterProtocol, profile: ProfileViewModel) {
+    init(router: some ProfileEditRouterProtocol, profile: ProfileViewModel, service: ProfileServiceProtocol) {
         self.router = router
         self.profile = profile
+        self.service = service
+    }
+
+    func getProfileViewModel() -> ProfileViewModel {
+        return ProfileViewModel(name: profile.name,
+                                userPic: profile.userPic,
+                                description: profile.description,
+                                website: profile.website,
+                                nfts: profile.nfts,
+                                likes: profile.likes,
+                                id: profile.id)
     }
 }
 
 // MARK: - ProfileEditPresenterProtocol
 
 extension ProfileEditPresenter: ProfileEditPresenterProtocol {
+
     // MARK: - TBD a service implementation
     func viewDidLoad() {
     }

@@ -20,23 +20,23 @@ final class RatingStarsView: UIView {
     }
 
     func setRatingStars(rating: Int) {
-        for item in 0..<rating {
-            starImageViews.append(UIImageView(image: Assets.onActiveStarImage.image))
-            starImageViews[item].tintColor = Assets.ypYellowUniversal.color
+        starImageViews = []
+        for item in 1...5 {
+            let image = Assets.noActiveStarImage.image
+            let templateImage = image.withRenderingMode(.alwaysTemplate)
+            let starImageView = UIImageView(image: templateImage)
+            starImageView.tintColor = item <= rating ? Assets.ypYellowUniversal.color : Assets.ypLightGrey.color
+            starImageViews.append(starImageView)
         }
-        for item in rating..<5 {
-            starImageViews.append(UIImageView(image: Assets.noActiveStarImage.image))
-            starImageViews[item].tintColor = Assets.ypLightGrey.color
-        }
-        getStackView()
+        updateStackView()
     }
 
-    private func getStackView() {
+    private func updateStackView() {
         let stackView = UIStackView(arrangedSubviews: starImageViews)
         stackView.axis  = .horizontal
         stackView.spacing = 2
-        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
+
         setupSubviews(stackView: stackView)
         layoutSetup(stackView: stackView)
     }
@@ -47,10 +47,9 @@ final class RatingStarsView: UIView {
 
     private func layoutSetup(stackView: UIStackView) {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+            stackView.widthAnchor.constraint(equalToConstant: 68),
+            stackView.heightAnchor.constraint(equalToConstant: 12),
+            stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 }

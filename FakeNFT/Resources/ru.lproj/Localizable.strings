@@ -14,3 +14,6 @@
 "Profile.stubMyNFTLabel.title" = "У Вас ещё нет NFT";
 "Profile.stubFavotitesLabel.title" = "У Вас ещё нет избранных NFT";
 "Profile.editImagelabel.title" = "Сменить фото";
+"Profile.alertController.title" = "Вы хотите сохранить изменения?";
+"Profile.alertControllerSaveAction.title" = "Сохранить";
+"Profile.alertControllerCancelAction.title" = "Отменить";

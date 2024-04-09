@@ -7,9 +7,24 @@
 
 import UIKit
 
-protocol ProfileViewProtocol: AnyObject {}
+protocol ProfileViewProtocol: AnyObject {
+    func updateProfileDetails(profileModel: ProfileViewModel)
+    func showLoader()
+    func hideLoader()
+}
 
 final class ProfileViewController: UIViewController {
+
+    // MARK: - Constants
+    private enum Constants {
+        static let baseSpacing: CGFloat = 16
+        static let horizontalInset: CGFloat = 16
+        static let imageSize: CGFloat = 70
+        static let topConstraint: CGFloat = 20
+        static let websiteLinkLabelTop: CGFloat = 12
+        static let tableViewTop: CGFloat = 40
+        static let tableViewBotton: CGFloat = 221
+    }
 
     // MARK: - Properties
     private let presenter: any ProfilePresenterProtocol
@@ -54,7 +69,7 @@ final class ProfileViewController: UIViewController {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 16
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(userProfileImageView)
         stackView.addArrangedSubview(userNamelabel)
         return stackView
@@ -81,6 +96,8 @@ final class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    private var profileViewModel: ProfileViewModel?
+
     lazy var activityIndicator: UIActivityIndicatorView = {
         activityIndicator =  UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -100,8 +117,12 @@ final class ProfileViewController: UIViewController {
         setupSubview()
         layoutSubviews()
         addEditButton()
-        updateProfileDetails()
-        updateUserPic()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.getProfile()
+        tableView.reloadData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -121,19 +142,40 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editButtontapped() {
-        presenter.switchToProfileEditView(profile: presenter.getProfileDetails())
+        guard let profileViewModel = profileViewModel else { return }
+        presenter.switchToProfileEditView(profile: profileViewModel)
     }
 
     @objc private func websiteLinkLabelTapped() {
-        guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
+        guard let profileViewModel = profileViewModel,
+              let url = URL(string: profileViewModel.website)
+        else { return }
         presenter.switchToProfileUserWebViewViewController(with: url)
+    }
+
+    func updateProfileDetails(profileModel: ProfileViewModel) {
+        userNamelabel.text = profileModel.name
+        descriptionLabel.text = profileModel.description
+        websiteLinkLabel.text = profileModel.website
+        updateUserPic(url: profileModel.userPic)
+        self.profileViewModel = profileModel
+//        activityIndicator.stopAnimating()
+        tableView.reloadData()
+    }
+
+    private func updateUserPic(url: String) {
+        userProfileImageView.kf.indicatorType = .activity
+        guard let url = URL(string: url) else {
+            return
+        }
+        userProfileImageView.kf.setImage(with: url)
     }
 
     private func setupView() {
         self.title = nil
         presenter.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
     }
 
     private func setupSubview() {
@@ -145,56 +187,56 @@ final class ProfileViewController: UIViewController {
 
     private func layoutSubviews() {
         NSLayoutConstraint.activate([
-            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                       constant: Constants.horizontalInset),
+            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                        constant: -Constants.horizontalInset),
+            verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                   constant: Constants.topConstraint),
 
             horizontalStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             horizontalStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             horizontalStackView.topAnchor.constraint(equalTo: verticalStackView.topAnchor),
 
-            userProfileImageView.widthAnchor.constraint(equalToConstant: 70),
-            userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
+            userProfileImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
+            userProfileImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
             userProfileImageView.topAnchor.constraint(equalTo: horizontalStackView.topAnchor),
             userProfileImageView.leadingAnchor.constraint(equalTo: horizontalStackView.leadingAnchor),
 
-            activityIndicator.centerYAnchor.constraint(equalTo: userProfileImageView.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: userProfileImageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             userNamelabel.centerYAnchor.constraint(equalTo: horizontalStackView.centerYAnchor),
             userNamelabel.trailingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor),
 
             descriptionLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             descriptionLabel.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-            descriptionLabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 20),
+            descriptionLabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor,
+                                                  constant: Constants.topConstraint),
 
-            websiteLinkLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            websiteLinkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            websiteLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
+            websiteLinkLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                      constant: Constants.horizontalInset),
+            websiteLinkLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                       constant: -Constants.horizontalInset),
+            websiteLinkLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor,
+                                                  constant: Constants.websiteLinkLabelTop),
 
-            tableView.topAnchor.constraint(equalTo: websiteLinkLabel.bottomAnchor, constant: 40),
+            tableView.topAnchor.constraint(equalTo: websiteLinkLabel.bottomAnchor, constant: Constants.tableViewTop),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -221)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                              constant: -Constants.tableViewBotton)
         ])
     }
 
-    private func updateProfileDetails() {
-        let profileModel = presenter.getProfileDetails()
-        userNamelabel.text = profileModel.name
-        descriptionLabel.text = profileModel.description
-        websiteLinkLabel.text = profileModel.website
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+        activityIndicator.startAnimating()
     }
 
-    private func updateUserPic() {
-        userProfileImageView.kf.indicatorType = .activity
-        let profileImageString = presenter.getProfileDetails().userPic
-        guard
-            let url = URL(string: profileImageString)
-        else {
-            return
-        }
-        userProfileImageView.kf.setImage(with: url)
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
+        activityIndicator.stopAnimating()
     }
 }
 
@@ -209,16 +251,18 @@ extension ProfileViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: ProfileViewTableViewCell.defaultReuseIdentifier) as? ProfileViewTableViewCell
-        else {
-            return UITableViewCell()
+        let cell: ProfileViewTableViewCell = tableView.dequeueReusableCell()
+        cell.layoutMargins = UIEdgeInsets(top: 0,
+                                          left: Constants.horizontalInset,
+                                          bottom: 0,
+                                          right: Constants.horizontalInset)
+        if let profileViewModel = profileViewModel {
+            cell.configureCell(indexPath: indexPath, with: profileViewModel)
         }
-        cell.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        cell.configureCell(indexPath: indexPath, with: presenter)
         return cell
     }
 }
+
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -230,7 +274,9 @@ extension ProfileViewController: UITableViewDelegate {
         } else if indexPath.row == 1 {
             presenter.switchToProfileFavoriteView()
         } else if indexPath.row == 2 {
-            guard let url = URL(string: ProfileViewModel.getProfile().website) else { return }
+            guard let profileViewModel = profileViewModel,
+                  let url = URL(string: profileViewModel.website)
+            else { return }
             presenter.switchToProfileUserWebViewViewController(with: url)
         }
     }

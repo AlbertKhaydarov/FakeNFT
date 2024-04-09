@@ -7,7 +7,21 @@
 
 import UIKit
 
+protocol ProfileFavoritesCollectionCellDelegate: AnyObject {
+    func favoriteCancell(indexPath: IndexPath)
+}
+
 class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+
+    // MARK: - Constants
+    private enum Constants {
+        static let baseSpacing: CGFloat = 4
+        static let baseCornerRadius: CGFloat = 12
+        static let imageSize: CGFloat = 80
+        static let buttonSize: CGFloat = 42
+        static let commonStackViewLeft: CGFloat = 12
+        static let commonStackViewVertical: CGFloat = 7
+    }
 
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,6 +33,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        button.setImage(Assets.onActiveFavorites.image, for: .normal)
         return button
     }()
 
@@ -50,13 +65,16 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.distribution = .equalCentering
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(priceLabel)
         return stackView
     }()
+
+    private var indexPath: IndexPath?
+
+    weak var delegate: ProfileFavoritesCollectionCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,22 +86,18 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configureCell(indexPath: IndexPath, with presenter: ProfileFavoritesPresenterProtocol) {
-        downloadImage(path: presenter.favoritesNFT[indexPath.row].imagePath)
-        nameLabel.text = presenter.favoritesNFT[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: presenter.favoritesNFT[indexPath.row].starsRating)
-        priceLabel.text = "\(presenter.favoritesNFT[indexPath.row].price) ETH"
-        setIsLiked(isLiked: presenter.favoritesNFT[indexPath.row].isFavorite)
+    func configureCell(indexPath: IndexPath, with nfts: [MyNFTViewModel]) {
+        let imagePath = nfts[indexPath.row].images[0]
+        downloadImage(path: imagePath)
+        nameLabel.text = nfts[indexPath.row].name
+        starsRatingImageView.setRatingStars(rating: nfts[indexPath.row].rating)
+        priceLabel.text = "\(nfts[indexPath.row].price) ETH"
+        self.indexPath = indexPath
     }
 
     @objc private func likeButtonClicked() {
-        // MARK: - TBD in 2nd part
-    }
-
-    func setIsLiked(isLiked: Bool) {
-        var favoriteActiveImage = UIImage()
-        favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
-        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+        guard let indexPath = indexPath else {return}
+        delegate?.favoriteCancell(indexPath: indexPath)
     }
 
     private func setupCell() {
@@ -92,7 +106,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
         contentView.addSubview(favoriteActiveButton)
         contentView.addSubview(commonStackView)
 
-        nftImageView.layer.cornerRadius = 12
+        nftImageView.layer.cornerRadius = Constants.baseCornerRadius
         nftImageView.layer.masksToBounds = true
     }
 
@@ -102,18 +116,22 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
             nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            nftImageView.heightAnchor.constraint(equalToConstant: 80),
-            nftImageView.widthAnchor.constraint(equalToConstant: 80),
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.imageSize),
+            nftImageView.widthAnchor.constraint(equalToConstant: Constants.imageSize),
 
-            favoriteActiveButton.heightAnchor.constraint(equalToConstant: 42),
-            favoriteActiveButton.widthAnchor.constraint(equalToConstant: 42),
+            favoriteActiveButton.heightAnchor.constraint(equalToConstant: Constants.buttonSize),
+            favoriteActiveButton.widthAnchor.constraint(equalToConstant: Constants.buttonSize),
             favoriteActiveButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
             favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
 
-            commonStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 12),
+            commonStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                     constant: Constants.commonStackViewLeft),
+            commonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             commonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            commonStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
-            commonStackView.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -7)
+            commonStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                 constant: Constants.commonStackViewVertical),
+            commonStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                    constant: -Constants.commonStackViewVertical)
         ])
     }
 

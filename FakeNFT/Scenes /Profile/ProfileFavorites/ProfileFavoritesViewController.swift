@@ -7,19 +7,32 @@
 
 import UIKit
 
-protocol ProfileFavoritesViewProtocol: AnyObject { }
+protocol ProfileFavoritesViewProtocol: AnyObject {
+    func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel])
+    func showLoader()
+    func hideLoader()
+}
 
 class ProfileFavoritesViewController: UIViewController {
+
+    // MARK: - Constants
+    private enum Constants {
+        static let horizontalInset: CGFloat = 16
+        static let cellSpacing: CGFloat = 7
+        static let lineSpacing: CGFloat = 20
+
+        static let cellCount: Int = 2
+    }
 
     // MARK: - Properties
     private let presenter: any ProfileFavoritesPresenterProtocol
 
     private let params = GeometricParams(
-        cellCount: 2,
-        leftInset: 16,
-        rightInset: 16,
-        cellSpacing: 7,
-        lineSpacingForSectionAt: 20)
+        cellCount: Constants.cellCount,
+        leftInset: Constants.horizontalInset,
+        rightInset: Constants.horizontalInset,
+        cellSpacing: Constants.cellSpacing,
+        lineSpacingForSectionAt: Constants.lineSpacing)
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,6 +56,8 @@ class ProfileFavoritesViewController: UIViewController {
         return label
     }()
 
+    private var favoriteNFTs: [MyNFTViewModel]?
+
     init(presenter: some ProfileFavoritesPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -53,9 +68,17 @@ class ProfileFavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = .loc.Profile.FavoriteNFTButton.title
+        view.backgroundColor = Assets.ypWhite.color
+        presenter.viewDidLoad()
         isStubHidden()
         setupSubviews()
         layoutSubviews()
+    }
+
+    func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel]) {
+        self.favoriteNFTs = favoriteNFTs
+        isStubHidden()
+        collectionView.reloadData()
     }
 
     private func setupSubviews() {
@@ -64,7 +87,7 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
-        if presenter.favoritesNFT.count == 0 {
+        if favoriteNFTs?.count == 0 || favoriteNFTs == nil {
             stubFavotitesLabel.isHidden = false
         } else {
             stubFavotitesLabel.isHidden = true
@@ -80,9 +103,19 @@ class ProfileFavoritesViewController: UIViewController {
 
             stubFavotitesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stubFavotitesLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stubFavotitesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stubFavotitesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            stubFavotitesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                        constant: Constants.horizontalInset),
+            stubFavotitesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                         constant: -Constants.horizontalInset)
         ])
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
     }
 }
 
@@ -94,18 +127,17 @@ extension ProfileFavoritesViewController: ProfileFavoritesViewProtocol { }
 extension ProfileFavoritesViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.favoritesNFT.count
+        guard let favoriteNFTs = self.favoriteNFTs else {return 0}
+        return favoriteNFTs.count
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProfileFavoritesCollectionViewCell.defaultReuseIdentifier,
-            for: indexPath) as? ProfileFavoritesCollectionViewCell
-        else {
-            return UICollectionViewCell()
+        let cell: ProfileFavoritesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        cell.delegate = self
+        if let favoriteNFTs = favoriteNFTs {
+            cell.configureCell(indexPath: indexPath, with: favoriteNFTs)
         }
-        cell.configureCell(indexPath: indexPath, with: presenter)
         return cell
     }
 }
@@ -141,5 +173,16 @@ extension ProfileFavoritesViewController: UICollectionViewDelegateFlowLayout & U
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return params.lineSpacingForSectionAt
+    }
+}
+
+// MARK: - ProfileFavoritesCollectionViewCellDelegate
+
+extension ProfileFavoritesViewController: ProfileFavoritesCollectionCellDelegate {
+    func favoriteCancell(indexPath: IndexPath) {
+        self.favoriteNFTs?.remove(at: indexPath.row)
+        presenter.updateProfile(favorites: self.favoriteNFTs)
+        isStubHidden()
+        collectionView.reloadData()
     }
 }

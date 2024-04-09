@@ -7,10 +7,26 @@
 import Kingfisher
 import UIKit
 
+protocol ProfileMyNFTTableViewCellDelegate: AnyObject {
+    func setFavorite(indexPath: IndexPath, isFavorite: Bool)
+}
+
 class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
 
+    // MARK: - Constants
+    private enum Constants {
+        static let baseSpacing: CGFloat = 4
+        static let baseCornerRadius: CGFloat = 12
+        static let horizontalConstraint: CGFloat = 16
+        static let nftImageViewSize: CGFloat = 108
+        static let favoriteActiveButtonSize: CGFloat = 42
+        static let stackViewVerticalConstraint: CGFloat = 39
+        static let stackViewRightConstraint: CGFloat = 20
+        static let authorLabelWidth: CGFloat = 78
+        static let priceStackViewVertical: CGFloat = 49
+    }
+
     // MARK: - Properties
-    private var presenter: ProfileMyNFTPresenterProtocol?
 
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -46,8 +62,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.distribution = .equalCentering
+        stackView.spacing = Constants.baseSpacing
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(starsRatingImageView)
         stackView.addArrangedSubview(authorLabel)
@@ -77,8 +92,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 2
-        stackView.distribution = .equalCentering
+        stackView.spacing = Constants.baseSpacing / 2
         stackView.addArrangedSubview(priceTitleLabel)
         stackView.addArrangedSubview(priceLabel)
         return stackView
@@ -91,9 +105,13 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         return button
     }()
 
+    private var indexPath: IndexPath?
+    private var isFavorite: Bool = false
+
+    weak var delegate: ProfileMyNFTTableViewCellDelegate?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.presenter = nil
         contentView.backgroundColor = Assets.ypWhite.color
         setupSubview()
         layoutSetup()
@@ -113,24 +131,30 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     }
 
     // MARK: - Public
-    func configureCell(indexPath: IndexPath, with presenter: ProfileMyNFTPresenterProtocol) {
-        downloadImage(path: presenter.myNFT[indexPath.row].imagePath)
-        nameLabel.text = presenter.myNFT[indexPath.row].name
-        starsRatingImageView.setRatingStars(rating: presenter.myNFT[indexPath.row].starsRating)
-        authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(presenter.myNFT[indexPath.row].author)"
-        priceLabel.text = "\(presenter.myNFT[indexPath.row].price) ETH"
-        setIsLiked(isLiked: presenter.myNFT[indexPath.row].isFavorite)
+    func configureCell(with nft: MyNFTViewModel, indexPath: IndexPath, isLiked: Bool) {
+        self.indexPath = indexPath
+        let imagePath = nft.images[0]
+        downloadImage(path: imagePath)
+        nameLabel.text = nft.name
+        starsRatingImageView.setRatingStars(rating: nft.rating)
+        authorLabel.text = .loc.Profile.AuthorLabelText.title+" "+"\(nft.author)"
+        priceLabel.text = "\(nft.price) ETH"
+        setIsLiked(isLiked: isLiked)
     }
 
-    func setIsLiked(isLiked: Bool) {
+   private func setIsLiked(isLiked: Bool) {
         var favoriteActiveImage = UIImage()
+        isFavorite = isLiked
         favoriteActiveImage = isLiked ? Assets.onActiveFavorites.image : Assets.noActiveFavorite.image
         self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
 
     // MARK: - Private
    @objc private func likeButtonClicked() {
-        // MARK: - TBD in 2nd part
+       if let indexPath = indexPath {
+           isFavorite = !isFavorite
+           delegate?.setFavorite(indexPath: indexPath, isFavorite: isFavorite)
+       }
     }
 
     private func setupSubview() {
@@ -139,34 +163,48 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
         contentView.addSubview(priceStackView)
         contentView.addSubview(favoriteActiveButton)
 
-        nftImageView.layer.cornerRadius = 12
+        nftImageView.layer.cornerRadius = Constants.baseCornerRadius
         nftImageView.layer.masksToBounds = true
     }
 
     private func layoutSetup() {
-        NSLayoutConstraint.activate([
-            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            nftImageView.heightAnchor.constraint(equalToConstant: 108),
-            nftImageView.widthAnchor.constraint(equalToConstant: 108),
+        authorLabel.setContentHuggingPriority(.required, for: .horizontal)
+        nameAndRatingStackView.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-            favoriteActiveButton.heightAnchor.constraint(equalToConstant: 42),
-            favoriteActiveButton.widthAnchor.constraint(equalToConstant: 42),
+        NSLayoutConstraint.activate([
+            nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                  constant: Constants.horizontalConstraint),
+            nftImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                              constant: Constants.horizontalConstraint),
+            nftImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                 constant: -Constants.horizontalConstraint),
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.nftImageViewSize),
+            nftImageView.widthAnchor.constraint(equalToConstant: Constants.nftImageViewSize),
+
+            favoriteActiveButton.heightAnchor.constraint(equalToConstant: Constants.favoriteActiveButtonSize),
+            favoriteActiveButton.widthAnchor.constraint(equalToConstant: Constants.favoriteActiveButtonSize),
             favoriteActiveButton.topAnchor.constraint(equalTo: nftImageView.topAnchor),
             favoriteActiveButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor),
 
-            nameAndRatingStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 39),
-            nameAndRatingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -39),
-            nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: 20),
+            nameAndRatingStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                        constant: Constants.stackViewVerticalConstraint),
+            nameAndRatingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                           constant: -Constants.stackViewVerticalConstraint),
+            nameAndRatingStackView.leadingAnchor.constraint(equalTo: nftImageView.trailingAnchor,
+                                                            constant: Constants.stackViewRightConstraint),
             nameAndRatingStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
+            authorLabel.widthAnchor.constraint(equalToConstant: Constants.authorLabelWidth),
+
             priceStackView.leadingAnchor.constraint(greaterThanOrEqualTo: nameAndRatingStackView.trailingAnchor,
-                                                    constant: 39),
-            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -39),
-            priceStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 49),
-            priceStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -49)
+                                                    constant: Constants.stackViewVerticalConstraint),
+            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                     constant: -Constants.stackViewVerticalConstraint),
+            priceStackView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                constant: Constants.priceStackViewVertical),
+            priceStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                   constant: -Constants.priceStackViewVertical)
         ])
     }
 

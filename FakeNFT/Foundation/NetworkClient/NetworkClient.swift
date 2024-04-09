@@ -60,7 +60,9 @@ struct DefaultNetworkClient: NetworkClient {
                 onResponse(result)
             }
         }
-        guard let urlRequest = create(request: request) else { return nil }
+        guard var urlRequest = create(request: request) else { return nil }
+        let token = NetworkConstants.token
+        urlRequest.addValue(token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
@@ -118,12 +120,13 @@ struct DefaultNetworkClient: NetworkClient {
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
 
-        if let dto = request.dto,
-           let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let dto = request.dto {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            encoder.outputFormatting = .withoutEscapingSlashes
+            let dtoEncoded = try? encoder.encode(dto)
             urlRequest.httpBody = dtoEncoded
-        }
-
+    }
         return urlRequest
     }
 

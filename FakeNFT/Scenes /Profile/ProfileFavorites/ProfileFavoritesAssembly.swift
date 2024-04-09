@@ -14,8 +14,11 @@ final class ProfileFavoritesAssembly {
     // MARK: - Public
 
     static func assemble() -> UIViewController {
+        let servicesAssembler = ServicesAssembly( networkClient: DefaultNetworkClient(),
+                                                  nftStorage: NftStorageImpl() )
         let router = ProfileFavoritesRouter()
-        let presenter = ProfileFavoritesPresenter(router: router)
+        let presenter = ProfileFavoritesPresenter(router: router,
+                                                  service: servicesAssembler.profileMyNFTService)
         let view = ProfileFavoritesViewController(presenter: presenter)
 
         presenter.view = view

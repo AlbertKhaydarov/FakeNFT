@@ -1,13 +1,13 @@
 //
-//  FavoritesViewModel.swift
+//  ProfileMyNFT.swift
 //  FakeNFT
 //
-//  Created by Альберт Хайдаров on 26.03.2024.
+//  Created by Альберт Хайдаров on 29.03.2024.
 //
 
 import Foundation
 
-struct MyNFTViewModel {
+struct ProfileMyNFT: Decodable {
     let createdAt: String
     let name: String
     let images: [String]
@@ -16,5 +16,4 @@ struct MyNFTViewModel {
     let price: Decimal
     let author: String
     let id: String
-    let isLiked: Bool
 }
