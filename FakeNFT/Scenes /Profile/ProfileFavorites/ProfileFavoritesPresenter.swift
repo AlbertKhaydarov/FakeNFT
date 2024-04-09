@@ -25,7 +25,6 @@ final class ProfileFavoritesPresenter {
     }
 
     private func getFavoritesNFTs() {
-        UIBlockingProgressHUD.show()
         service.loadFavoritesNfts { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -43,11 +42,9 @@ final class ProfileFavoritesPresenter {
                 }
                 var favoritesNFTsSortedDefault = favoriteNfts
                 favoritesNFTsSortedDefault = favoritesNFTsSortedDefault.sorted { $0.name < $1.name }
-                UIBlockingProgressHUD.dismiss()
                 self.view?.updateFavoritesNFTs(favoriteNFTs: favoritesNFTsSortedDefault)
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
-                UIBlockingProgressHUD.dismiss()
             }
         }
     }
