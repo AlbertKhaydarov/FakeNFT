@@ -9,6 +9,8 @@ import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
     func updateProfileDetails(profileModel: ProfileViewModel)
+    func showLoader()
+    func hideLoader()
 }
 
 final class ProfileViewController: UIViewController {
@@ -157,8 +159,7 @@ final class ProfileViewController: UIViewController {
         websiteLinkLabel.text = profileModel.website
         updateUserPic(url: profileModel.userPic)
         self.profileViewModel = profileModel
-        UIBlockingProgressHUD.dismiss()
-        activityIndicator.stopAnimating()
+//        activityIndicator.stopAnimating()
         tableView.reloadData()
     }
 
@@ -172,10 +173,9 @@ final class ProfileViewController: UIViewController {
 
     private func setupView() {
         self.title = nil
-        UIBlockingProgressHUD.show()
         presenter.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
     }
 
     private func setupSubview() {
@@ -227,6 +227,16 @@ final class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                               constant: -Constants.tableViewBotton)
         ])
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+        activityIndicator.startAnimating()
+    }
+
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
+        activityIndicator.stopAnimating()
     }
 }
 

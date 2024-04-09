@@ -30,6 +30,7 @@ final class ProfilePresenter {
 
     // MARK: - Public
     func getProfile() {
+        view?.showLoader()
         service.loadProfile { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -42,8 +43,10 @@ final class ProfilePresenter {
                                                       likes: profile.likes,
                                                       id: profile.id)
                 self.view?.updateProfileDetails(profileModel: profileDetails)
+                self.view?.hideLoader()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
+                self.view?.hideLoader()
             }
         }
     }
@@ -68,6 +71,7 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - TBD a service implementation
     func viewDidLoad() {
         getProfile()
+        self.view?.showLoader()
     }
 
     func switchToProfileEditView(profile: ProfileViewModel) {
@@ -92,5 +96,6 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 
 extension ProfilePresenter: ObserverProtocol {
     func didCloseViewController(model: Profile) {
-        updateProfile(model: model)    }
+        updateProfile(model: model)
+    }
 }
