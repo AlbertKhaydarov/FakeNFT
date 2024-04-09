@@ -23,7 +23,7 @@ final class ProfilePresenterTests: XCTestCase {
 
         // assert
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            XCTAssertTrue(view.invokedUpdateProfileDetails)
+            XCTAssertTrue(view.invokedUpdateProfile)
         }
     }
 }

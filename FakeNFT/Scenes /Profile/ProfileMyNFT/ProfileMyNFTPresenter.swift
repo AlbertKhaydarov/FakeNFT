@@ -40,7 +40,7 @@ final class ProfileMyNFTPresenter {
         guard let profileMyNfts else {return}
         view?.updateMyNFTs(myNFTs: profileMyNfts)
     }
-    
+
     private func sortedNFTs() {
         switch profileStorage.chosenTypeSort {
         case .byPrice:
@@ -150,26 +150,26 @@ extension ProfileMyNFTPresenter: ProfileMyNFTPresenterProtocol {
     func viewDidLoad() {
         getFavoriteNft()
     }
-    
+
     func sortButtonTapped() {
         view?.showSortingAlert()
     }
-    
+
     func sortByPrice() {
         profileStorage.chosenTypeSort = .byPrice
         getSortedItems()
     }
-    
+
     func sortByRatingAction() {
         profileStorage.chosenTypeSort = .byRating
         getSortedItems()
     }
-    
+
     func sortByNameAction() {
         profileStorage.chosenTypeSort = .byName
         getSortedItems()
     }
-    
+
     func refreshAction() {
         profileStorage.chosenTypeSort = .none
         getMyNFTs()

@@ -9,13 +9,13 @@
 import Foundation
 
 final class ProfileServiceStub: ProfileServiceProtocol {
-    
+
     enum State {
         case success, failure
     }
-   
+
     let state: State
-    
+
     private var mockProfileData = Profile(name: "name",
                                           avatar: "avatar",
                                           description: "description",
@@ -23,11 +23,11 @@ final class ProfileServiceStub: ProfileServiceProtocol {
                                           nfts: ["1", "2"],
                                           likes: ["1"],
                                           id: "1e07d999-5de3-47b6-bd74-a643c4d395e4")
-    
+
     init(state: State = .success) {
         self.state = state
     }
-    
+
     func loadProfile(completion: @escaping FakeNFT.ProfileCompletion) {
         switch state {
         case .success:
@@ -37,18 +37,18 @@ final class ProfileServiceStub: ProfileServiceProtocol {
             completion(.failure(error))
         }
     }
-    
+
     var invokedUpdateProfile = false
     var invokedUpdateProfileCount = 0
     var invokedUpdateProfileParameters: (model: FakeNFT.Profile?, Void)?
     var invokedUpdateProfileParametersList = [(model: FakeNFT.Profile?, Void)]()
-    
+
     func uploadProfile(model: FakeNFT.Profile?, completion: @escaping FakeNFT.ProfileCompletion) {
         invokedUpdateProfile = true
         invokedUpdateProfileCount += 1
         invokedUpdateProfileParameters = (model, ())
         invokedUpdateProfileParametersList.append((model, ()))
-        
+
         switch state {
         case .success:
             completion(.success(mockProfileData))
@@ -58,4 +58,3 @@ final class ProfileServiceStub: ProfileServiceProtocol {
         }
     }
 }
-
