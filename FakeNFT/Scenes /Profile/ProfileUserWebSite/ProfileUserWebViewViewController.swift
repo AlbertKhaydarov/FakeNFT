@@ -41,7 +41,7 @@ class ProfileUserWebViewViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(Assets.backwardIcon.image, for: .normal)
         button.addTarget(self, action: #selector(backwardButtonTapped), for: .touchUpInside)
-        button.tintColor = Assets.ypBlack.color
+        button.tintColor = Assets.ypBlackUniversal.color
         return button
     }()
 

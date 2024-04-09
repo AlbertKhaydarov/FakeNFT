@@ -2,46 +2,48 @@
 //  ProfileServiceStub.swift
 //  FakeNFTTests
 //
-//  Created by Альберт Хайдаров on 08.04.2024.
+//  Created by Альберт Хайдаров on 09.04.2024.
 //
 
 @testable import FakeNFT
 import Foundation
 
 final class ProfileServiceStub: ProfileServiceProtocol {
+    
     enum State {
         case success, failure
     }
    
     let state: State
     
-   private var testProfileData: Profile = Profile(name: "name",
-                                                  avatar: "avatar",
-                                                  description: "description",
-                                                  website: "websitewebsite",
-                                                  nfts: ["1", "2"],
-                                                  likes: ["1"],
-                                                  id: "1e07d999-5de3-47b6-bd74-a643c4d395e4")
+    private var mockProfileData = Profile(name: "name",
+                                          avatar: "avatar",
+                                          description: "description",
+                                          website: "websitewebsite",
+                                          nfts: ["1", "2"],
+                                          likes: ["1"],
+                                          id: "1e07d999-5de3-47b6-bd74-a643c4d395e4")
     
     init(state: State = .success) {
         self.state = state
     }
     
-    func loadProfile(completion: @escaping ProfileCompletion) {
+    func loadProfile(completion: @escaping FakeNFT.ProfileCompletion) {
         switch state {
         case .success:
-            completion(testProfileData)
+            completion(.success(mockProfileData))
         case .failure:
-            completion(nil)
+            let error = NSError(domain: "domain", code: 500, userInfo: [NSLocalizedDescriptionKey: "An error occurred"])
+            completion(.failure(error))
         }
     }
     
     var invokedUpdateProfile = false
     var invokedUpdateProfileCount = 0
-    var invokedUpdateProfileParameters: (model: Profile, Void)?
-    var invokedUpdateProfileParametersList = [(model: : Profile, Void)]()
+    var invokedUpdateProfileParameters: (model: FakeNFT.Profile?, Void)?
+    var invokedUpdateProfileParametersList = [(model: FakeNFT.Profile?, Void)]()
     
-    func updateProfile(model: Profile, completion: @escaping ProfileInfoResult) {
+    func uploadProfile(model: FakeNFT.Profile?, completion: @escaping FakeNFT.ProfileCompletion) {
         invokedUpdateProfile = true
         invokedUpdateProfileCount += 1
         invokedUpdateProfileParameters = (model, ())
@@ -49,9 +51,11 @@ final class ProfileServiceStub: ProfileServiceProtocol {
         
         switch state {
         case .success:
-            completion(testProfileData)
+            completion(.success(mockProfileData))
         case .failure:
-            completion(nil)
+            let error = NSError(domain: "domain", code: 500, userInfo: [NSLocalizedDescriptionKey: "An error occurred"])
+            completion(.failure(error))
         }
     }
 }
+

@@ -200,8 +200,11 @@ class ProfileEditViewController: UIViewController {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(Assets.closeIcon.image, for: .normal)
+        let image = Assets.closeIcon.image
+        let templateImage = image.withRenderingMode(.alwaysTemplate)
+        button.setImage(templateImage, for: .normal)
         button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        button.tintColor = Assets.ypBlack.color
         return button
     }()
 
