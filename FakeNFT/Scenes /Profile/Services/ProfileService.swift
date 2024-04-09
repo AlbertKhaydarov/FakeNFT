@@ -41,7 +41,7 @@ final class ProfileService: ProfileServiceProtocol {
     }
 
     func uploadProfile(model: Profile?, completion: @escaping ProfileCompletion) {
-        var request = ProfileUpdateRequest(model: model)
+        let request = ProfileUpdateRequest(model: model)
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
