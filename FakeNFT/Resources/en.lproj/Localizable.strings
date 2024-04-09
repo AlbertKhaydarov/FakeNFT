@@ -19,3 +19,6 @@
 "Profile.alertAction2.title" = "By raiting";
 "Profile.alertAction3.title" = "By name";
 "Profile.alertCloseAction.title" = "Close";
+"Profile.alertController.title" = "Do you want to save the changes?";
+"Profile.alertControllerSaveAction.title" = "Save";
+"Profile.cancelAction.title" = "Cancel";

@@ -10,6 +10,8 @@ import UIKit
 protocol ProfileMyNFTViewProtocol: AnyObject {
     func updateMyNFTs(myNFTs: [MyNFTViewModel])
     func showSortingAlert()
+    func showLoader()
+    func hideLoader()
 }
 
 class ProfileMyNFTViewController: UIViewController {
@@ -115,6 +117,14 @@ class ProfileMyNFTViewController: UIViewController {
                                                      constant: -Constants.stubMyNFTLabelHorizontalConstraint)
         ])
     }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
+    }
 }
 
 // MARK: - ProfileMyNFTViewProtocol
@@ -211,7 +221,6 @@ extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellDelegate {
                                  author: myNFTs[indexPath.row].author,
                                  id: myNFTs[indexPath.row].id,
                                  isLiked: isFavorite)
-
         presenter.setFavorite(with: nft, isFavorite: isFavorite)
     }
 }

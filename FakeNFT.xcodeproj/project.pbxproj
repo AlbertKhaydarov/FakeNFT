@@ -67,6 +67,7 @@
 		5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */; };
 		7C31AE222BC3B12100C8226E /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31AE212BC3B12100C8226E /* UIBlockingProgressHUD.swift */; };
 		7C31AE242BC3DCE700C8226E /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31AE232BC3DCE700C8226E /* NetworkConstants.swift */; };
+		7C31AE262BC5214000C8226E /* MockName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31AE252BC5214000C8226E /* MockName.swift */; };
 		7C9833B82BB40DC300781151 /* ProfileFavoritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9833B72BB40DC300781151 /* ProfileFavoritesRouter.swift */; };
 		7C9833BA2BB40E0D00781151 /* ProfileFavoritesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9833B92BB40E0D00781151 /* ProfileFavoritesAssembly.swift */; };
 		7C9833BC2BB40E4A00781151 /* ProfileFavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9833BB2BB40E4A00781151 /* ProfileFavoritesPresenter.swift */; };
@@ -190,6 +191,7 @@
 		5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringGenerated.swift; sourceTree = "<group>"; };
 		7C31AE212BC3B12100C8226E /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		7C31AE232BC3DCE700C8226E /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
+		7C31AE252BC5214000C8226E /* MockName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockName.swift; sourceTree = "<group>"; };
 		7C9833B72BB40DC300781151 /* ProfileFavoritesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesRouter.swift; sourceTree = "<group>"; };
 		7C9833B92BB40E0D00781151 /* ProfileFavoritesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesAssembly.swift; sourceTree = "<group>"; };
 		7C9833BB2BB40E4A00781151 /* ProfileFavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesPresenter.swift; sourceTree = "<group>"; };
@@ -560,6 +562,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7C31AE272BC5214900C8226E /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				7C31AE252BC5214000C8226E /* MockName.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		7C9833B42BB4092F00781151 /* ProfileMyNFT */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +578,7 @@
 				EA97C5C92BB2D90D003B6A81 /* ProfileMyNFTPresenter.swift */,
 				EA97C5CB2BB2D923003B6A81 /* ProfileMyNFTAssembly.swift */,
 				EA97C5CD2BB2D932003B6A81 /* ProfileMyNFTRouter.swift */,
+				7C31AE272BC5214900C8226E /* Helper */,
 			);
 			path = ProfileMyNFT;
 			sourceTree = "<group>";
@@ -994,6 +1005,7 @@
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				5EE7BEEA2BAA029400A32EC0 /* SplashPresenter.swift in Sources */,
 				EA97C5C52BB2BEE2003B6A81 /* Extension+TextField.swift in Sources */,
+				7C31AE262BC5214000C8226E /* MockName.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,

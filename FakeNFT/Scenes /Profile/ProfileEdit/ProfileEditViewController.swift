@@ -7,8 +7,7 @@
 
 import UIKit
 
-protocol ProfileEditViewProtocol: AnyObject {
-}
+protocol ProfileEditViewProtocol: AnyObject {}
 
 class ProfileEditViewController: UIViewController {
 
@@ -173,6 +172,7 @@ class ProfileEditViewController: UIViewController {
         textField.becomeFirstResponder()
         textField.delegate = self
         textField.returnKeyType = .done
+        textField.isUserInteractionEnabled = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -301,8 +301,15 @@ class ProfileEditViewController: UIViewController {
                                          nfts: profileUpdate.nfts,
                                          likes: profileUpdate.likes,
                                          id: profileUpdate.id)
-        delegate?.didCloseViewController(model: profileUpdateModel)
-        dismiss(animated: true)
+
+        if profileUpdateName ||
+            profileUpdateUserProfileImageTextField ||
+            profileUpdateDescriptionTextView ||
+            profileUpdateWebsiteTextField {
+            showDeleteAlert(with: profileUpdateModel)
+        } else {
+            dismiss(animated: true)
+        }
     }
 
     private func setupView() {
@@ -421,7 +428,9 @@ extension ProfileEditViewController: UITextFieldDelegate {
         return true
     }
 
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         if textField == userNameTextField {
             profileUpdateName = true
         } else if textField == userProfileImageDownloadLinkTextField {
@@ -429,5 +438,38 @@ extension ProfileEditViewController: UITextFieldDelegate {
         } else if textField == websiteTextField {
             profileUpdateWebsiteTextField = true
         }
+        return true
+    }
+}
+
+extension ProfileEditViewController {
+    private func showDeleteAlert(with profileUpdateModel: Profile) {
+        let alertController = UIAlertController(
+            title: .loc.Profile.AlertController.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let saveAction = UIAlertAction(
+            title: .loc.Profile.AlertControllerSaveAction.title,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            delegate?.didCloseViewController(model: profileUpdateModel)
+            dismiss(animated: true)
+        }
+
+        let cancelAction = UIAlertAction(
+            title: .loc.Profile.AlertControllerCancelAction.title,
+            style: .cancel
+        ) { [weak self] _ in
+            guard let self else { return }
+            dismiss(animated: true)
+        }
+
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+
+        self.present(alertController, animated: true, completion: nil)
     }
 }

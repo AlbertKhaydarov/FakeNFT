@@ -19,3 +19,6 @@
 "Profile.alertAction2.title" = "По рейтингу";
 "Profile.alertAction3.title" = "По названию";
 "Profile.alertCloseAction.title" = "Закрыть";
+"Profile.alertController.title" = "Вы хотите сохранить изменения?";
+"Profile.alertControllerSaveAction.title" = "Сохранить";
+"Profile.alertControllerCancelAction.title" = "Отменить";

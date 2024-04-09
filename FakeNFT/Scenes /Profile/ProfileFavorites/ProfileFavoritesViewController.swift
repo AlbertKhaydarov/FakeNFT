@@ -9,6 +9,8 @@ import UIKit
 
 protocol ProfileFavoritesViewProtocol: AnyObject {
     func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel])
+    func showLoader()
+    func hideLoader()
 }
 
 class ProfileFavoritesViewController: UIViewController {
@@ -75,7 +77,6 @@ class ProfileFavoritesViewController: UIViewController {
 
     func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel]) {
         self.favoriteNFTs = favoriteNFTs
-        print(favoriteNFTs.count)
         isStubHidden()
         collectionView.reloadData()
     }
@@ -107,6 +108,14 @@ class ProfileFavoritesViewController: UIViewController {
             stubFavotitesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                                          constant: -Constants.horizontalInset)
         ])
+    }
+
+    func showLoader() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func hideLoader() {
+        UIBlockingProgressHUD.dismiss()
     }
 }
 
