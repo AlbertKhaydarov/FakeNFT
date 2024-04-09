@@ -157,8 +157,9 @@ final class ProfileViewController: UIViewController {
         websiteLinkLabel.text = profileModel.website
         updateUserPic(url: profileModel.userPic)
         self.profileViewModel = profileModel
-        tableView.reloadData()
+        UIBlockingProgressHUD.dismiss()
         activityIndicator.stopAnimating()
+        tableView.reloadData()
     }
 
     private func updateUserPic(url: String) {
@@ -171,6 +172,7 @@ final class ProfileViewController: UIViewController {
 
     private func setupView() {
         self.title = nil
+        UIBlockingProgressHUD.show()
         presenter.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
         activityIndicator.startAnimating()

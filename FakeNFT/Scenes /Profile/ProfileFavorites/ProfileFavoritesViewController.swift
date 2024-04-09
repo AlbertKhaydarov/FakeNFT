@@ -67,6 +67,7 @@ class ProfileFavoritesViewController: UIViewController {
         super.viewDidLoad()
         title = .loc.Profile.FavoriteNFTButton.title
         view.backgroundColor = Assets.ypWhite.color
+        UIBlockingProgressHUD.show()
         presenter.viewDidLoad()
         isStubHidden()
         setupSubviews()
@@ -75,8 +76,8 @@ class ProfileFavoritesViewController: UIViewController {
 
     func updateFavoritesNFTs(favoriteNFTs: [MyNFTViewModel]) {
         self.favoriteNFTs = favoriteNFTs
-        print(favoriteNFTs.count)
         isStubHidden()
+        UIBlockingProgressHUD.dismiss()
         collectionView.reloadData()
     }
 

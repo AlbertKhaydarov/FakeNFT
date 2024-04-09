@@ -30,7 +30,6 @@ final class ProfilePresenter {
 
     // MARK: - Public
     func getProfile() {
-        UIBlockingProgressHUD.show()
         service.loadProfile { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -42,11 +41,9 @@ final class ProfilePresenter {
                                                       nfts: profile.nfts,
                                                       likes: profile.likes,
                                                       id: profile.id)
-                UIBlockingProgressHUD.dismiss()
                 self.view?.updateProfileDetails(profileModel: profileDetails)
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
-                UIBlockingProgressHUD.dismiss()
             }
         }
     }

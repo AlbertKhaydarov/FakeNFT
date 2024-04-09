@@ -58,6 +58,7 @@ class ProfileMyNFTViewController: UIViewController {
         presenter.viewDidLoad()
         view.backgroundColor = Assets.ypWhite.color
         title = .loc.Profile.MyNFTButton.title
+        UIBlockingProgressHUD.show()
         setupSubview()
         layoutSubviews()
         sortButton()
@@ -66,6 +67,7 @@ class ProfileMyNFTViewController: UIViewController {
 
     func updateMyNFTs(myNFTs: [MyNFTViewModel]) {
         self.myNFTs = myNFTs
+        UIBlockingProgressHUD.dismiss()
         tableView.reloadData()
     }
 
@@ -163,7 +165,7 @@ extension ProfileMyNFTViewController: ProfileMyNFTTableViewCellDelegate {
                                  author: myNFTs[indexPath.row].author,
                                  id: myNFTs[indexPath.row].id,
                                  isLiked: isFavorite)
-
+        UIBlockingProgressHUD.show()
         presenter.setFavorite(with: nft, isFavorite: isFavorite)
     }
 }
