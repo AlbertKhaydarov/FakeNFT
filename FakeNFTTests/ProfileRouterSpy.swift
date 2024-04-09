@@ -7,43 +7,34 @@
 
 @testable import FakeNFT
 import Foundation
+import UIKit
 // swiftlint:disable all
-final class ProfileRouterSpy: ICollectionRouter {
+final class ProfileRouterSpy: ProfileRouterProtocol {
     let viewController = ProfileViewControllerSpy()
     var invokedSwitchToProfileEditView = false
     var invokedSwitchToProfileEditViewCount = 0
-    var invokedSwitchToProfileEditViewParameters: (destination: UIViewController, profile: ProfileViewModel, Void)?
-    var invokedSwitchToProfileEditViewParametersList = [(destination: UIViewController, profile: ProfileViewModel,  Void)]()
+    var invokedSwitchToProfileEditViewParameters: (destination: UIViewController, profile: ProfileViewModel)?
     
-    func switchToProfileEditView(destination: viewController, profile: ProfileViewModel) {
+    func switchToProfileEditView(destination: UIViewController, profile: ProfileViewModel) {
         invokedSwitchToProfileEditView = true
         invokedSwitchToProfileEditViewCount += 1
-        invokedSwitchToProfileEditViewParameters = (destination: destination, profile: profile, ())
-        invokedSwitchToProfileEditViewParametersList.append((destination: destination, profile: profile, ()))
+        invokedSwitchToProfileEditViewParameters = (destination: destination, profile: profile)
     }
     
     var invokedSwitchToProfileMyNFTView = false
     var invokedSwitchToProfileMyNFTViewCount = 0
-    var invokedSwitchToProfileMyNFTViewParameters: (Void)?
-    var invokedSwitchToProfileMyNFTViewParametersList = [(Void)]()
-    
+
     func switchToProfileMyNFTView() {
         invokedSwitchToProfileMyNFTView = false
-        invokedSwitchToProfileMyNFTViewCount = 0
-        invokedSwitchToProfileMyNFTViewParameters: (Void)?
-        invokedSwitchToProfileMyNFTViewParametersList = [(Void)]()
+        invokedSwitchToProfileMyNFTViewCount += 1
     }
     
     var invokedSwitchToProfileFavoriteView = false
     var invokedSwitchToProfileFavoriteViewCount = 0
-    var invokedSwitchToProfileFavoriteViewParameters: (Void)?
-    var invokedSwitchToPProfileFavoriteViewParametersList = [(Void)]()
     
     func switchToProfileFavoriteView() {
         invokedSwitchToProfileFavoriteView = false
-        invokedSwitchToProfileFavoriteViewCount = 0
-        invokedSwitchToProfileFavoriteViewParameters: (Void)?
-        invokedSwitchToPProfileFavoriteViewParametersList = [(Void)]()
+        invokedSwitchToProfileFavoriteViewCount += 1
     }
     
     var invokedSwitchToProfileUserWebViewViewController = false
