@@ -25,6 +25,18 @@ internal enum Localization {
       /// О разработчике
       internal static let title = Localization.tr("Localizable", "Profile.aboutDesignerButton.title", fallback: "О разработчике")
     }
+    internal enum AlertController {
+      /// Вы хотите сохранить изменения?
+      internal static let title = Localization.tr("Localizable", "Profile.alertController.title", fallback: "Вы хотите сохранить изменения?")
+    }
+    internal enum AlertControllerCancelAction {
+      /// Отменить
+      internal static let title = Localization.tr("Localizable", "Profile.alertControllerCancelAction.title", fallback: "Отменить")
+    }
+    internal enum AlertControllerSaveAction {
+      /// Сохранить
+      internal static let title = Localization.tr("Localizable", "Profile.alertControllerSaveAction.title", fallback: "Сохранить")
+    }
     internal enum AuthorLabelText {
       /// от
       internal static let title = Localization.tr("Localizable", "Profile.authorLabelText.title", fallback: "от")
