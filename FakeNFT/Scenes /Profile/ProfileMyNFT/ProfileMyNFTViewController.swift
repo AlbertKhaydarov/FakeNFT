@@ -135,7 +135,7 @@ extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
             message: nil,
             preferredStyle: .actionSheet
         )
-//
+
         let byPriceAction = UIAlertAction(
             title: .loc.Profile.AlertAction1.title,
             style: .default,
@@ -143,7 +143,6 @@ extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
                 self?.presenter.sortByPrice()
             }
         )
-//        byPriceAction.accessibilityIdentifier = AccessibilityConstant.sortItemByName
 
         let byRatingAction = UIAlertAction(
             title: .loc.Profile.AlertAction2.title,
@@ -152,7 +151,6 @@ extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
                 self?.presenter.sortByRatingAction()
             }
         )
-//        byRatingAction.accessibilityIdentifier = AccessibilityConstant.sortItemByNft
 
         let byNameAction = UIAlertAction(
             title: .loc.Profile.AlertAction3.title,
@@ -162,8 +160,6 @@ extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
             }
         )
 
-//        byNameAction.accessibilityIdentifier = AccessibilityConstant.sortItemByNft.accessibilityIdentifier = AccessibilityConstant.sortItemByNft
-        
         let cancelAction = UIAlertAction(
             title: .loc.Profile.AlertCloseAction.title,
             style: .cancel

@@ -148,7 +148,6 @@
 		EA97C5D32BB30E23003B6A81 /* ProfileMyNFTTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5D22BB30E23003B6A81 /* ProfileMyNFTTableViewCell.swift */; };
 		EA97C5D52BB34746003B6A81 /* RatingStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5D42BB34746003B6A81 /* RatingStarsView.swift */; };
 		EA97C5DE2BC45172003B6A81 /* ProfileUserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5DD2BC45172003B6A81 /* ProfileUserDefaultsStorage.swift */; };
-		EA97C5E32BC45D5A003B6A81 /* ProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5E22BC45D5A003B6A81 /* ProfileTestData.swift */; };
 		EA97C5E72BC4624C003B6A81 /* ProfileRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */; };
 		EA97C5E92BC46638003B6A81 /* ProfileViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */; };
 		EA97C5ED2BC5916B003B6A81 /* ProfilePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */; };
@@ -280,6 +279,7 @@
 		7C31AE212BC3B12100C8226E /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		7C31AE232BC3DCE700C8226E /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		7C31AE252BC5214000C8226E /* MockName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockName.swift; sourceTree = "<group>"; };
+		7C31AE282BC5C94F00C8226E /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		7C9833B72BB40DC300781151 /* ProfileFavoritesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesRouter.swift; sourceTree = "<group>"; };
 		7C9833B92BB40E0D00781151 /* ProfileFavoritesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesAssembly.swift; sourceTree = "<group>"; };
 		7C9833BB2BB40E4A00781151 /* ProfileFavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesPresenter.swift; sourceTree = "<group>"; };
@@ -320,7 +320,6 @@
 		EA97C5D22BB30E23003B6A81 /* ProfileMyNFTTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMyNFTTableViewCell.swift; sourceTree = "<group>"; };
 		EA97C5D42BB34746003B6A81 /* RatingStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStarsView.swift; sourceTree = "<group>"; };
 		EA97C5DD2BC45172003B6A81 /* ProfileUserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserDefaultsStorage.swift; sourceTree = "<group>"; };
-		EA97C5E22BC45D5A003B6A81 /* ProfileTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTestData.swift; sourceTree = "<group>"; };
 		EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouterSpy.swift; sourceTree = "<group>"; };
 		EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSpy.swift; sourceTree = "<group>"; };
 		EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterTests.swift; sourceTree = "<group>"; };
@@ -471,11 +470,11 @@
 		3F6806AC29CBBAF200B4F915 /* FakeNFTTests */ = {
 			isa = PBXGroup;
 			children = (
+				7C31AE282BC5C94F00C8226E /* TestPlan.xctestplan */,
 				EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */,
 				EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */,
 				EA97C5EE2BC591BD003B6A81 /* ProfileServiceStub.swift */,
 				EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */,
-				EA97C5E22BC45D5A003B6A81 /* ProfileTestData.swift */,
 			);
 			path = FakeNFTTests;
 			sourceTree = "<group>";
@@ -1275,7 +1274,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA97C5ED2BC5916B003B6A81 /* ProfilePresenterTests.swift in Sources */,
-				EA97C5E32BC45D5A003B6A81 /* ProfileTestData.swift in Sources */,
 				EA97C5E72BC4624C003B6A81 /* ProfileRouterSpy.swift in Sources */,
 				EA97C5E92BC46638003B6A81 /* ProfileViewControllerSpy.swift in Sources */,
 				EA97C5EF2BC591BD003B6A81 /* ProfileServiceStub.swift in Sources */,
