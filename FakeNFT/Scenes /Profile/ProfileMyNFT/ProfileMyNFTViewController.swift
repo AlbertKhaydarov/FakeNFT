@@ -169,7 +169,6 @@ extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
         alertController.addAction(byRatingAction)
         alertController.addAction(byNameAction)
         alertController.addAction(cancelAction)
-//        alertController.view.accessibilityIdentifier = AccessibilityConstant.sortingAlert
         present(alertController, animated: true)
     }
 }
