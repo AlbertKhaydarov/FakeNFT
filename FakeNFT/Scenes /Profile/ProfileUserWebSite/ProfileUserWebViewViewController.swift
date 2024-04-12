@@ -31,8 +31,8 @@ class ProfileUserWebViewViewController: UIViewController {
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Assets.ypLightGrey.color
-        view.tintColor = Assets.ypBlack.color
+        view.backgroundColor = Assets.ypBackgroundUniversal.color
+        view.tintColor = Assets.ypBlackUniversal.color
         return view
     }()
 
@@ -41,7 +41,7 @@ class ProfileUserWebViewViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(Assets.backwardIcon.image, for: .normal)
         button.addTarget(self, action: #selector(backwardButtonTapped), for: .touchUpInside)
-        button.tintColor = Assets.ypBlack.color
+        button.tintColor = Assets.ypBlackUniversal.color
         return button
     }()
 

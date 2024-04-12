@@ -14,6 +14,11 @@
 "Profile.stubMyNFTLabel.title" = "You don't have an NFT yet";
 "Profile.stubFavotitesLabel.title" = "You don't have any NFT favorites yet";
 "Profile.editImagelabel.title" = "Change the photo";
+"Profile.alert.title" = "Sorting";
+"Profile.alertAction1.title" = "By price";
+"Profile.alertAction2.title" = "By raiting";
+"Profile.alertAction3.title" = "By name";
+"Profile.alertCloseAction.title" = "Close";
 "Profile.alertController.title" = "Do you want to save the changes?";
 "Profile.alertControllerSaveAction.title" = "Save";
 "Profile.cancelAction.title" = "Cancel";

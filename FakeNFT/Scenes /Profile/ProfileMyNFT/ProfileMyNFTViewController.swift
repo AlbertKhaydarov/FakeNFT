@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileMyNFTViewProtocol: AnyObject {
     func updateMyNFTs(myNFTs: [MyNFTViewModel])
+    func showSortingAlert()
     func showLoader()
     func hideLoader()
 }
@@ -80,12 +81,6 @@ class ProfileMyNFTViewController: UIViewController {
         }
     }
 
-    // MARK: - TBD in the 3rd part
-
-    @objc private func sortButtonTapped() {
-        print(#function)
-    }
-
     private func sortButton() {
         let rightButton = UIBarButtonItem(image: Assets.sortImage.image,
                                           style: .plain,
@@ -93,6 +88,11 @@ class ProfileMyNFTViewController: UIViewController {
                                           action: #selector(sortButtonTapped))
         self.navigationItem.rightBarButtonItem = rightButton
         rightButton.tintColor = Assets.ypBlack.color
+    }
+
+    @objc
+    private func sortButtonTapped() {
+        presenter.sortButtonTapped()
     }
 
     private func setupSubview() {
@@ -129,7 +129,50 @@ class ProfileMyNFTViewController: UIViewController {
 
 // MARK: - ProfileMyNFTViewProtocol
 
-extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {}
+extension ProfileMyNFTViewController: ProfileMyNFTViewProtocol {
+    func showSortingAlert() {
+        let alertController = UIAlertController(
+            title: .loc.Profile.Alert.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let byPriceAction = UIAlertAction(
+            title: .loc.Profile.AlertAction1.title,
+            style: .default,
+            handler: { [weak self] _ in
+                self?.presenter.sortByPrice()
+            }
+        )
+
+        let byRatingAction = UIAlertAction(
+            title: .loc.Profile.AlertAction2.title,
+            style: .default,
+            handler: { [weak self] _ in
+                self?.presenter.sortByRatingAction()
+            }
+        )
+
+        let byNameAction = UIAlertAction(
+            title: .loc.Profile.AlertAction3.title,
+            style: .default,
+            handler: { [weak self] _ in
+                self?.presenter.sortByNameAction()
+            }
+        )
+
+        let cancelAction = UIAlertAction(
+            title: .loc.Profile.AlertCloseAction.title,
+            style: .cancel
+        )
+
+        alertController.addAction(byPriceAction)
+        alertController.addAction(byRatingAction)
+        alertController.addAction(byNameAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+}
 
 // MARK: - UITableViewDataSource
 extension ProfileMyNFTViewController: UITableViewDataSource {
