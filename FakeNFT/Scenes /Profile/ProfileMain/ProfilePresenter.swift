@@ -21,9 +21,9 @@ final class ProfilePresenter {
     // MARK: Properties
     weak var view: (any ProfileViewProtocol)?
     private let router: any ProfileRouterProtocol
-    private let service: ProfileServiceProtocol
+    private let service: ProfileBaseServiceProtocol
 
-    init(router: some ProfileRouterProtocol, service: ProfileServiceProtocol) {
+    init(router: some ProfileRouterProtocol, service: ProfileBaseServiceProtocol) {
         self.router = router
         self.service = service
     }

@@ -18,8 +18,8 @@ final class ServicesAssembly {
         )
     }
 
-    var profileService: ProfileServiceProtocol {
-        ProfileService(
+    var profileService: ProfileBaseServiceProtocol {
+        ProfileBaseService(
             networkClient: networkClient,
             storage: nftStorage
         )

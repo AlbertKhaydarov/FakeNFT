@@ -8,7 +8,7 @@
 @testable import FakeNFT
 import Foundation
 
-final class ProfileServiceStub: ProfileServiceProtocol {
+final class ProfileServiceStub: ProfileBaseServiceProtocol {
 
     enum State {
         case success, failure

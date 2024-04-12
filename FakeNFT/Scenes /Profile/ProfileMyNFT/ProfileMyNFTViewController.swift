@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileMyNFTViewProtocol: AnyObject {
     func updateMyNFTs(myNFTs: [MyNFTViewModel])
+    func showSortingAlert()
     func showLoader()
     func hideLoader()
 }
@@ -38,7 +39,7 @@ class ProfileMyNFTViewController: UIViewController {
     private lazy var stubMyNFTLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .center
         label.text = .loc.Profile.StubMyNFTLabel.title

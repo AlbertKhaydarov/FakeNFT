@@ -13,7 +13,7 @@ extension UITextField {
         paragraphStyle.alignment = .center
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: Assets.ypBlack.color,
-            .font: .bodyRegular as UIFont,
+            .font: .Body.regular as UIFont,
             .paragraphStyle: paragraphStyle
         ]
         self.attributedPlaceholder = NSAttributedString(string: text, attributes: attributes)

@@ -48,7 +48,7 @@ class ProfileFavoritesViewController: UIViewController {
     private lazy var stubFavotitesLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .center
         label.text = .loc.Profile.StubFavotitesLabel.title

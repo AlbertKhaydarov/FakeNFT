@@ -137,7 +137,7 @@ struct DefaultNetworkClient: NetworkClient {
         } else if let data = request.data {
             urlRequest.httpBody = data
         }
-        
+
         encoder.outputFormatting = .withoutEscapingSlashes
 
         urlRequest.setValue(

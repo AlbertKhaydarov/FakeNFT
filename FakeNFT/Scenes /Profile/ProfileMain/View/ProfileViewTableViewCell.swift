@@ -32,7 +32,7 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var titleButtonsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         return label
     }()
@@ -40,7 +40,7 @@ class ProfileViewTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var countLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         return label
     }()

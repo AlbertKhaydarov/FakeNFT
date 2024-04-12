@@ -1,6 +1,6 @@
 import Foundation
 
-protocol NftStorage: AnyObject {
+protocol INftStorage: AnyObject {
     func saveNft(_ nft: Nft)
     func getNft(with id: String) -> Nft?
 
@@ -11,7 +11,7 @@ protocol NftStorage: AnyObject {
     func getProfileMyNFTs(with id: String) -> ProfileMyNFT?
 }
 
-final class NftStorageImpl: NftStorage {
+final class NftStorageImpl: INftStorage {
 
     private var storage: [String: Nft] = [:]
 

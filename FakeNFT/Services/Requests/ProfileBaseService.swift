@@ -9,17 +9,17 @@ import Foundation
 
 typealias ProfileCompletion = (Result<Profile, Error>) -> Void
 
-protocol ProfileServiceProtocol {
+protocol ProfileBaseServiceProtocol {
     func loadProfile(completion: @escaping ProfileCompletion)
     func uploadProfile(model: Profile?, completion: @escaping ProfileCompletion)
 }
 
-final class ProfileService: ProfileServiceProtocol {
+final class ProfileBaseService: ProfileBaseServiceProtocol {
 
     private let networkClient: NetworkClient
-    private let storage: NftStorage
+    private let storage: INftStorage
 
-    init(networkClient: NetworkClient, storage: NftStorage) {
+    init(networkClient: NetworkClient, storage: INftStorage) {
         self.storage = storage
         self.networkClient = networkClient
     }
@@ -28,7 +28,7 @@ final class ProfileService: ProfileServiceProtocol {
         if let profile = storage.getProfile() {
             completion(.success(profile))
         }
-        let request = ProfileRequest()
+        let request = ProfileMyRequest()
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
