@@ -31,8 +31,8 @@ class ProfileUserWebViewViewController: UIViewController {
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Assets.ypLightGrey.color
-        view.tintColor = Assets.ypBlack.color
+        view.backgroundColor = Assets.ypBackgroundUniversal.color
+        view.tintColor = Assets.ypBlackUniversal.color
         return view
     }()
 
