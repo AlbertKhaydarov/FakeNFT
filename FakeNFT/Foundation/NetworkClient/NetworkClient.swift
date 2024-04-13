@@ -132,6 +132,8 @@ struct DefaultNetworkClient: NetworkClient {
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
             urlRequest.httpBody = dtoEncoded
+        } else if let data = request.data {
+            urlRequest.httpBody = data
         }
 
         encoder.outputFormatting = .withoutEscapingSlashes

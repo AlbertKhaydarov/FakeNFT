@@ -70,12 +70,10 @@ final class CollectionPresenter {
             switch result {
             case let .success(model):
                 self?.profile = model
-                self?.dispatchGroup.leave()
             case .failure:
-                self?.dispatchGroup.leave()
                 self?.showError()
-                return
             }
+            self?.dispatchGroup.leave()
         }
     }
 
