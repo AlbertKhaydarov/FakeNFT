@@ -11,11 +11,11 @@ enum SortType: String {
     case byNft, byName, none
 }
 
-protocol ISortStorage {
+protocol ICatalogSortStorage {
     var chosenSort: SortType { get set }
 }
 
-struct SortStorage: ISortStorage {
+struct CatalogSortStorage: ICatalogSortStorage {
     private enum Constant {
         static let key = "catalogSort"
     }

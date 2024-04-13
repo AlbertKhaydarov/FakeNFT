@@ -24,7 +24,7 @@ final class CatalogPresenter {
     weak var view: (any ICatalogView & ErrorView)?
     private let router: any ICatalogRouter
     private let service: any ICatalogItemService
-    private var sortStorage: any ISortStorage
+    private var sortStorage: any ICatalogSortStorage
     private var catalogItems = [CatalogItem]()
 
     // MARK: - Lifecycle
@@ -32,7 +32,7 @@ final class CatalogPresenter {
     init(
         router: some ICatalogRouter,
         service: some ICatalogItemService,
-        sortStorage: some ISortStorage
+        sortStorage: some ICatalogSortStorage
     ) {
         self.router = router
         self.service = service
