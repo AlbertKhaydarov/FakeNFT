@@ -16,7 +16,7 @@ final class CollectionAssembly {
         let profileService: IProfileService = ProfileService(networkClient: networkClient)
         let orderService: IOrderService = OrderService(networkClient: networkClient)
 
-        let nftStorage = NftStorage()
+        let nftStorage = NftStorageImpl()
         let nftService: INftService = NftService(networkClient: networkClient, storage: nftStorage)
 
         let router = CollectionRouter()

@@ -20,7 +20,6 @@
 		0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB7452A78064B0009A829 /* NftDetailCellModel.swift */; };
 		0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */; };
 		0CFCB74E2A7817DC0009A829 /* NftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCB74D2A7817DC0009A829 /* NftStorage.swift */; };
-		2209497F686F5E8AE742BD05 /* libPods-FakeNFT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF7FC8204F1D3BFD4F77926 /* libPods-FakeNFT.a */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -87,6 +86,7 @@
 		5EE7BF192BAA218400A32EC0 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF172BAA218400A32EC0 /* Localization.swift */; };
 		5EE7BF1C2BAA223A00A32EC0 /* Bundle+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF1B2BAA223A00A32EC0 /* Bundle+Ext.swift */; };
 		5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */; };
+		737F4ED9B5E1C656C76063A6 /* libPods-FakeNFT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F552087D7DF189429DD8BC4 /* libPods-FakeNFT.a */; };
 		7C31AF252BC9978800C8226E /* NftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31AF242BC9978800C8226E /* NftRequest.swift */; };
 		7C31AF262BC99A8200C8226E /* ProfileInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E805A802BB996BF00517566 /* ProfileInfoRequest.swift */; };
 		7C31AF272BC99C2100C8226E /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5BA2BB1D4BB003B6A81 /* ProfileEditViewController.swift */; };
@@ -169,7 +169,8 @@
 		0CFCB7452A78064B0009A829 /* NftDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDetailCellModel.swift; sourceTree = "<group>"; };
 		0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		0CFCB74D2A7817DC0009A829 /* NftStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftStorage.swift; sourceTree = "<group>"; };
-		36BFD1EED64E05F5DA8D6773 /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
+		1F552087D7DF189429DD8BC4 /* libPods-FakeNFT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FakeNFT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F80CDFC552BD1B001BDE46D /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -270,8 +271,7 @@
 		7C9834092BBBED1900781151 /* ProfileNFTServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNFTServices.swift; sourceTree = "<group>"; };
 		7C98340D2BBD431B00781151 /* ProfileUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUpdateRequest.swift; sourceTree = "<group>"; };
 		7C98340F2BBEC9A200781151 /* ObserverProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverProtocol.swift; sourceTree = "<group>"; };
-		BE4A7461E601F2D2803DB216 /* Pods-FakeNFT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.release.xcconfig"; sourceTree = "<group>"; };
-		DDF7FC8204F1D3BFD4F77926 /* libPods-FakeNFT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FakeNFT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D5270C5480CE08714BED9B /* Pods-FakeNFT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.release.xcconfig"; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 			files = (
 				3F603CD029DB4A74000C43D7 /* Kingfisher in Frameworks */,
 				3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */,
-				2209497F686F5E8AE742BD05 /* libPods-FakeNFT.a in Frameworks */,
+				737F4ED9B5E1C656C76063A6 /* libPods-FakeNFT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,14 +323,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		09E089CF1B32988F7109F007 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DDF7FC8204F1D3BFD4F77926 /* libPods-FakeNFT.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		0C79EE642A76DDCF00EE90EA /* NftDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,7 +408,7 @@
 				3F68069429CBBAF100B4F915 /* Products */,
 				69BD3A8DEB1E9B54A54CCF48 /* Pods */,
 				5EAD11432BC9904700A9BC12 /* Recovered References */,
-				09E089CF1B32988F7109F007 /* Frameworks */,
+				62CCBE4469573100172C50C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -717,11 +709,19 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		62CCBE4469573100172C50C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F552087D7DF189429DD8BC4 /* libPods-FakeNFT.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		69BD3A8DEB1E9B54A54CCF48 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				36BFD1EED64E05F5DA8D6773 /* Pods-FakeNFT.debug.xcconfig */,
-				BE4A7461E601F2D2803DB216 /* Pods-FakeNFT.release.xcconfig */,
+				2F80CDFC552BD1B001BDE46D /* Pods-FakeNFT.debug.xcconfig */,
+				98D5270C5480CE08714BED9B /* Pods-FakeNFT.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -855,7 +855,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3F6806BD29CBBAF200B4F915 /* Build configuration list for PBXNativeTarget "FakeNFT" */;
 			buildPhases = (
-				A90C0289F32AF34F88418493 /* [CP] Check Pods Manifest.lock */,
+				69F29149BCB7A195002BAECA /* [CP] Check Pods Manifest.lock */,
 				3FC8C39529D24CDB0081F015 /* Swiftlint */,
 				3F68068F29CBBAF100B4F915 /* Sources */,
 				3F68069029CBBAF100B4F915 /* Frameworks */,
@@ -1025,7 +1025,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi \n";
 		};
-		A90C0289F32AF34F88418493 /* [CP] Check Pods Manifest.lock */ = {
+		69F29149BCB7A195002BAECA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1349,7 +1349,7 @@
 		};
 		3F6806BE29CBBAF200B4F915 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36BFD1EED64E05F5DA8D6773 /* Pods-FakeNFT.debug.xcconfig */;
+			baseConfigurationReference = 2F80CDFC552BD1B001BDE46D /* Pods-FakeNFT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1380,7 +1380,7 @@
 		};
 		3F6806BF29CBBAF200B4F915 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE4A7461E601F2D2803DB216 /* Pods-FakeNFT.release.xcconfig */;
+			baseConfigurationReference = 98D5270C5480CE08714BED9B /* Pods-FakeNFT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -38,7 +38,7 @@ final class ProfileViewController: UIViewController {
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .headline3
+        label.font = .Headline.medium
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label
@@ -47,7 +47,7 @@ final class ProfileViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption2
+        label.font = .Caption.medium
         label.textColor = Assets.ypBlack.color
         label.numberOfLines = 0
         label.textAlignment = .left
@@ -57,7 +57,7 @@ final class ProfileViewController: UIViewController {
     private lazy var websiteLinkLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption1
+        label.font = .Caption.large
         label.textColor = Assets.ypBlueUniversal.color
         label.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(websiteLinkLabelTapped))

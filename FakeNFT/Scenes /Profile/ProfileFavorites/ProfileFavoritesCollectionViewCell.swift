@@ -40,7 +40,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label
@@ -55,7 +55,7 @@ class ProfileFavoritesCollectionViewCell: UICollectionViewCell, ReuseIdentifying
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption1
+        label.font = .Caption.large
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label

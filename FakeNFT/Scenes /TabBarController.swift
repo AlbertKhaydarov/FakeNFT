@@ -50,7 +50,6 @@ final class TabBarController: UITabBarController {
         )
 
         viewControllers = [profile, catalog, cart, statistics]
-        selectedIndex = 1
     }
 
     private func prepareViewController(

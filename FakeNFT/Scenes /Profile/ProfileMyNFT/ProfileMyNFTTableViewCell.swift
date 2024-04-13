@@ -37,7 +37,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label
@@ -52,7 +52,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption2
+        label.font = .Caption.medium
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label
@@ -72,7 +72,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var priceTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption2
+        label.font = .Caption.medium
         label.text = .loc.Profile.PriceTitleLabel.title
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
@@ -82,7 +82,7 @@ class ProfileMyNFTTableViewCell: UITableViewCell, ReuseIdentifying {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .bodyBold
+        label.font = .Body.bold
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         return label

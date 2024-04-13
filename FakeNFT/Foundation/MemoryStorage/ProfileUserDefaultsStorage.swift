@@ -15,7 +15,7 @@ enum SortProfileSortType: String {
 }
 
 protocol ProfileUserDefaultsStorageProtocol {
-    var chosenTypeSort: SortType { get set }
+    var chosenTypeSort: SortProfileSortType { get set }
 }
 
 struct ProfileUserDefaultsStorage: ProfileUserDefaultsStorageProtocol {
@@ -27,10 +27,10 @@ struct ProfileUserDefaultsStorage: ProfileUserDefaultsStorageProtocol {
 
     private let userDefaults = UserDefaults.standard
 
-    var chosenTypeSort: SortType {
+    var chosenTypeSort: SortProfileSortType {
         get {
             if let value = userDefaults.string(forKey: Constant.key),
-               let type = SortType(rawValue: value) {
+               let type = SortProfileSortType(rawValue: value) {
                 return type
             } else {
                 return .none

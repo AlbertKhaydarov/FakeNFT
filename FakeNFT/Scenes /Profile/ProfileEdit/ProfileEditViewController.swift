@@ -46,7 +46,7 @@ class ProfileEditViewController: UIViewController {
     private lazy var editImagelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .caption3
+        label.font = .Caption.small
         label.textColor = Assets.ypWhiteUniversal.color
         label.textAlignment = .center
         label.text = .loc.Profile.EditImagelabel.title
@@ -58,7 +58,7 @@ class ProfileEditViewController: UIViewController {
         let textField = UITextField()
         textField.isHidden = true
         textField.backgroundColor = .clear
-        textField.font = .bodyRegular
+        textField.font = .Body.regular
         textField.textColor = Assets.ypBlack.color
         let placeholder: String = .loc.Profile.UserProfileImageDownload.title
         textField.setCenteredPlaceholder(placeholder)
@@ -72,7 +72,7 @@ class ProfileEditViewController: UIViewController {
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .headline3
+        label.font = .Headline.large
         label.textColor = Assets.ypBlack.color
         label.textAlignment = .left
         label.text = .loc.Profile.UserNamelabel.title
@@ -89,7 +89,7 @@ class ProfileEditViewController: UIViewController {
         textField.backgroundColor = Assets.ypLightGrey.color
         textField.layer.cornerRadius = 12
         textField.clipsToBounds = true
-        textField.font = .bodyRegular
+        textField.font = .Body.regular
         textField.textColor = Assets.ypBlack.color
         textField.becomeFirstResponder()
         textField.returnKeyType = .done
@@ -112,7 +112,7 @@ class ProfileEditViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .headline3
+        label.font = .Headline.medium
         label.textColor = Assets.ypBlack.color
         label.numberOfLines = 0
         label.textAlignment = .left
@@ -129,7 +129,7 @@ class ProfileEditViewController: UIViewController {
                                                    left: Constants.horizontalInset,
                                                    bottom: Constants.verticalInset,
                                                    right: Constants.horizontalInset)
-        textView.font = .bodyRegular
+        textView.font = .Body.regular
         textView.textColor = Assets.ypBlack.color
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
@@ -151,7 +151,7 @@ class ProfileEditViewController: UIViewController {
     private lazy var websiteLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .headline3
+        label.font = .Headline.medium
         label.textColor = Assets.ypBlack.color
         label.text = .loc.Profile.WebsiteLabel.title
         return label
@@ -167,7 +167,7 @@ class ProfileEditViewController: UIViewController {
         textField.backgroundColor = Assets.ypLightGrey.color
         textField.layer.cornerRadius = 12
         textField.clipsToBounds = true
-        textField.font = .bodyRegular
+        textField.font = .Body.regular
         textField.textColor = Assets.ypBlack.color
         textField.becomeFirstResponder()
         textField.delegate = self
