@@ -13,8 +13,8 @@ struct GetProfileRequest: NetworkRequest {
     }
 }
 
-struct SaveProfileRequest: NetworkRequest {
-    let requestDto: ProfileInfoRequest
+struct UpdateProfileRequest: NetworkRequest {
+    let profileModel: Profile?
 
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/profile/1")
@@ -22,20 +22,7 @@ struct SaveProfileRequest: NetworkRequest {
 
     var httpMethod: HttpMethod { .put }
 
-    var data: Data? {
-        var dataString = """
-        name=\(requestDto.name)
-        &description=\(requestDto.description)
-        &website=\(requestDto.website)
-        &likes=
-        """
-        if requestDto.likes.isEmpty {
-            dataString += "null"
-        } else {
-            requestDto.likes.forEach {
-                dataString += "\($0),"
-            }
-        }
-        return dataString.data(using: .utf8)
+    var dto: Encodable? {
+        profileModel?.toQueryString()
     }
 }

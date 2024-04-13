@@ -17,7 +17,7 @@ typealias CollectionSnapshot = NSDiffableDataSourceSnapshot<Section, CollectionV
 typealias CollectionDataSource = UICollectionViewDiffableDataSource<Section, CollectionViewModel>
 
 protocol ICollectionView: AnyObject {
-    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo)
+    func updateCollectionInfo(_ item: CatalogItem, profile: Profile)
     func updateNfts(_ items: [CollectionViewModel])
 
     func showLoader()
@@ -239,11 +239,11 @@ extension CollectionViewController: ICollectionView {
         authorLabel.isHidden = false
     }
 
-    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo) {
+    func updateCollectionInfo(_ item: CatalogItem, profile: Profile) {
         downloadCover(with: item.cover)
 
-        profileLink = profileInfo.website
-        authorLabelLink.text = profileInfo.name
+        profileLink = profile.website
+        authorLabelLink.text = profile.name
         descriptionLabel.text = item.description
         titleLabel.text = item.name
     }

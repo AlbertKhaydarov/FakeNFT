@@ -2,60 +2,54 @@
 //  ProfileService.swift
 //  FakeNFT
 //
-//  Created by MAKOVEY Vladislav on 27.03.2024.
+//  Created by Альберт Хайдаров on 28.03.2024.
 //
 
 import Foundation
 
-typealias ProfileInfoResult = (ProfileInfo?) -> Void
+typealias ProfileCompletion = (Result<Profile, Error>) -> Void
 
-protocol IProfileService {
-    func loadProfile(completion: @escaping ProfileInfoResult)
-    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult)
+protocol ProfileServiceProtocol {
+    func loadProfile(completion: @escaping ProfileCompletion)
+    func uploadProfile(model: Profile?, completion: @escaping ProfileCompletion)
 }
 
-final class ProfileService: IProfileService {
+final class ProfileService: ProfileServiceProtocol {
 
-    // MARK: - Properties
+    private let networkClient: NetworkClient
+    private let storage: INftStorage
 
-    private let networkClient: any NetworkClient
-
-    // MARK: - Lifecycle
-
-    init(networkClient: some NetworkClient) {
+    init(networkClient: NetworkClient, storage: INftStorage) {
+        self.storage = storage
         self.networkClient = networkClient
     }
 
-    func loadProfile(completion: @escaping ProfileInfoResult) {
+    func loadProfile(completion: @escaping ProfileCompletion) {
+        if let profile = storage.getProfile() {
+            completion(.success(profile))
+        }
         let request = GetProfileRequest()
-
-        networkClient.send(
-            request: request,
-            type: ProfileInfo.self,
-            completionQueue: .main
-        ) {
-            switch $0 {
-            case let .success(model):
-                completion(model)
-            case .failure:
-                completion(nil)
+        networkClient.send(request: request, type: Profile.self) { [weak storage] result in
+            switch result {
+            case .success(let profile):
+                storage?.saveProfile(profile)
+                completion(.success(profile))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
 
-    func updateProfile(requestDto: ProfileInfoRequest, completion: @escaping ProfileInfoResult) {
-        let request = SaveProfileRequest(requestDto: requestDto)
-
-        networkClient.send(
-            request: request,
-            type: ProfileInfo.self,
-            completionQueue: .main
-        ) {
-            switch $0 {
-            case let .success(model):
-                completion(model)
-            case .failure:
-                completion(nil)
+    func uploadProfile(model: Profile?, completion: @escaping ProfileCompletion) {
+        let request = UpdateProfileRequest(profileModel: model)
+        networkClient.send(request: request, type: Profile.self) { [weak storage] result in
+            switch result {
+            case .success(let profile):
+                storage?.saveProfile(profile)
+                completion(.success(profile))
+            case .failure(let error):
+                assertionFailure("Failed to upload Profile \(error)")
+                completion(.failure(error))
             }
         }
     }

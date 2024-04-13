@@ -7,8 +7,8 @@ protocol INftStorage: AnyObject {
     func saveProfile(_ profile: Profile)
     func getProfile() -> Profile?
 
-    func saveProfileMyNFTs(_ myNFTs: [ProfileMyNFT])
-    func getProfileMyNFTs(with id: String) -> ProfileMyNFT?
+    func saveProfileMyNFTs(_ myNFTs: [Nft])
+    func getProfileMyNFTs(with id: String) -> Nft?
 }
 
 final class NftStorageImpl: INftStorage {
@@ -19,7 +19,7 @@ final class NftStorageImpl: INftStorage {
     private var storageProfile: Profile?
     private let syncQueueProfile = DispatchQueue(label: "sync-profile-queue")
 
-    private var storageProfileMyNFTs: [ProfileMyNFT]?
+    private var storageProfileMyNFTs: [Nft]?
     private let syncQueueProfileMyNFTs = DispatchQueue(label: "sync-profileProfileMyNFT-queue")
 
     func saveNft(_ nft: Nft) {
@@ -49,13 +49,13 @@ final class NftStorageImpl: INftStorage {
         }
     }
 
-    func saveProfileMyNFTs(_ myNFTs: [ProfileMyNFT]) {
+    func saveProfileMyNFTs(_ myNFTs: [Nft]) {
         syncQueueProfileMyNFTs.async { [weak self] in
             self?.storageProfileMyNFTs = myNFTs
         }
     }
 
-    func getProfileMyNFTs(with id: String) -> ProfileMyNFT? {
+    func getProfileMyNFTs(with id: String) -> Nft? {
         syncQueueProfileMyNFTs.sync {
             if let profileMyNFT = self.storageProfileMyNFTs?.first(where: { $0.id == id }) {
                 return profileMyNFT

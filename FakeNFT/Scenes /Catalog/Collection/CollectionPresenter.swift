@@ -26,13 +26,13 @@ final class CollectionPresenter {
 
     weak var view: (any ICollectionView & ErrorView)?
     private let chosenItem: CatalogItem
-    private let profileService: any IProfileService
+    private let profileService: any ProfileServiceProtocol
     private let orderService: any IOrderService
     private let nftService: any INftService
     private let router: any ICollectionRouter
     private let dispatchGroup = DispatchGroup()
 
-    private var profileInfo: ProfileInfo?
+    private var profile: Profile?
     private var order: Order?
     private var nfts: [Nft]?
 
@@ -40,7 +40,7 @@ final class CollectionPresenter {
 
     init(
         chosenItem: CatalogItem,
-        profileService: any IProfileService,
+        profileService: any ProfileServiceProtocol,
         orderService: any IOrderService,
         nftService: any INftService,
         router: some ICollectionRouter
@@ -66,15 +66,16 @@ final class CollectionPresenter {
 
     private func loadProfile() {
         dispatchGroup.enter()
-        profileService.loadProfile { [weak self] profileInfo in
-            guard let profileInfo else {
+        profileService.loadProfile { [weak self] result in
+            switch result {
+            case let .success(model):
+                self?.profile = model
+                self?.dispatchGroup.leave()
+            case .failure:
                 self?.dispatchGroup.leave()
                 self?.showError()
                 return
             }
-
-            self?.profileInfo = profileInfo
-            self?.dispatchGroup.leave()
         }
     }
 
@@ -109,7 +110,7 @@ final class CollectionPresenter {
     }
 
     private func assembleViewModel() {
-        guard let nfts, let profileInfo, let order else { return }
+        guard let nfts, let profile, let order else { return }
 
         let collectionViewModel = nfts.sorted(by: { $0.name < $1.name }).map { nft in
             CollectionViewModel(
@@ -119,12 +120,12 @@ final class CollectionPresenter {
                 website: Constant.website,
                 imagePath: nft.images[0],
                 rating: nft.rating,
-                liked: profileInfo.likes.first(where: { $0 == nft.id }) != nil,
+                liked: profile.likes.first(where: { $0 == nft.id }) != nil,
                 inCart: order.nfts.first(where: { $0 == nft.id }) != nil
             )
         }
 
-        view?.updateCollectionInfo(chosenItem, profileInfo: profileInfo)
+        view?.updateCollectionInfo(chosenItem, profile: profile)
         view?.updateNfts(collectionViewModel)
         view?.dismissLoader()
     }
@@ -155,35 +156,42 @@ extension CollectionPresenter: ICollectionPresenter {
     }
 
     func favoriteButtonTapped(id: String, state: Bool) {
-        guard let profileInfo else { return }
+        guard let profile else { return }
 
-        let dto: ProfileInfoRequest
+        let newProfile: Profile
         if state {
-            var newLikes = profileInfo.likes
+            var newLikes = profile.likes
             newLikes.append(id)
 
-            dto = .init(
-                name: profileInfo.name,
-                description: profileInfo.description,
-                website: profileInfo.website,
-                likes: newLikes
+            newProfile = .init(
+                name: profile.name,
+                avatar: profile.avatar,
+                description: profile.description,
+                website: profile.website,
+                nfts: profile.nfts,
+                likes: newLikes,
+                id: profile.id
             )
         } else {
-            dto = .init(
-                name: profileInfo.name,
-                description: profileInfo.description,
-                website: profileInfo.website,
-                likes: profileInfo.likes.filter { $0 != id }
+            newProfile = .init(
+                name: profile.name,
+                avatar: profile.avatar,
+                description: profile.description,
+                website: profile.website,
+                nfts: profile.nfts,
+                likes: profile.likes.filter { $0 != id },
+                id: profile.id
             )
         }
 
-        profileService.updateProfile(requestDto: dto) { [weak self] profileInfo in
-            guard let profileInfo else {
+        profileService.uploadProfile(model: newProfile) { [weak self] result in
+            switch result {
+            case let .success(profile):
+                self?.profile = profile
+            case .failure:
                 self?.showError()
                 return
             }
-
-            self?.profileInfo = profileInfo
         }
     }
 

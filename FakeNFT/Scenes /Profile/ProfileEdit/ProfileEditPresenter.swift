@@ -15,12 +15,12 @@ protocol ProfileEditPresenterProtocol {
 final class ProfileEditPresenter {
     // MARK: Properties
     private let router: any ProfileEditRouterProtocol
-    private let service: ProfileBaseServiceProtocol
+    private let service: ProfileServiceProtocol
     private var profile: ProfileViewModel
 
     weak var view: (any ProfileEditViewProtocol)?
 
-    init(router: some ProfileEditRouterProtocol, profile: ProfileViewModel, service: ProfileBaseServiceProtocol) {
+    init(router: some ProfileEditRouterProtocol, profile: ProfileViewModel, service: ProfileServiceProtocol) {
         self.router = router
         self.profile = profile
         self.service = service

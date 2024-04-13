@@ -13,10 +13,14 @@ final class CollectionAssembly {
 
     static func assemble(collectionItem: CatalogItem) -> UIViewController {
         let networkClient = DefaultNetworkClient()
-        let profileService: IProfileService = ProfileService(networkClient: networkClient)
+        let nftStorage = NftStorageImpl()
+
+        let profileService: ProfileServiceProtocol = ProfileService(
+            networkClient: networkClient,
+            storage: NftStorageImpl()
+        )
         let orderService: IOrderService = OrderService(networkClient: networkClient)
 
-        let nftStorage = NftStorageImpl()
         let nftService: INftService = NftService(networkClient: networkClient, storage: nftStorage)
 
         let router = CollectionRouter()

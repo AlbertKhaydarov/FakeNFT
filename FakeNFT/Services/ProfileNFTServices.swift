@@ -7,8 +7,8 @@
 
 import Foundation
 
-typealias ProfileMyNftCompletion = (Result<ProfileMyNFT, Error>) -> Void
-typealias ProfileMyNftsCompletion = (Result<[ProfileMyNFT], Error>) -> Void
+typealias ProfileMyNftCompletion = (Result<Nft, Error>) -> Void
+typealias ProfileMyNftsCompletion = (Result<[Nft], Error>) -> Void
 
 protocol ProfileMyNftServiceProtocol {
     func loadNfts(completion: @escaping ProfileMyNftsCompletion)
@@ -33,7 +33,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
             switch result {
             case .success(let profile):
                 let iDs = profile.likes
-                var likes: [ProfileMyNFT] = []
+                var likes: [Nft] = []
                 let group = DispatchGroup()
                 iDs.compactMap { item in
                     group.enter()
@@ -75,7 +75,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
                             likes: favorites,
                             id: profile?.id ?? "")
 
-        let request = ProfileUpdateRequest(model: model)
+        let request = UpdateProfileRequest(profileModel: model)
 
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
@@ -95,7 +95,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
             switch result {
             case .success(let profile):
                 let iDs = profile.nfts
-                var nfts: [ProfileMyNFT] = []
+                var nfts: [Nft] = []
                 let group = DispatchGroup()
                 iDs.compactMap { item in
                     group.enter()
@@ -125,7 +125,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
         if let profile = storage.getProfile() {
             completion(.success(profile))
         }
-        let request = ProfileMyRequest()
+        let request = GetProfileRequest()
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):
@@ -146,7 +146,7 @@ final class ProfileMyNftService: ProfileMyNftServiceProtocol {
         }
         let request = NFTRequest(id: id)
 
-        networkClient.send(request: request, type: ProfileMyNFT.self) { [weak storage] result in
+        networkClient.send(request: request, type: Nft.self) { [weak storage] result in
             switch result {
             case .success(let nft):
                 completion(.success(nft))

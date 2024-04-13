@@ -67,7 +67,7 @@ final class TabBarController: UITabBarController {
     private func setupNavigationAppearance() {
         UINavigationBar.appearance().backIndicatorImage = Assets.backwardIcon.image
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = Assets.backwardIcon.image
-        UINavigationBar.appearance().tintColor = Assets.ypBlack.color
+        UINavigationBar.appearance().tintColor = Assets.ypBlackUniversal.color
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear],
                                                             for: .normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear],
