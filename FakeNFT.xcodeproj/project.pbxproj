@@ -83,6 +83,18 @@
 		5EE7BF192BAA218400A32EC0 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF172BAA218400A32EC0 /* Localization.swift */; };
 		5EE7BF1C2BAA223A00A32EC0 /* Bundle+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF1B2BAA223A00A32EC0 /* Bundle+Ext.swift */; };
 		5EE7BF1E2BAA227A00A32EC0 /* StringGenerated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */; };
+		5EEDB9C02BCA6E47001CD9A6 /* CatalogPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9BE2BCA6E47001CD9A6 /* CatalogPresenterTests.swift */; };
+		5EEDB9C32BCA6E4A001CD9A6 /* CollectionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C12BCA6E4A001CD9A6 /* CollectionPresenterTests.swift */; };
+		5EEDB9D12BCA6E4E001CD9A6 /* CatalogItemServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C42BCA6E4E001CD9A6 /* CatalogItemServiceStub.swift */; };
+		5EEDB9D22BCA6E4E001CD9A6 /* CatalogRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C52BCA6E4E001CD9A6 /* CatalogRouterSpy.swift */; };
+		5EEDB9D32BCA6E4E001CD9A6 /* CatalogViewSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C62BCA6E4E001CD9A6 /* CatalogViewSpy.swift */; };
+		5EEDB9D42BCA6E4E001CD9A6 /* CatalogSortStorageStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C72BCA6E4E001CD9A6 /* CatalogSortStorageStub.swift */; };
+		5EEDB9D52BCA6E4E001CD9A6 /* CatalogItem+Fake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9C92BCA6E4E001CD9A6 /* CatalogItem+Fake.swift */; };
+		5EEDB9D62BCA6E4E001CD9A6 /* CollectionRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9CA2BCA6E4E001CD9A6 /* CollectionRouterSpy.swift */; };
+		5EEDB9D72BCA6E4E001CD9A6 /* CollectionViewSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9CB2BCA6E4E001CD9A6 /* CollectionViewSpy.swift */; };
+		5EEDB9D82BCA6E4E001CD9A6 /* NftServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9CC2BCA6E4E001CD9A6 /* NftServiceStub.swift */; };
+		5EEDB9D92BCA6E4E001CD9A6 /* OrderServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9CD2BCA6E4E001CD9A6 /* OrderServiceStub.swift */; };
+		5EEDB9DE2BCA72BB001CD9A6 /* ProfileServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEDB9DD2BCA72BB001CD9A6 /* ProfileServiceStub.swift */; };
 		737F4ED9B5E1C656C76063A6 /* libPods-FakeNFT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F552087D7DF189429DD8BC4 /* libPods-FakeNFT.a */; };
 		7C31AF252BC9978800C8226E /* NftRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C31AF242BC9978800C8226E /* NftRequest.swift */; };
 		7C31AF272BC99C2100C8226E /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5BA2BB1D4BB003B6A81 /* ProfileEditViewController.swift */; };
@@ -128,7 +140,6 @@
 		EA97C5E72BC4624C003B6A81 /* ProfileRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */; };
 		EA97C5E92BC46638003B6A81 /* ProfileViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */; };
 		EA97C5ED2BC5916B003B6A81 /* ProfilePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */; };
-		EA97C5EF2BC591BD003B6A81 /* ProfileServiceStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97C5EE2BC591BD003B6A81 /* ProfileServiceStub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,9 +248,20 @@
 		5EE7BF172BAA218400A32EC0 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		5EE7BF1B2BAA223A00A32EC0 /* Bundle+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Ext.swift"; sourceTree = "<group>"; };
 		5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringGenerated.swift; sourceTree = "<group>"; };
+		5EEDB9BE2BCA6E47001CD9A6 /* CatalogPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogPresenterTests.swift; sourceTree = "<group>"; };
+		5EEDB9C12BCA6E4A001CD9A6 /* CollectionPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionPresenterTests.swift; sourceTree = "<group>"; };
+		5EEDB9C42BCA6E4E001CD9A6 /* CatalogItemServiceStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogItemServiceStub.swift; sourceTree = "<group>"; };
+		5EEDB9C52BCA6E4E001CD9A6 /* CatalogRouterSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogRouterSpy.swift; sourceTree = "<group>"; };
+		5EEDB9C62BCA6E4E001CD9A6 /* CatalogViewSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewSpy.swift; sourceTree = "<group>"; };
+		5EEDB9C72BCA6E4E001CD9A6 /* CatalogSortStorageStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogSortStorageStub.swift; sourceTree = "<group>"; };
+		5EEDB9C92BCA6E4E001CD9A6 /* CatalogItem+Fake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CatalogItem+Fake.swift"; sourceTree = "<group>"; };
+		5EEDB9CA2BCA6E4E001CD9A6 /* CollectionRouterSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionRouterSpy.swift; sourceTree = "<group>"; };
+		5EEDB9CB2BCA6E4E001CD9A6 /* CollectionViewSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSpy.swift; sourceTree = "<group>"; };
+		5EEDB9CC2BCA6E4E001CD9A6 /* NftServiceStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftServiceStub.swift; sourceTree = "<group>"; };
+		5EEDB9CD2BCA6E4E001CD9A6 /* OrderServiceStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderServiceStub.swift; sourceTree = "<group>"; };
+		5EEDB9DD2BCA72BB001CD9A6 /* ProfileServiceStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileServiceStub.swift; sourceTree = "<group>"; };
 		7C31AE232BC3DCE700C8226E /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		7C31AE252BC5214000C8226E /* MockName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockName.swift; sourceTree = "<group>"; };
-		7C31AE282BC5C94F00C8226E /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		7C31AF242BC9978800C8226E /* NftRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NftRequest.swift; path = "FakeNFT/Scenes /Profile/Requests/NftRequest.swift"; sourceTree = SOURCE_ROOT; };
 		7C31AF3B2BC9A86100C8226E /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Profile.swift; path = FakeNFT/Models/Network/Profile.swift; sourceTree = SOURCE_ROOT; };
 		7C9833B72BB40DC300781151 /* ProfileFavoritesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFavoritesRouter.swift; sourceTree = "<group>"; };
@@ -278,7 +300,6 @@
 		EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouterSpy.swift; sourceTree = "<group>"; };
 		EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSpy.swift; sourceTree = "<group>"; };
 		EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterTests.swift; sourceTree = "<group>"; };
-		EA97C5EE2BC591BD003B6A81 /* ProfileServiceStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceStub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -428,11 +449,10 @@
 		3F6806AC29CBBAF200B4F915 /* FakeNFTTests */ = {
 			isa = PBXGroup;
 			children = (
-				7C31AE282BC5C94F00C8226E /* TestPlan.xctestplan */,
-				EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */,
-				EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */,
-				EA97C5EE2BC591BD003B6A81 /* ProfileServiceStub.swift */,
-				EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */,
+				5EEDB9DB2BCA6E53001CD9A6 /* Profile */,
+				5EEDB9D02BCA6E4E001CD9A6 /* Doubles */,
+				5EEDB9C22BCA6E4A001CD9A6 /* Collection */,
+				5EEDB9BF2BCA6E47001CD9A6 /* Catalog */,
 			);
 			path = FakeNFTTests;
 			sourceTree = "<group>";
@@ -678,6 +698,74 @@
 				5EE7BF1D2BAA227A00A32EC0 /* StringGenerated.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		5EEDB9BF2BCA6E47001CD9A6 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9BE2BCA6E47001CD9A6 /* CatalogPresenterTests.swift */,
+			);
+			path = Catalog;
+			sourceTree = "<group>";
+		};
+		5EEDB9C22BCA6E4A001CD9A6 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9C12BCA6E4A001CD9A6 /* CollectionPresenterTests.swift */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		5EEDB9C82BCA6E4E001CD9A6 /* Catalog */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9C42BCA6E4E001CD9A6 /* CatalogItemServiceStub.swift */,
+				5EEDB9C52BCA6E4E001CD9A6 /* CatalogRouterSpy.swift */,
+				5EEDB9C62BCA6E4E001CD9A6 /* CatalogViewSpy.swift */,
+				5EEDB9C72BCA6E4E001CD9A6 /* CatalogSortStorageStub.swift */,
+			);
+			path = Catalog;
+			sourceTree = "<group>";
+		};
+		5EEDB9CF2BCA6E4E001CD9A6 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9C92BCA6E4E001CD9A6 /* CatalogItem+Fake.swift */,
+				5EEDB9CA2BCA6E4E001CD9A6 /* CollectionRouterSpy.swift */,
+				5EEDB9CB2BCA6E4E001CD9A6 /* CollectionViewSpy.swift */,
+				5EEDB9CC2BCA6E4E001CD9A6 /* NftServiceStub.swift */,
+				5EEDB9CD2BCA6E4E001CD9A6 /* OrderServiceStub.swift */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		5EEDB9D02BCA6E4E001CD9A6 /* Doubles */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9DC2BCA6E5F001CD9A6 /* Profile */,
+				5EEDB9C82BCA6E4E001CD9A6 /* Catalog */,
+				5EEDB9CF2BCA6E4E001CD9A6 /* Collection */,
+			);
+			path = Doubles;
+			sourceTree = "<group>";
+		};
+		5EEDB9DB2BCA6E53001CD9A6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EA97C5EC2BC5916B003B6A81 /* ProfilePresenterTests.swift */,
+			);
+			name = Profile;
+			path = FakeNFTTests/Profile;
+			sourceTree = SOURCE_ROOT;
+		};
+		5EEDB9DC2BCA6E5F001CD9A6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5EEDB9DD2BCA72BB001CD9A6 /* ProfileServiceStub.swift */,
+				EA97C5E82BC46638003B6A81 /* ProfileViewControllerSpy.swift */,
+				EA97C5E62BC4624C003B6A81 /* ProfileRouterSpy.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		62CCBE4469573100172C50C7 /* Frameworks */ = {
@@ -1139,10 +1227,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EEDB9C02BCA6E47001CD9A6 /* CatalogPresenterTests.swift in Sources */,
+				5EEDB9D42BCA6E4E001CD9A6 /* CatalogSortStorageStub.swift in Sources */,
+				5EEDB9D92BCA6E4E001CD9A6 /* OrderServiceStub.swift in Sources */,
+				5EEDB9DE2BCA72BB001CD9A6 /* ProfileServiceStub.swift in Sources */,
+				5EEDB9D82BCA6E4E001CD9A6 /* NftServiceStub.swift in Sources */,
+				5EEDB9D22BCA6E4E001CD9A6 /* CatalogRouterSpy.swift in Sources */,
 				EA97C5ED2BC5916B003B6A81 /* ProfilePresenterTests.swift in Sources */,
 				EA97C5E72BC4624C003B6A81 /* ProfileRouterSpy.swift in Sources */,
+				5EEDB9D52BCA6E4E001CD9A6 /* CatalogItem+Fake.swift in Sources */,
 				EA97C5E92BC46638003B6A81 /* ProfileViewControllerSpy.swift in Sources */,
-				EA97C5EF2BC591BD003B6A81 /* ProfileServiceStub.swift in Sources */,
+				5EEDB9D12BCA6E4E001CD9A6 /* CatalogItemServiceStub.swift in Sources */,
+				5EEDB9C32BCA6E4A001CD9A6 /* CollectionPresenterTests.swift in Sources */,
+				5EEDB9D62BCA6E4E001CD9A6 /* CollectionRouterSpy.swift in Sources */,
+				5EEDB9D72BCA6E4E001CD9A6 /* CollectionViewSpy.swift in Sources */,
+				5EEDB9D32BCA6E4E001CD9A6 /* CatalogViewSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

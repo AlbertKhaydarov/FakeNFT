@@ -13,14 +13,14 @@ final class CollectionViewSpy: ICollectionView, ErrorView {
 
     var invokedUpdateCollectionInfo = false
     var invokedUpdateCollectionInfoCount = 0
-    var invokedUpdateCollectionInfoParameters: (item: CatalogItem, profileInfo: ProfileInfo)?
-    var invokedUpdateCollectionInfoParametersList = [(item: CatalogItem, profileInfo: ProfileInfo)]()
+    var invokedUpdateCollectionInfoParameters: (item: CatalogItem, profile: Profile)?
+    var invokedUpdateCollectionInfoParametersList = [(item: CatalogItem, profile: Profile)]()
 
-    func updateCollectionInfo(_ item: CatalogItem, profileInfo: ProfileInfo) {
+    func updateCollectionInfo(_ item: CatalogItem, profile: Profile) {
         invokedUpdateCollectionInfo = true
         invokedUpdateCollectionInfoCount += 1
-        invokedUpdateCollectionInfoParameters = (item, profileInfo)
-        invokedUpdateCollectionInfoParametersList.append((item, profileInfo))
+        invokedUpdateCollectionInfoParameters = (item, profile)
+        invokedUpdateCollectionInfoParametersList.append((item, profile))
     }
 
     var invokedUpdateNfts = false

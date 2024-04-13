@@ -1,5 +1,5 @@
 //
-//  SortStorageStub.swift
+//  CatalogSortStorageStub.swift
 //  FakeNFTTests
 //
 //  Created by MAKOVEY Vladislav on 05.04.2024.
@@ -9,7 +9,7 @@
 import Foundation
 
 // swiftlint:disable all
-final class SortStorageStub: ISortStorage {
+final class CatalogSortStorageStub: ICatalogSortStorage {
 
     let type: SortType
 

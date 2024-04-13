@@ -14,7 +14,7 @@ final class CatalogPresenterTests: XCTestCase {
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
             service: CatalogItemServiceStub(),
-            sortStorage: SortStorageStub()
+            sortStorage: CatalogSortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -34,7 +34,7 @@ final class CatalogPresenterTests: XCTestCase {
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
             service: CatalogItemServiceStub(state: .failure),
-            sortStorage: SortStorageStub()
+            sortStorage: CatalogSortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -54,7 +54,7 @@ final class CatalogPresenterTests: XCTestCase {
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
             service: CatalogItemServiceStub(),
-            sortStorage: SortStorageStub()
+            sortStorage: CatalogSortStorageStub()
         )
 
         let view = CatalogViewSpy()
@@ -74,7 +74,7 @@ final class CatalogPresenterTests: XCTestCase {
         let presenter = CatalogPresenter(
             router: CatalogRouterSpy(),
             service: CatalogItemServiceStub(),
-            sortStorage: SortStorageStub()
+            sortStorage: CatalogSortStorageStub()
         )
 
         let view = CatalogViewSpy()

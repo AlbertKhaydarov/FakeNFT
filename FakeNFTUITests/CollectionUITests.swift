@@ -20,6 +20,7 @@ final class CollectionUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launch()
+        app.tabBars.buttons.element(boundBy: 1).tap()
 
         XCTAssertTrue(catalogPage.firstCell.waitForExistence(timeout: Constant.baseTimeout))
         catalogPage.firstCell.tap()

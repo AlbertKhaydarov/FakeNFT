@@ -19,6 +19,7 @@ final class CatalogUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app.launch()
+        app.tabBars.buttons.element(boundBy: 1).tap()
     }
 
     func test_catalogSortingByName() {

@@ -167,7 +167,7 @@ final class CollectionPresenterTests: XCTestCase {
         presenter.favoriteButtonTapped(id: newId, state: true)
 
         // assert
-        let actualRequestDto = try XCTUnwrap(profileStub.invokedUpdateProfileParameters?.requestDto)
+        let actualRequestDto = try XCTUnwrap(profileStub.invokedUpdateProfileParameters?.model)
         XCTAssertTrue(profileStub.invokedUpdateProfile)
         XCTAssertTrue(actualRequestDto.likes.contains(newId))
     }
@@ -189,7 +189,7 @@ final class CollectionPresenterTests: XCTestCase {
         presenter.favoriteButtonTapped(id: existingId, state: false)
 
         // assert
-        let actualRequestDto = try XCTUnwrap(profileStub.invokedUpdateProfileParameters?.requestDto)
+        let actualRequestDto = try XCTUnwrap(profileStub.invokedUpdateProfileParameters?.model)
         XCTAssertTrue(profileStub.invokedUpdateProfile)
         XCTAssertFalse(actualRequestDto.likes.contains(existingId))
     }
