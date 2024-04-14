@@ -1,7 +1,7 @@
 # ТЗ мобильного приложения FakeNFT
 
 # Ссылки
-[Скринкаст профиля](https://disk.yandex.ru/i/uEhVxPuNf5cdcg)
+[Скринкаст профиля](https://disk.yandex.ru/i/ArCKqSdR5P3XTQ)
 
 [Скринкаст каталога](https://disk.yandex.ru/i/ORwkJ7SYH7Diug)
 
