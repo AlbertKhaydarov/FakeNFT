@@ -21,9 +21,14 @@ extension Profile {
 
     func toQueryString() -> String {
         var components = URLComponents()
+        var favorites: [String] = likes
+        if favorites.count == 0 {
+            favorites = ["null"]
+        }
+
         components.queryItems = [
             URLQueryItem(name: "nfts", value: nfts.joined(separator: ",")),
-            URLQueryItem(name: "likes", value: likes.joined(separator: ",")),
+            URLQueryItem(name: "likes", value: favorites.joined(separator: ",")),
             URLQueryItem(name: "avatar", value: avatar),
             URLQueryItem(name: "name", value: name),
             URLQueryItem(name: "description", value: description),

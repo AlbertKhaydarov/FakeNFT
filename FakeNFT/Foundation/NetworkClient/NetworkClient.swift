@@ -71,7 +71,7 @@ struct DefaultNetworkClient: NetworkClient {
                 onResponse(result)
             }
         }
-        guard var urlRequest = create(request: request) else { return nil }
+        guard let urlRequest = create(request: request) else { return nil }
 
         let task = session.dataTask(with: urlRequest) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
@@ -138,13 +138,12 @@ struct DefaultNetworkClient: NetworkClient {
 
         encoder.outputFormatting = .withoutEscapingSlashes
 
-        urlRequest.setValue(
-            RequestConstants.contentTypeEncodedValue,
-            forHTTPHeaderField: RequestConstants.contentTypeHeader
-        )
-        urlRequest.setValue(RequestConstants.acceptValue, forHTTPHeaderField: RequestConstants.acceptHeader)
-        urlRequest.setValue(NetworkConstants.token, forHTTPHeaderField: RequestConstants.tokenHeader)
-
+        urlRequest.setValue(RequestConstants.contentTypeEncodedValue,
+                            forHTTPHeaderField: RequestConstants.contentTypeHeader)
+        urlRequest.setValue(RequestConstants.acceptValue,
+                            forHTTPHeaderField: RequestConstants.acceptHeader)
+        urlRequest.setValue(NetworkConstants.token,
+                            forHTTPHeaderField: RequestConstants.tokenHeader)
         return urlRequest
     }
 

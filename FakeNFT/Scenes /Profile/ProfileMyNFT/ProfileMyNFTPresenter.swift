@@ -63,6 +63,7 @@ final class ProfileMyNFTPresenter {
                 profileFavoriteNfts?.remove(at: favoriteNftIndex)
             }
         }
+
         updateProfile(nfts: profileFavoriteNfts)
     }
 
@@ -96,6 +97,7 @@ final class ProfileMyNFTPresenter {
                                           id: item.id,
                                           isLiked: true)
                 })
+
                 getMyNFTs()
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
@@ -109,33 +111,38 @@ final class ProfileMyNFTPresenter {
             switch result {
             case .success(let nfts):
                 let myNfts = nfts.map { nft -> MyNFTViewModel in
-                    if (self.profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id })) != nil {
-                        return MyNFTViewModel(createdAt: nft.createdAt,
-                                              name: Name.getName(),
-                                              images: nft.images,
-                                              rating: nft.rating,
-                                              description: nft.description,
-                                              price: nft.price,
-                                              author: nft.name,
-                                              id: nft.id,
-                                              isLiked: true)
-                    } else {
-                        return MyNFTViewModel(createdAt: nft.createdAt,
-                                              name: Name.getName(),
-                                              images: nft.images,
-                                              rating: nft.rating,
-                                              description: nft.description,
-                                              price: nft.price,
-                                              author: nft.name,
-                                              id: nft.id,
-                                              isLiked: false)
+                    var name: String = ""
+                    let words = nft.name.components(separatedBy: " ")
+                    if let firstWord = words.first {
+                        name = firstWord
+                    }
+                        if (self.profileFavoriteNfts?.firstIndex(where: { $0.id == nft.id })) != nil {
+                            return MyNFTViewModel(createdAt: nft.createdAt,
+                                                  name: name,
+                                                  images: nft.images,
+                                                  rating: nft.rating,
+                                                  description: nft.description,
+                                                  price: nft.price,
+                                                  author: nft.name,
+                                                  id: nft.id,
+                                                  isLiked: true)
+                        } else {
+                            return MyNFTViewModel(createdAt: nft.createdAt,
+                                                  name: name,
+                                                  images: nft.images,
+                                                  rating: nft.rating,
+                                                  description: nft.description,
+                                                  price: nft.price,
+                                                  author: nft.name,
+                                                  id: nft.id,
+                                                  isLiked: false)
                     }
                 }
-                profileMyNfts = myNfts
-                var myNFTsSortedDefault = myNfts
-                myNFTsSortedDefault = myNFTsSortedDefault.sorted { $0.name < $1.name }
-                self.view?.updateMyNFTs(myNFTs: myNFTsSortedDefault)
-                self.view?.hideLoader()
+                self.profileMyNfts = myNfts
+                if let profileMyNfts {
+                    getSortedItems()
+                    self.view?.hideLoader()
+                }
             case .failure(let error):
                 assertionFailure("Failed to load Profile \(error)")
                 self.view?.hideLoader()
@@ -168,10 +175,5 @@ extension ProfileMyNFTPresenter: ProfileMyNFTPresenterProtocol {
     func sortByNameAction() {
         profileStorage.chosenTypeSort = .byName
         getSortedItems()
-    }
-
-    func refreshAction() {
-        profileStorage.chosenTypeSort = .none
-        getMyNFTs()
     }
 }

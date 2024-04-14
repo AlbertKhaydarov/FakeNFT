@@ -87,7 +87,7 @@ class ProfileFavoritesViewController: UIViewController {
     }
 
     private func isStubHidden() {
-        if favoriteNFTs?.count == 0 || favoriteNFTs == nil {
+        if favoriteNFTs?.count == 0 {
             stubFavotitesLabel.isHidden = false
         } else {
             stubFavotitesLabel.isHidden = true

@@ -294,6 +294,7 @@ class ProfileEditViewController: UIViewController {
         let updateAvatar = profileUpdateUserProfileImageTextField ? avatar : profileUpdate.userPic
         let updateDescription = profileUpdateDescriptionTextView ? description : profileUpdate.description
         let updateWebsite = profileUpdateWebsiteTextField ? website : profileUpdate.website
+
         let profileUpdateModel = Profile(name: updateName,
                                          avatar: updateAvatar,
                                          description: updateDescription,
@@ -449,7 +450,7 @@ extension ProfileEditViewController {
             message: nil,
             preferredStyle: .actionSheet
         )
-
+        
         let saveAction = UIAlertAction(
             title: .loc.Profile.AlertControllerSaveAction.title,
             style: .default
@@ -458,7 +459,7 @@ extension ProfileEditViewController {
             delegate?.didCloseViewController(model: profileUpdateModel)
             dismiss(animated: true)
         }
-
+        
         let cancelAction = UIAlertAction(
             title: .loc.Profile.AlertControllerCancelAction.title,
             style: .cancel
@@ -466,10 +467,10 @@ extension ProfileEditViewController {
             guard let self else { return }
             dismiss(animated: true)
         }
-
+        
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
-
+        
         self.present(alertController, animated: true, completion: nil)
     }
 }
