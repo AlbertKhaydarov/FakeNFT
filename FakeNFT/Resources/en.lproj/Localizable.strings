@@ -1,0 +1,37 @@
+"Profile.title" = "Profile";
+
+// Common
+"Common.error_title" = "Something went wrong";
+"Common.error_repeat_title" = "Try again";
+
+// Catalog
+"Catalog.title" = "Catalog";
+"Catalog.alert_title" = "Sorting";
+"Catalog.alert_action1_title" = "By name";
+"Catalog.alert_action2_title" = "By number of NFTs";
+"Catalog.alert_close_action_title" = "Close";
+
+"Collection.author_label_title" = "Authors collection:";
+
+"Cart.title" = "Cart";
+"Statistics.title" = "Statistic";
+"Profile.myNFTButton.title" = "My NFTs";
+"Profile.favoriteNFTButton.title" = "Favorite NFT";
+"Profile.aboutDesignerButton.title" = "About designers";
+"Profile.userProfileImageDownload.title" = "Download an image";
+"Profile.userNamelabel.title" = "Name";
+"Profile.descriptionLabel.title" = "`Description";
+"Profile.websiteLabel.title" = "Website";
+"Profile.priceTitleLabel.title" = "Price";
+"Profile.authorLabelText.title" = "from";
+"Profile.stubMyNFTLabel.title" = "You don't have an NFT yet";
+"Profile.stubFavotitesLabel.title" = "You don't have any NFT favorites yet";
+"Profile.editImagelabel.title" = "Change the photo";
+"Profile.alertController.title" = "Do you want to save the changes?";
+"Profile.alertControllerSaveAction.title" = "Save";
+"Profile.cancelAction.title" = "Cancel";
+"Profile.alert.title" = "Sorting";
+"Profile.alertAction1.title" = "By price";
+"Profile.alertAction2.title" = "By raiting";
+"Profile.alertAction3.title" = "By name";
+"Profile.alertCloseAction.title" = "Close";

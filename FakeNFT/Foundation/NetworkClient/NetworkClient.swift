@@ -21,33 +21,44 @@ protocol NetworkClient {
 }
 
 extension NetworkClient {
-
     @discardableResult
-    func send(request: NetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
+    func send(
+        request: NetworkRequest,
+        onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, completionQueue: .main, onResponse: onResponse)
     }
 
     @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
+    func send<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        onResponse: @escaping (Result<T, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, type: type, completionQueue: .main, onResponse: onResponse)
     }
 }
 
 struct DefaultNetworkClient: NetworkClient {
+    // MARK: - Properties
+
     private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
-         encoder: JSONEncoder = JSONEncoder()) {
+    // MARK: - Lifecycle
+
+    init(
+        session: URLSession = URLSession.shared,
+        decoder: JSONDecoder = JSONDecoder(),
+        encoder: JSONEncoder = JSONEncoder()
+    ) {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
     }
+
+    // MARK: - Public
 
     @discardableResult
     func send(
@@ -120,10 +131,19 @@ struct DefaultNetworkClient: NetworkClient {
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = dtoEncoded
+        } else if let data = request.data {
+            urlRequest.httpBody = data
         }
 
+        encoder.outputFormatting = .withoutEscapingSlashes
+
+        urlRequest.setValue(RequestConstants.contentTypeEncodedValue,
+                            forHTTPHeaderField: RequestConstants.contentTypeHeader)
+        urlRequest.setValue(RequestConstants.acceptValue,
+                            forHTTPHeaderField: RequestConstants.acceptHeader)
+        urlRequest.setValue(NetworkConstants.token,
+                            forHTTPHeaderField: RequestConstants.tokenHeader)
         return urlRequest
     }
 
